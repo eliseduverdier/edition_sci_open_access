@@ -1,40 +1,56 @@
 <%
-    @author = Author.where(paper_id: @paper.id).take
-    @person = Person.where(id: @author.id).take
+    provide(:title, "« #{@paper.title} » by #{get_list_name(@paper.get_authors, true)}" )
 %>
-
-<% provide(:title, "« #{@paper.title} » by #{@person.firstname} #{@person.lastname}" ) %>
 
 <p id="notice"><%= notice %></p>
 
 <p>
-    <strong> <%= @paper.paper_type %> </strong> /
+    <strong> <%= @paper.paper_type %> </strong>
+    /
+    <%= @paper.category.name %>
+    /
     <% if @paper.status == 1 %>
      Accepted
     <% elsif @paper.status == 0 %>
      Rejected
     <% else %>
      Pending
-    <% end %> (<%= @paper.status %>)
+    <% end %>
 </p>
 
 <div class="right-align">
     <%= link_to 'Edit',
-    edit_paper_path(@paper),
-    class: "btn-flat" %>
+        edit_paper_path(@paper),
+        class: "btn-flat" %>
 
     <%= link_to 'Destroy',
-    @paper, method: :delete,
-    data: { confirm: 'Are you sure?' },
-    class: "btn-flat"
-%>
+        @paper, method: :delete,
+        data: { confirm: 'Are you sure?' },
+        class: "btn-flat" %>
 </div>
 
 <h1 id="paper-title">
     <em><%= @paper.title %></em>
     by
-    <em><%=@person.firstname%> <%=@person.lastname%></em>
+    <%= get_list_name(@paper.get_authors) %>
 </h1>
+
+<% if ! @paper.pdf_url.empty? %>
+    <%= link_to raw('↓ PDF'),
+        @paper.pdf_url,
+        class: "btn" %>
+<% end %>
+
+<blockquote id="abstract">
+    <%= @paper.abstract %>
+</blockquote>
+
+<div class="card blue-grey lighten-4">
+    <div class="card-content">
+        <strong>Content:</strong>
+        <p><%= @paper.html_content %></p>
+    </div>
+</div>
 
 <%= link_to 'Review this article',
     new_reviewer_path(@paper.id),
@@ -44,32 +60,7 @@
     reviewers_path(@paper.id),
     class: "btn" %>
 
-<blockquote id="abstract">
-    <%= @paper.abstract %>
-</blockquote>
-
-<p>
-  <strong>Tex content:</strong>
-  <%= @paper.tex_content %>
-</p>
-
-<p>
-  <strong>Html content:</strong>
-  <%= @paper.html_content %>
-</p>
-
-<% if ! @paper.pdf_url.empty? %>
-    <%= link_to raw('↓ PDF'),
-        @paper.pdf_url,
-        class: "btn" %>
-<% end %>
-
-<p>
-  <strong>Category:</strong>
-  <!-- link to papers by category -->
-  <%= @paper.category.name %>
-  <!-- (sub) category and parent if exists -->
-</p>
+<div> </div>
 
 <%= link_to 'Back',
     papers_path,

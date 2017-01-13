@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+
 <h2>
     <%= @person.firstname %> <%= @person.lastname %>
 </h2>
 
 <p>
-  <strong>Email:</strong>
-  <%= @person.email %>
+  <div class="chip">
+      <%= @person.email %>
+  </div>
 </p>
 
 <p>
@@ -14,10 +16,9 @@
   <%= @person.status %>
 </p>
 
-<p>
-  <strong>Bio:</strong>
-  <%= @person.bio %>
-</p>
+<blockquote>
+  <%= @person.bio if ! @person.bio.nil? %>
+</blockquote>
 
 <p>
   <strong>Level:</strong>
@@ -29,14 +30,18 @@
   <%= @person.country %>
 </p>
 
-<p>
-  <strong>Other sites:</strong>
-  <br />
-  <a href="<%= @person.academia_url %>">View on Academia →</a>
-  <br />
-  <a href="<%= @person.research_gate_url %>">View on Research gate →</a>
-</p>
 
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
-<%= link_to 'Destroy', @person, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Academia', @person.academia_url, class: "btn" %>
+<%= link_to 'Research Gate', @person.research_gate_url, class: "btn" %>
+
+<div></div>
+
+<%= link_to 'Edit',
+    edit_person_path(@person),
+    class: "btn" %>
+
+
+<%= link_to 'Delete your profile',
+    @person, method: :delete,
+    data: { confirm: 'Are you sure?' },
+    class: "btn-flat" %>

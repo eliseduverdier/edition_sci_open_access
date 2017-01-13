@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113120903) do
+ActiveRecord::Schema.define(version: 20170113143656) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20170113120903) do
     t.string   "password"
     t.string   "university"
     t.string   "academic_status"
+    t.string   "password_digest"
+    t.index ["email"], name: "index_people_on_email", unique: true
   end
 
   create_table "reading_list_folders", force: :cascade do |t|

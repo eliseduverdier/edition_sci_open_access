@@ -1,10 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
+  email: name_one@mail.com
   firstname: MyString
   lastname: MyString
-  password: MyString
+  password: abcdefghijkl
   status: MyString
   bio: MyText
   level: MyText
@@ -13,10 +13,10 @@ one:
   research_gate_url: MyString
 
 two:
-  email: MyString
+  email: name_two@mail.com
   firstname: MyString
   lastname: MyString
-  password: MyString
+  password: abcdefghijkl
   status: MyString
   bio: MyText
   level: MyText

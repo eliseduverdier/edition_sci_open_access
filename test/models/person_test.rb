@@ -17,9 +17,9 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test 'should be invalid' do
-    assert !@personNok_lastname.valid?
-    assert !@personNok_email.valid?
-    assert !@personNok_password.valid?
+    assert_not @personNok_lastname.valid?
+    assert_not @personNok_email.valid?
+    assert_not @personNok_password.valid?
   end
 
 end

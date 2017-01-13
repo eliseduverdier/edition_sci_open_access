@@ -17,7 +17,7 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create paper" do
     assert_difference('Paper.count') do
-      post papers_url, params: { paper: { abstract: @paper.abstract, category_id: @paper.category_id, html_content: @paper.html_content, pdf_url: @paper.pdf_url, status: @paper.status, tex_content: @paper.tex_content, title: @paper.title, type: @paper.type } }
+      post papers_url, params: { paper: { abstract: @paper.abstract, category_id: @paper.category_id, html_content: @paper.html_content, pdf_url: @paper.pdf_url, status: @paper.status, tex_content: @paper.tex_content, title: @paper.title, paper_type: @paper.paper_type } }
     end
 
     assert_redirected_to paper_url(Paper.last)
@@ -34,7 +34,7 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update paper" do
-    patch paper_url(@paper), params: { paper: { abstract: @paper.abstract, category_id: @paper.category_id, html_content: @paper.html_content, pdf_url: @paper.pdf_url, status: @paper.status, tex_content: @paper.tex_content, title: @paper.title, type: @paper.type } }
+    patch paper_url(@paper), params: { paper: { abstract: @paper.abstract, category_id: @paper.category_id, html_content: @paper.html_content, pdf_url: @paper.pdf_url, status: @paper.status, tex_content: @paper.tex_content, title: @paper.title, paper_type: @paper.paper_type } }
     assert_redirected_to paper_url(@paper)
   end
 

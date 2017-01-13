@@ -10,6 +10,8 @@
     <div class="card-content">
         <span class="card-title"><%= person.firstname %> <%= person.lastname %></span>
         <div class="chip"><%= person.email %></div>
+        <!-- <%= gravatar_for person %> -->
+
         <% if !person.country.nil? %><p><%= person.country %></p><% end %>
         <% if !person.bio.nil? %><p><%= person.bio %></p><% end %>
         <% if !person.status.nil? %><p><%= person.status %></p><% end %>
