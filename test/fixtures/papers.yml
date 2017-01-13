@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  paper_type: MyString
+  title: MyString
+  abstract: MyText
+  status: MyString
+  tex_content: MyText
+  html_content: MyText
+  pdf_url: MyString
+  category: one
+
+two:
+  paper_type: MyString
+  title: MyString
+  abstract: MyText
+  status: MyString
+  tex_content: MyText
+  html_content: MyText
+  pdf_url: MyString
+  category: two

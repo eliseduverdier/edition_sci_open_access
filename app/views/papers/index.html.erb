@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Papers</h1>
+
+    <% @papers.each do |paper|
+        author = Author.where(paper_id: paper.id).take # TODO if many
+        person = Person.where(id: author.id).take
+    %>
+    <div class="card blue-grey lighten-4">
+        <div class="card-content">
+            <span class="card-title"><%= paper.title %></span>
+
+             <!-- author.each do |author| -->
+            <p>By <%= person.firstname %> <%= person.lastname %></p>
+
+            <p>Published on <%= paper.created_at %></p>
+            <div class="chip"><%= paper.category.name %></div>
+            <div class="chip"><%= paper.paper_type %></div>
+        </div>
+        <div class="card-action">
+            <%= link_to 'Read', paper, class: "btn" %>
+            <% if ! paper.pdf_url.empty? %>
+            <%= link_to '↓PDF', paper.pdf_url, class: "btn" %>
+            <% end %>
+        </div>
+    </div>
+
+    <% end %>
+
+    <%= link_to 'New Paper', new_paper_path, class: "btn" %>

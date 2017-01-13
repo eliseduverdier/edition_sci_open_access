@@ -1,0 +1,44 @@
+<%= form_for @reviewer, :url => "/papers/#{@paper.id}/reviews"  do |f| %>
+
+  <% # POST: Error return ? %>
+  <% if reviewer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reviewer.errors.count, "error") %> prohibited this reviewer from being saved:</h2>
+      <ul>
+      <% reviewer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label 'By' %>
+    <select name="reviewer[person_id]">
+        <% Person.all.each do |person| %>
+        <option value="<%= person.id %>"><%= person.firstname %> <%= person.lastname %></option>
+        <% end %>
+    </select>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <select name="reviewer[status]">
+        <option disabled selected>— Choice —</option>
+        <option value="3">Accepted</option>
+        <option value="2">Need minor modifications</option>
+        <option value="1">Need major modifications</option>
+        <option value="0">Rejected</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%#= f.text_area :content %>
+    <textarea id="content" name="reviewer[content]" class="materialize-textarea"></textarea>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Post review', :class => "btn" %>
+  </div>
+<% end %>

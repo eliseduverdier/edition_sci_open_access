@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Review</h1>
+<p>
+  <strong>Person:</strong>
+  <%= @reviewer.person.firstname %> <%= @reviewer.person.lastname %>
+</p>
+
+<p>
+  <strong>Paper:</strong>
+  <%= link_to @reviewer.paper.title, @reviewer.paper %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= get_status(@reviewer.status) %>
+</p>
+
+<blockquote>
+  <%= @reviewer.content %>
+</blockquote>
+
+<%= link_to "Edit",
+    edit_reviewer_path(@reviewer),
+    class: "btn" %>
+
+<%= link_to "Back to reviews",
+    reviewers_path,
+    class: "btn" %>
+
+<%#= link_to "Destroy",
+    # @reviewer,
+    # method: :delete,
+    # data: { confirm: 'Are you sure?' },
+    # class: "btn"
+%>

@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @category.name %>
+</h1>
+
+
+<table class="bordered">
+    <tbody>
+      <% Paper.where(category_id: @category.id).each do |paper| %>
+      <tr>
+          <tr>
+            <td><%= link_to 'Read',
+                paper,
+                class: "btn-flat"%></td>
+            <td><div class="chip"><%= paper.paper_type %></div></td>
+            <td><%= paper.title %></td>
+            <td>
+                <% if ! paper.pdf_url.empty? %>
+                <%= link_to 'PDF',
+                    paper.pdf_url,
+                    class: "btn-flat" %>
+                <% end %>
+            </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'Edit',
+    edit_category_path(@category),
+    class: "btn-flat" %>
+
+<%= link_to 'Back',
+    categories_path,
+    class: "btn-flat" %>

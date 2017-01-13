@@ -1,0 +1,57 @@
+<%= form_for(paper) do |f| %>
+  <% if paper.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(paper.errors.count, "error") %> prohibited this paper from being saved:</h2>
+
+      <ul>
+      <% paper.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :paper_type %>
+    <%= f.text_field :paper_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :abstract %>
+    <%= f.text_area :abstract, class: "materialize-textarea" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %>
+    <%= f.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= f.label :tex_content %>
+    <%= f.text_area :tex_content, class: "materialize-textarea" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :html_content %>
+    <%= f.text_area :html_content, class: "materialize-textarea" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :pdf_url %>
+    <%= f.text_field :pdf_url %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id %>
+    <%= f.text_field :category_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Save', :class => "btn"  %>
+  </div>
+<% end %>

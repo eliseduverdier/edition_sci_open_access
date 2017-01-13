@@ -1,0 +1,27 @@
+<% provide(:title, "People list") %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>People</h1>
+
+<% @people.each do |person| %>
+
+<div class="card blue-grey lighten-4">
+    <div class="card-content">
+        <span class="card-title"><%= person.firstname %> <%= person.lastname %></span>
+        <div class="chip"><%= person.email %></div>
+        <% if !person.country.nil? %><p><%= person.country %></p><% end %>
+        <% if !person.bio.nil? %><p><%= person.bio %></p><% end %>
+        <% if !person.status.nil? %><p><%= person.status %></p><% end %>
+    </div>
+    <div class="card-action">
+        <%= link_to 'Show', person, class: "btn" %>
+        <%= link_to 'Edit', edit_person_path(person), class: "btn" %>
+        <%= link_to 'Academia', person.academia_url %>
+        <%= link_to 'Research Gate', person.research_gate_url %>
+    </div>
+</div>
+
+<% end %>
+
+<%= link_to 'Add a Person', new_person_path %>

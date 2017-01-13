@@ -1,0 +1,14 @@
+<h1>New Paper</h1>
+
+<%= render 'form', paper: @paper %>
+
+// categories
+<select name="category">
+    <% @category.each do |cat| %>
+        <option value="<%=cat.id %>"><%= cat.name %></option>
+    <% end %>
+</select>
+
+
+
+<%= link_to 'Back', papers_path %>

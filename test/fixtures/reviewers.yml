@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person: one
+  paper: one
+  status: MyString
+  content: MyText
+
+two:
+  person: two
+  paper: two
+  status: MyString
+  content: MyText

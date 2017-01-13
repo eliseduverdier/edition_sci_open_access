@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  person: one
+  paper: one
+  reading_list_folder: one
+
+two:
+  person: two
+  paper: two
+  reading_list_folder: two

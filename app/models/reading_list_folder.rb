@@ -1,0 +1,2 @@
+class ReadingListFolder < ApplicationRecord
+end

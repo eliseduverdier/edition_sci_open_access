@@ -1,0 +1,22 @@
+<%= form_for(reading_list_folder) do |f| %>
+  <% if reading_list_folder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reading_list_folder.errors.count, "error") %> prohibited this reading_list_folder from being saved:</h2>
+
+      <ul>
+      <% reading_list_folder.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

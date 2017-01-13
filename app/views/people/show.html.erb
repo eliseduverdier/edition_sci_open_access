@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h2>
+    <%= @person.firstname %> <%= @person.lastname %>
+</h2>
+
+<p>
+  <strong>Email:</strong>
+  <%= @person.email %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @person.status %>
+</p>
+
+<p>
+  <strong>Bio:</strong>
+  <%= @person.bio %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @person.level %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @person.country %>
+</p>
+
+<p>
+  <strong>Other sites:</strong>
+  <br />
+  <a href="<%= @person.academia_url %>">View on Academia →</a>
+  <br />
+  <a href="<%= @person.research_gate_url %>">View on Research gate →</a>
+</p>
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>
+<%= link_to 'Destroy', @person, method: :delete, data: { confirm: 'Are you sure?' } %>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @reading_list.person %>
+</p>
+
+<p>
+  <strong>Paper:</strong>
+  <%= @reading_list.paper %>
+</p>
+
+<p>
+  <strong>Reading list folder:</strong>
+  <%= @reading_list.reading_list_folder %>
+</p>
+
+<%= link_to 'Edit', edit_reading_list_path(@reading_list) %> |
+<%= link_to 'Back', reading_lists_path %>

@@ -1,0 +1,40 @@
+<!-- <header>
+    <div id="main-title">
+        <a href="/">
+            <%= image_tag("open_access.jpg", size: "32") %>
+            Scientific publications in open-access
+        </a>
+    </div>
+</header> -->
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo right">
+            Scientific edition
+            <%= image_tag("OpenAccess.svg", size: "30x45") %>
+             <!-- // open-access -->
+        </a>
+
+        <!-- <a href="#" data-activates="nav-mobile" class="button-collapse">
+            <i class="material-icons">menu</i>
+        </a> -->
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><%= link_to "Papers", papers_path %> </li>
+          <li><%= link_to "People", people_path %> </li>
+          <li><%= link_to "Categories ↓",
+                categories_path,
+                class: "dropdown-button",
+                :'data-activates' => "list-categories" %> </li>
+          <li><%= link_to "Reading Lists", reading_lists_path %> </li>
+          <li><%= link_to "About", about_path %></li>
+        </ul>
+    </div>
+</nav>
+
+<ul id="list-categories" class="dropdown-content">
+<% Category.all.each do |category| %>
+    <li><%= link_to category.name.capitalize, category_path(category) %></li>
+<% end %>
+</ul>
+
+<!-- <i class="material-icons right">arrow_drop_down</i> -->
