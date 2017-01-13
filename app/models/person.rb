@@ -25,4 +25,13 @@ class Person < ApplicationRecord
         end
     end
 
+  def get_papers
+      list = Array.new()
+      authors = Author.where(person_id: self[:id])
+      authors.each do |write|
+          list.push(Paper.where(id: write.paper_id).take)
+      end
+      return list
+  end
+
 end

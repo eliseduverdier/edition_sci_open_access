@@ -34,14 +34,26 @@
 <%= link_to 'Academia', @person.academia_url, class: "btn" %>
 <%= link_to 'Research Gate', @person.research_gate_url, class: "btn" %>
 
-<div></div>
+<h2>Papers</h2>
 
-<%= link_to 'Edit',
+<div class="collection">
+    <% @person.get_papers.each do |paper| %>
+
+    <%= link_to paper.title,
+        paper,
+        class: "collection-item" %>
+
+    <% end %>
+</div>
+
+<div class="row"> </div>
+
+<%= link_to 'Edit profile',
     edit_person_path(@person),
     class: "btn" %>
 
 
-<%= link_to 'Delete your profile',
+<%= link_to 'Delete profile',
     @person, method: :delete,
     data: { confirm: 'Are you sure?' },
     class: "btn-flat" %>
