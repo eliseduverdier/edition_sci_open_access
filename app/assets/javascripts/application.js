@@ -16,10 +16,25 @@
 //= require materialize
 
 $(document).ready(function() {
-    $('select').material_select();
+  // forms
+  $('select').material_select();
+  $('input#input_text, textarea#textarea1').characterCounter();
 
-    // nav
-    $(".dropdown-button").dropdown();
-    $(".button-collapse").sideNav();
+  // nav
+  $(".dropdown-button").dropdown();
+  $(".button-collapse").sideNav();
+
+
+  // keyword chips
+  $('.chips').material_chip();
+
+  $('.chips-placeholder').material_chip({
+    placeholder: 'Enter a keyword',
+    secondaryPlaceholder: '+Keyword',
+  });
+  var chip = {
+    tag: 'chip content',
+  };
+  $('.chips-initial').material_chip('data');
 
 });

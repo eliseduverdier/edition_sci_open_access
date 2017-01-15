@@ -9,18 +9,16 @@
 
             <p>By <%= get_list_name(paper.get_authors) %></p>
 
-            <p>Published on <%= paper.created_at %></p>
-            <div class="chip"><%= paper.category.name %></div>
-            <div class="chip"><%= paper.paper_type %></div>
+            <p>Published on <%= paper.created_at.strftime("%Y-%m-%d") %></p>
+            <div class="chip"><%= paper.category.name if !paper.category.nil? %></div>
+            <div class="badge"><%= paper.paper_type %></div>
         </div>
         <div class="card-action">
             <%= link_to 'Read', paper, class: "btn" %>
-            <% if ! paper.pdf_url.empty? %>
+            <% if ! paper.pdf_url.nil? %>
             <%= link_to '↓PDF', paper.pdf_url, class: "btn" %>
             <% end %>
         </div>
     </div>
 
     <% end %>
-
-    <%= link_to 'New Paper', new_paper_path, class: "btn" %>

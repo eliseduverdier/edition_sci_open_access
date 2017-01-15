@@ -1,6 +1,8 @@
-<h1>Editing Person</h1>
+<% provide(:title, "Edit your profile" ) %>
 
-<%= render 'form', person: @person %>
+<h1>Edit your profile</h1>
 
-<%= link_to 'Show', @person %> |
-<%= link_to 'Back', people_path %>
+<%= render 'form_edit', person: @person %>
+
+<%= link_to 'Cancel', @person, :class => "btn" %> |
+<%#= link_to 'Back', people_path %>

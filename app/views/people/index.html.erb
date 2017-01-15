@@ -8,9 +8,11 @@
 
 <div class="card blue-grey lighten-4">
     <div class="card-content">
-        <span class="card-title"><%= person.firstname %> <%= person.lastname %></span>
+        <span class="card-title">
+            <%= gravatar_for person  %>
+            <%= person.firstname %> <%= person.lastname %>
+        </span>
         <div class="chip"><%= person.email %></div>
-        <!-- <%= gravatar_for person %> -->
 
         <% if !person.country.nil? %><p><%= person.country %></p><% end %>
         <% if !person.bio.nil? %><p><%= person.bio %></p><% end %>
@@ -18,7 +20,6 @@
     </div>
     <div class="card-action">
         <%= link_to 'Show', person, class: "btn" %>
-        <%= link_to 'Edit', edit_person_path(person), class: "btn" %>
         <%= link_to 'Academia', person.academia_url %>
         <%= link_to 'Research Gate', person.research_gate_url %>
     </div>

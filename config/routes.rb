@@ -4,7 +4,18 @@ HelloApp::Application.routes.draw do
   resources :reading_list_folders
   resources :reviewers, path: 'papers/:paper_id/reviews'
   resources :authors
-  resources :people
+  resources :people # todo: avoid seeing other people's info
+
+  get   '/signup',  to: 'people#new'
+  post  '/signup',  to: 'people#create'
+
+  get    '/login',   to: 'sessions#new'
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+
+  get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
+  post   '/people/:id/edit_password' => 'people#update_password'
+  
   resources :papers
   resources :categories
 
@@ -12,13 +23,6 @@ HelloApp::Application.routes.draw do
   get '/home',  to: 'static_pages#home'
   get '/about', to: 'static_pages#about'
 
-  # get 'papers/:paper_id/reviews'     => 'reviewers#index', :via => [:get]
-  # get 'papers/:paper_id/reviews'     => 'reviewers#create', :via => [:post]
-  # get 'papers/:paper_id/reviews/new' => 'reviewers#new', :via => [:get]
-  # get 'papers/:paper_id/reviews/:id' => 'reviewers#show', :via => [:get]
-  # get 'papers/:paper_id/reviews/:id/edit'   => 'reviewers#edit', :via => [:get]
-  # get 'papers/:paper_id/reviews/:id/update' => 'reviewers#update', :via => [:patch, :put]
-  # get 'papers/:paper_id/reviews/:id' => 'reviewers#update', :via => [:delete]
 
   # match 'papers/:id/reviews/:review_id' => 'reviewers#new', :via => [:get]
 

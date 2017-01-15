@@ -1,0 +1,41 @@
+<%= form_for(person, url: signup_path) do |f| %>
+  <% if person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(person.errors.count, "error") %> need correction before you can sign up:</h2>
+      <ul class="collection">
+      <% person.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input-field col s12">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="input-field col s6">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="input-field col s6">
+    <%= f.label :password_confirmation, "Password Confirmation" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div class="input-field col s6">
+    <%= f.label :firstname %>
+    <%= f.text_field :firstname %>
+  </div>
+
+  <div class="input-field col s6">
+    <%= f.label :lastname %>
+    <%= f.text_field :lastname %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Sign Up', :class => "btn"  %>
+  </div>
+<% end %>

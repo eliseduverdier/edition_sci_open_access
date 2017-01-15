@@ -1,0 +1,30 @@
+<% provide(:title, "Welcome") %>
+
+<div class="center-align">
+
+    <h1>Open Science</h1>
+    <h3>Scientific publications in open-access</h3>
+    <%= image_tag("OpenAccess_black.svg", size: "100") %>
+
+    <h2>
+        This site is for ...
+    </h2>
+    <div class="row">
+        <div class="col s4">
+            Automatization of peer review process, to allow a scientific journal to be open-access.
+        </div>
+        <div class="col s4">
+            Guarantee quality of work and conflict-free reviews
+        </div>
+        <div class="col s4">
+            Allow researchers to publish freely, and redears to access knowlegde
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <%= link_to "Log in", login_path, class: 'btn-large teal' %>
+    <br /> or <br />
+    <%= link_to "Sign up", signup_path, class: 'btn-large lime' %>
+
+</div>

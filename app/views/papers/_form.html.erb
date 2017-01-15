@@ -10,48 +10,68 @@
       </ul>
     </div>
   <% end %>
+<div class="row">
 
-  <div class="field">
-    <%= f.label :paper_type %>
-    <%= f.text_field :paper_type %>
+  <div class="field col s4">
+    <label for="paper_pub_date">Publication date</label>
+    <input type="date" id="paper_pub_date" name="paper[pub_date]">
   </div>
 
-  <div class="field">
+  <div class="field col s4">
+    <label for="paper_category">Category</label>
+    <select id="paper_category" name="paper[category]">
+        <!-- <option disabled selected>Category</option> -->
+        <% Category.all.each do |cat| %>
+        <option value="<%=cat.id %>"><%= cat.name %></option>
+        <% end %>
+    </select>
+  </div>
+
+  <div class="field col s4">
+      <label for="paper_type">Type</label>
+      <select id="paper_type" name="paper[paper_type]">
+          <!-- <option disabled selected>Type</option> -->
+          <% get_paper_types.each do |type| %>
+          <option value="<%=type %>"><%= type %></option>
+          <% end %>
+      </select>
+  </div>
+
+  <div class="field col s12">
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
 
-  <div class="field">
+
+  <div class="field col s3">
+      <label for="keywords">Keywords</label>
+      <div id="keywords" class="chips chips-placeholder"></div>
+  </div>
+
+  <div class="field col s9">
     <%= f.label :abstract %>
     <%= f.text_area :abstract, class: "materialize-textarea" %>
   </div>
 
-  <div class="field">
-    <%= f.label :status %>
-    <%= f.text_field :status %>
+  <div class="field col s10">
+      <%= f.label :html_content %>
+      <%= f.text_area :html_content, class: "materialize-textarea" %>
   </div>
 
-  <div class="field">
+  <div class="field col s2">
     <%= f.label :tex_content %>
-    <%= f.text_area :tex_content, class: "materialize-textarea" %>
+    <%= file_field_tag :tex_content %>
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload one or more files">
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :html_content %>
-    <%= f.text_area :html_content, class: "materialize-textarea" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :pdf_url %>
-    <%= f.text_field :pdf_url %>
-  </div>
-
-  <div class="field">
-    <%= f.label :category_id %>
-    <%= f.text_field :category_id %>
-  </div>
-
-  <div class="actions">
+  <div class="field col s10">
+    <div class="actions">
     <%= f.submit 'Save', :class => "btn"  %>
+    </div>
   </div>
+
+
+</div>
 <% end %>

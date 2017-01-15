@@ -25,9 +25,15 @@ class PapersController < ApplicationController
   # POST /papers.json
   def create
     @paper = Paper.new(paper_params)
+    @paper.status = 0 # pending
 
     respond_to do |format|
       if @paper.save
+
+        # save author
+        @author = Author.new(paper_id: @paper.id, person_id: current_user.id)
+        @author.save
+
         format.html { redirect_to @paper, notice: 'Paper was successfully created.' }
         format.json { render :show, status: :created, location: @paper }
       else
@@ -69,6 +75,10 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:paper_type, :title, :abstract, :status, :tex_content, :html_content, :pdf_url, :category_id)
+      params.require(:paper).permit(:paper_type, :title, :abstract, :tex_content, :html_content, :category_id)
+    end
+
+    def author_params
+      params.require(:paper_id, :person_id)
     end
 end

@@ -21,6 +21,24 @@ class PeopleController < ApplicationController
   def edit
   end
 
+  # GET /people/1/edit_password
+  def edit_password
+      @person = current_user
+  end
+
+  # PATCH/PUT /people/1/edit_password
+  def update_password
+    respond_to do |format|
+      if @person.update(person_params_edit_password)
+        format.html { redirect_to @person, notice: 'Your profile was successfully updated.' }
+        format.json { render :show, status: :ok, location: @person }
+      else
+        format.html { render :edit_password }
+        format.json { render json: @person.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /people
   # POST /people.json
   def create
@@ -28,7 +46,8 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to @person, notice: 'Person was successfully created.' }
+        log_in @person
+        format.html { redirect_to @person, notice: 'Thanks for joining us!' }
         format.json { render :show, status: :created, location: @person }
       else
         format.html { render :new }
@@ -70,5 +89,15 @@ class PeopleController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def person_params
       params.require(:person).permit(:email, :password, :firstname, :lastname, :status, :bio, :level, :country, :academia_url, :research_gate_url)
+    end
+
+    # for editing one's profile
+    def person_params_edit
+      params.require(:person).permit(:firstname, :lastname, :status, :bio, :level, :country, :academia_url, :research_gate_url)
+    end
+
+    # for modifying password
+    def person_params_edit_password
+        params.require(:person).permit(:password)
     end
 end
