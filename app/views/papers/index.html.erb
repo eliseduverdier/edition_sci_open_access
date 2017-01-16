@@ -2,23 +2,29 @@
 
 <h1>Papers</h1>
 
-    <% @papers.each do |paper| %>
+<div class="row">
+
+  <% @papers.each do |paper| %>
+  <div class="col s12">
     <div class="card blue-grey lighten-4">
-        <div class="card-content">
-            <span class="card-title"><%= paper.title %></span>
+      <div class="card-content">
+        <span class="card-title"><%= paper.title %></span>
 
-            <p>By <%= get_list_name(paper.get_authors) %></p>
+        <p>By <strong><%= paper.get_authors_as_name_list %></strong></p>
 
-            <p>Published on <%= paper.created_at.strftime("%Y-%m-%d") %></p>
-            <div class="chip"><%= paper.category.name if !paper.category.nil? %></div>
-            <div class="badge"><%= paper.paper_type %></div>
-        </div>
-        <div class="card-action">
-            <%= link_to 'Read', paper, class: "btn" %>
-            <% if ! paper.pdf_url.nil? %>
-            <%= link_to '↓PDF', paper.pdf_url, class: "btn" %>
-            <% end %>
-        </div>
+        <p>Published on <strong><%= paper.created_at.strftime("%d %B %Y") %></strong> </p>
+        <div class="chip blue-grey"><%= paper.paper_type %></div>
+        <div class="chip"><%= paper.category.name if !paper.category.nil? %></div>
+      </div>
+
+      <div class="card-action">
+        <%= link_to 'Read', paper, class: "btn" %>
+        <% if !paper.pdf_url.nil? %>
+        <%= link_to '↓PDF', paper.pdf_url, class: "btn" %>
+        <% end %>
+      </div>
     </div>
+  </div>
+  <% end %>
 
-    <% end %>
+</div>

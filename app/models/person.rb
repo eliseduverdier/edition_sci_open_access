@@ -1,9 +1,8 @@
-
 class Person < ApplicationRecord
 
     VALID_EMAIL_REGEX = /\A[^@\s]+@([-a-z0-9]+\.)+[a-z]{2,}\z/i
 
-    # validates :firstname, presence: true
+    validates :firstname, presence: true
     validates :lastname, presence: true
 
     validates :email, presence: true,
@@ -15,6 +14,7 @@ class Person < ApplicationRecord
         presence: true,
         length: { minimum: 8, maximum: 256 }
 
+    # digests the password
     has_secure_password
 
     # Get the full name of a person
@@ -28,28 +28,60 @@ class Person < ApplicationRecord
         end
     end
 
+    ##################################################
+    #    PERSON STATUS
+    ##################################################
+
+    def is_editor?
+        self[:status] == 'editor'
+    end
+
+
+    ##################################################
+    #    RELATIONS TO PAPERS
+    ##################################################
+
     # Get all the papers written by a person
     def get_papers
-        list = Array.new()
-        authors = Author.where(person_id: self[:id])
-        authors.each do |write|
-          list.push(Paper.where(id: write.paper_id).take)
-        end
-        return list
+      list = Array.new()
+      authors = Author.where(person_id: self[:id])
+      authors.each do |write|
+        list.push(Paper.where(id: write.paper_id).take)
+      end
+      return list
     end
+
 
     # Returns true if the user wrote the paper
     def wrote?(paper)
       paper.get_authors.include? self
     end
 
+    # Returns true if the user has to review the paper
+    def should_review?(paper)
+      review = paper.get_review_by(self)
+      !review.nil? && (review[:status] == 'pending' || review[:status] == '1')
+    end
+
     # Returns true if the user should review the paper
     def is_reviewing?(paper)
-      false
+      review = paper.get_review_by(self)
+      !review.nil? && (review[:status] == 'ongoing' || review[:status] == '2')
     end
+
     # Returns true if the user reviewed the paper
-    def should_review?(paper)
-      false
+    def reviewed?(paper)
+      review = paper.get_review_by(self)
+      !review.nil? && (review[:status] == 'done' || review[:status] == '3')
     end
+
+
+    # private
+
+      # def is_reviewer_of(paper)?
+      #   paper.get_review_by(self)
+      # end
+
+    # end
 
 end

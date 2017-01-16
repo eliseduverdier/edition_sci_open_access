@@ -21,6 +21,7 @@ class ReviewersController < ApplicationController
 
   # GET /reviewers/1/edit
   def edit
+    @paper = Paper.find(params[:paper_id])
   end
 
   # POST /papers/:paper_id/reviews
@@ -30,7 +31,8 @@ class ReviewersController < ApplicationController
     # TODO get author_id from current session
     @reviewer = Reviewer.new(reviewer_params)
     @reviewer.paper_id = params[:paper_id]
-p @reviewer
+    @reviewer.person_id = current_user.id
+
     respond_to do |format|
       if @reviewer.save
         format.html { redirect_to paper_path( :id => @reviewer.paper_id),

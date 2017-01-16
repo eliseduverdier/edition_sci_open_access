@@ -11,7 +11,7 @@
   <% end %>
 
 <h3>Personal details</h3>
-
+<div class="row">
   <div class="input-field col s6">
     <%= f.label :firstname %>
     <%= f.text_field :firstname %>
@@ -26,9 +26,36 @@
     <%= f.label "Short biography" %>
     <%= f.text_area :bio, class: "materialize-textarea", length: "1000" %>
   </div>
+</div>
+
+
+<h3>Website related</h3>
+<div class="row">
+
+  <div class="input-field col s4">
+    <%= f.label :status %>
+    <select class="" name="person[status]">
+        <option disabled selected></option>
+      <% possible_website_status.each do |website_status| %>
+      <option value="<%= website_status %>"><%= website_status %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="input-field col s8">
+    Interests <br />
+    <% Category.all.each do |category| %>
+      <input id="interest_<%= category.name %>" type="checkbox" name="person[interests]" value="<%= category.name %>">
+      <label for="interest_<%= category.name %>"><%= category.name %></label> <br />
+    <% end %>
+  </div>
+</div>
+
+
 
 <h3>University life</h3>
 
+<div class="row">
   <div class="input-field col s4">
     <label for="person_university">University</label>
     <input type="text" name="person[university]" id="person_university" />
@@ -38,8 +65,8 @@
     <%= f.label :level %>
     <select name="person[level]">
         <option disabled selected></option>
-    <% possible_status.each do |level| %>
-        <option value="<%= level %>"><%= level %></option>
+    <% possible_uni_status.each do |uni_status| %>
+        <option value="<%= uni_status %>"><%= uni_status %></option>
     <% end %>
     </select>
   </div>
@@ -48,9 +75,11 @@
     <%= f.label :country %>
     <%= f.text_field :country %>
   </div>
+</div>
 
 <h3>External sites</h3>
 
+<div class="row">
   <div class="input-field col s6">
     <%= f.label :academia_url %>
     <%= f.text_field :academia_url %>
@@ -61,6 +90,7 @@
     <%= f.text_field :research_gate_url %>
   </div>
 
+</div>
 
 
   <div class="actions">

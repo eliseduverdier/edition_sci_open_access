@@ -14,12 +14,12 @@
 
   <div class="field col s4">
     <label for="paper_pub_date">Publication date</label>
-    <input type="date" id="paper_pub_date" name="paper[pub_date]">
+    <input type="date" id="paper_pub_date" name="paper[pub_date]" class="datepicker">
   </div>
 
   <div class="field col s4">
     <label for="paper_category">Category</label>
-    <select id="paper_category" name="paper[category]">
+    <select id="paper_category" name="paper[category_id]">
         <!-- <option disabled selected>Category</option> -->
         <% Category.all.each do |cat| %>
         <option value="<%=cat.id %>"><%= cat.name %></option>
@@ -54,14 +54,14 @@
   </div>
 
   <div class="field col s10">
-      <%= f.label :html_content %>
+      <%= f.label 'Content (TODO LATEX EDITOR)' %>
       <%= f.text_area :html_content, class: "materialize-textarea" %>
   </div>
 
   <div class="field col s2">
-    <%= f.label :tex_content %>
-    <%= file_field_tag :tex_content %>
     <div class="file-path-wrapper">
+      <%= f.label 'Tex Source' %>
+      <%= file_field_tag :tex_content, class: "file-path validate" %>
         <input class="file-path validate" type="text" placeholder="Upload one or more files">
     </div>
   </div>

@@ -7,6 +7,13 @@ class PapersController < ApplicationController
     @papers = Paper.all
   end
 
+  # GET /papers/pending
+  # GET /papers/pending.json
+  def index_pending
+    @papers = Paper.where(status: 'pending')
+  end
+
+
   # GET /papers/1
   # GET /papers/1.json
   def show

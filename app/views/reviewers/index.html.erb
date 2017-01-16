@@ -10,7 +10,7 @@
   <thead>
     <tr>
       <th></th>
-      <th>By</th>
+      <!-- <th>By</th> Anonymous ! -->
       <th>Status</th>
       <th>Content</th>
       <th colspan="2"></th>
@@ -23,7 +23,7 @@
         <td><%= link_to 'Read',
             "/papers/#{@paper.id}/reviews/#{review.id}",
             class: "waves-effect waves-light btn-flat"  %></td>
-        <td><%= review.person.firstname %> <%= review.person.lastname %></td>
+        <%#= review.person.full_name if !review.person.nil? %>
         <td><%= get_status(review.status) %></td>
         <td><%= review.content %></td>
       </tr>

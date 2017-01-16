@@ -1,4 +1,4 @@
-<%= form_for @reviewer, :url => "/papers/#{@paper.id}/reviews"  do |f| %>
+<%= form_for @reviewer, :url => reviewer_path  do |f| %>
 
   <% # POST: Error return ? %>
   <% if reviewer.errors.any? %>
@@ -13,32 +13,67 @@
   <% end %>
 
   <div class="field">
-    <%= f.label 'By' %>
-    <select name="reviewer[person_id]">
-        <% Person.all.each do |person| %>
-        <option value="<%= person.id %>"><%= person.firstname %> <%= person.lastname %></option>
-        <% end %>
-    </select>
-  </div>
-
-  <div class="field">
     <%= f.label :status %>
-    <select name="reviewer[status]">
+    <p>
+      <input name="reviewer[status]" type="radio" id="accepted" value="" />
+      <label for="accepted">
+        <i class="green-text tiny material-icons">check_circle</i>
+        Accepted
+        <!-- This paper is perfect: it should happen only after a first peer review. Paper will be okay for publication -->
+      </label>
+    </p>
+    <p>
+      <input name="reviewer[status]" type="radio" id="minor" value="" />
+      <label for="minor">
+        <i class="yellow-text tiny material-icons">feedback</i> <!-- edit -->
+        Need minor modifications
+        <!-- -->
+      </label>
+    </p>
+    <p>
+      <input name="reviewer[status]" type="radio" id="major" value="" />
+      <label for="major">
+        <i class="orange-text tiny material-icons">warning</i>
+        Need major modifications
+        <!-- -->
+      </label>
+    </p>
+    <p>
+      <input name="reviewer[status]" type="radio" id="refused" value="" />
+      <label for="refused">
+        <i class="red-text tiny material-icons">error</i>
+        Refused
+        <!-- This paper has serious flaws in it. Please explain precisely why -->
+      </label>
+    </p>
+    <!-- <select name="reviewer[status]">
         <option disabled selected>— Choice —</option>
         <option value="3">Accepted</option>
         <option value="2">Need minor modifications</option>
         <option value="1">Need major modifications</option>
         <option value="0">Rejected</option>
-    </select>
+    </select> -->
   </div>
 
   <div class="field">
-    <%= f.label :content %>
-    <%#= f.text_area :content %>
-    <textarea id="content" name="reviewer[content]" class="materialize-textarea"></textarea>
+    <%= f.label 'Comments on the article' %>
+    <textarea id="content" name="reviewer[content]" class="materialize-textarea" length="5000">
+<%= @reviewer.content %></textarea>
   </div>
 
+   <div class="switch">
+    <label>
+      Mark as Done:
+      <input name="reviewer[progression]" type="checkbox" value="done">
+      <span class="lever"></span>
+      If selected, you will not be able to modify your review after saving
+    </label>
+  </div>
+
+
+<br><br>
+
   <div class="actions">
-    <%= f.submit 'Post review', :class => "btn" %>
+    <%= f.submit 'Save', :class => "btn" %>
   </div>
 <% end %>

@@ -1,18 +1,5 @@
 module PeopleHelper
 
-
-    # Format the list of authors
-    # Params:
-    # +list+::      +Array+ authors
-    # +initials+::  +bool+  true: get only the initial of the firstname
-    def get_list_name(list, initials: false)
-        people = []
-        list.each do |person|
-            people.push( person.full_name(initials))
-        end
-        people.join(', ')
-    end
-
     # Get the gravatar for a user
     # Param:
     # +person+:: +Person+
@@ -23,7 +10,13 @@ module PeopleHelper
         image_tag(gravatar_url, alt: "#{person.firstname} #{person.lastname}", class: "gravatar")
     end
 
-    def possible_status
+    # Get possibles values for university status
+    def possible_uni_status
         ['undergraduate', 'graduate', 'PhD', 'post doc', '?', 'tenured', 'other:', 'not at the university']
+    end
+
+    # Get possibles values for website status
+    def possible_website_status
+        ['reader', 'author', 'writer', 'editor', 'helper']
     end
 end

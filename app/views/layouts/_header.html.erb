@@ -1,22 +1,22 @@
 <nav>
   <div class="nav-wrapper">
-    <!-- <a href="#" data-activates="nav-mobile" class="button-collapse">
-    <i class="material-icons">menu</i>
-    </a> -->
-    <ul id="nav-mobile" class="left hide-on-med-and-down">
-      <li><%= link_to "Papers", papers_path %>
-      </li>
+    <a href="/" class="brand-logo">
+      <%= image_tag("OpenAccess.svg", size: "30x45") %>
+      Open Science
+    </a>
 
+    <a href="#" data-activates="nav-mobile" class="button-collapse">
+      <i class="material-icons">menu</i>
+    </a>
+
+    <ul class="right hide-on-med-and-down">
+      <li><%= link_to "Papers", papers_path %> </li>
       <li><%= link_to "Categories ↓",
         categories_path,
         class: "dropdown-button",
-        :'data-activates' => "list-categories" %>
-        </li>
-
+        :'data-activates' => "list-categories" %> </li>
       <li><%= link_to "About", about_path %></li>
-
       <li><%= link_to "Log in", login_path, class: 'btn text teal' %></li>
-
       <li><%= link_to "Sign up", signup_path, class: 'btn text lime' %></li>
     </ul>
   </div>
@@ -28,4 +28,21 @@
   <% Category.all.each do |category| %>
   <li><%= link_to category.name.capitalize, category_path(category) %></li>
   <% end %>
+</ul>
+
+<!-- Nav Mobile -->
+<ul id="nav-mobile" class="side-nav">
+  <li><%= link_to 'Papers', papers_path %> </li>
+  <li><%=link_to 'Categories', categories_path %></li>
+
+  <div class="collapsible-body" style="display: block;">
+    <ul>
+    <% Category.all.each do |category| %>
+      <li><%= link_to category.name.capitalize, category_path(category) %></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <li><%= link_to "Log in", login_path, class: 'btn text teal' %></li>
+  <li><%= link_to "Sign up", signup_path, class: 'btn text lime' %></li>
 </ul>

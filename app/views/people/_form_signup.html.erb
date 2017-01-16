@@ -1,3 +1,5 @@
+<h1>Sign up</h1>
+
 <%= form_for(person, url: signup_path) do |f| %>
   <% if person.errors.any? %>
     <div id="error_explanation">
@@ -38,4 +40,8 @@
   <div class="actions">
     <%= f.submit 'Sign Up', :class => "btn"  %>
   </div>
+
+  <p>
+    Already have an account ? <%= link_to 'Log in !', login_path %>
+  </p>
 <% end %>

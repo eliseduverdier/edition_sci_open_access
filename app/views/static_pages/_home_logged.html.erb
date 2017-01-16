@@ -18,9 +18,18 @@
 
   <div class="col s4">
 
+    <p><%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %></p>
+
     <p><a href="#" class="btn">See your reviews</a></p>
     <p><a href="#" class="btn">See your articles</a></p>
-    <p><a href="#" class="btn">Contact other researchers</a></p>
+
+    <div class="input-field inline">
+      <i class="material-icons prefix">search</i>
+
+      <input id="search" type="search" class="validate">
+      <label for="search" data-error="wrong" data-success="right">Search</label>
+    </div>
+
     <p><a href="#" class="btn">Etc</a></p>
 
   </div>

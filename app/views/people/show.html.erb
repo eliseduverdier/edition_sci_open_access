@@ -28,7 +28,7 @@
   <div class="col s2">
 
     <div class="center">
-      <%= link_to 'Research Gate', @person.research_gate_url, class: "btn" %>
+      <%= link_to 'ResearchGate', @person.research_gate_url, class: "btn" %>
       <br /> <br />
       <%= link_to 'Academia', @person.academia_url, class: "btn" %>
     </div>
@@ -39,36 +39,47 @@
 </div>
 
 <% if !@person.get_papers.empty?  %>
-    <h2>Papers</h2>
+
+    <% if is_logged_in_user?(@person) %>
+    <h2>Your papers</h2>
+    <%= link_to 'Submit a new paper', new_paper_path, class: "btn-large" %>
+    <% else %>
+    <h2>Published papers</h2>
+    <% end %>
 
     <div class="collection">
-
-      <% if is_logged_in_user @person %>
-      <li><%= link_to 'Submit a new paper', new_paper_path, class: "btn dark-orange" %></li>
-      <% end %>
       <% @person.get_papers.each do |paper| %>
-      <%= link_to paper.title, paper, class: "collection-item" %>
-      <% end %>
+      <a class="collection-item" href="<%= paper_path(paper) %>">
+            <%= paper.title %>
+            <% if !paper.publication_date.nil? %>
+              <span class="badge"> Published on <%= paper.publication_date.strftime("%d %B %Y") %> </span>
+            <% end %>
+            <% if !paper.category.nil? %>
+              <span class="badge"><%= paper.category.name %> </span>
+            <% end %>
+      </a>
+      <%#= link_to paper.title, paper, class: "collection-item avatar" %>
+      <% end # end each paper %>
+
     </div>
 <% else %>
-    <%= link_to 'Publish a paper', new_paper_path, class: "btn-large dark-orange" %>
+
+    <%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %>
 
 <% end %>
 
 
-<% if is_logged_in_user @person %>
+<% if is_logged_in_user? @person %>
 <div>
 <h2>Manage your profile</h2>
 
     <%= link_to 'Edit profile',
         edit_person_path(@person),
         class: "btn" %>
-        <br />
 
     <%= link_to 'Change your password',
         edit_password_path(@person),
         class: "btn" %>
-        <br />
 
     <%= link_to 'Delete profile',
         @person, method: :delete,

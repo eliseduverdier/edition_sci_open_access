@@ -1,16 +1,14 @@
 <nav>
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">
-      Open Science
       <%= image_tag("OpenAccess.svg", size: "30x45") %>
+      <!-- <i class="material-icons">lock_open</i> -->
+      Open Science
     </a>
-
-    <!-- <a href="#" data-activates="nav-mobile" class="button-collapse">
-    <i class="material-icons">menu</i>
-    </a> -->
     <a href="#" data-activates="nav-mobile" class="button-collapse">
       <i class="material-icons">menu</i>
     </a>
+
     <ul class="right hide-on-med-and-down">
       <li><%= link_to "Papers", papers_path %> </li>
       <li><%= link_to "People", people_path %> </li>
@@ -42,18 +40,22 @@
 
 <!-- User -->
 <ul id="list-session" class="dropdown-content">
+  <li><%= current_user.status %></li>
   <li><%= link_to "Profile", current_user %></li>
   <li><%= link_to "Log out", logout_path, method: :delete %></li>
 </ul>
 
+<!-- Nav Mobile -->
 <ul id="nav-mobile" class="side-nav">
   <li><%= link_to 'Papers', papers_path %> </li>
   <li><%= link_to 'Profile', current_user %></li>
-  <li><%=link_to 'Categories', categories_path %></li>
-  <ul>
-  <% Category.all.each do |category| %>
-    <li> — <%= link_to category.name.capitalize, category_path(category) %></li>
-  <% end %>
-  </ul>
+  <li><%=link_to 'Categories', categories_path, class: 'collapsible-header' %></li>
+  <div class="collapsible-body" style="display: block;">
+    <ul>
+    <% Category.all.each do |category| %>
+      <li><%= link_to category.name.capitalize, category_path(category) %></li>
+    <% end %>
+    </ul>
+  </div>
   <li><%= link_to "Log out", logout_path, method: :delete %></li>
 </ul>

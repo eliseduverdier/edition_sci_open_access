@@ -1,5 +1,5 @@
 <%
-    authors = get_list_name(@paper.get_authors, initials: true)
+    authors = @paper.get_authors_as_name_list(initials: true)
     provide(:title, "« #{@paper.title} » by #{authors}" )
 %>
 
@@ -9,75 +9,136 @@
   <strong> <%= @paper.paper_type %> </strong>
   /
   <%= @paper.category.name if !@paper.category.nil?  %>
-  /
-  <% if @paper.status == 1 %>
-  Accepted
-  <% elsif @paper.status == 0 %>
-  Rejected
-  <% else %>
-  Pending
-  <% end %>
 </p>
 
-<% if current_user.wrote? @paper %>
-<div class="right-align">
-    <%= link_to 'Edit',
-        edit_paper_path(@paper),
-        class: "btn-flat" %>
+<% if logged_in? && current_user.wrote?(@paper) %>
+  <div class="right-align">
+      <%= link_to 'Edit',
+          edit_paper_path(@paper),
+          class: "btn-flat" %>
 
-    <%= link_to 'Destroy',
-        @paper, method: :delete,
-        data: { confirm: 'Are you sure?' },
-        class: "btn-flat" %>
-</div>
+      <%= link_to 'Delete',
+          @paper, method: :delete,
+          data: { confirm: 'Are you sure? Please enter the reson why below.
+            A confirmation to the editor will then be sent.' },
+          class: "btn-flat" %>
+  </div>
 <% end %>
 
-<h1 id="paper-title">
-    <em><%= @paper.title %></em>
-    by
-    <%= get_list_name(@paper.get_authors) %>
-</h1>
-<p id="published-at">
-    <p>Published on <%= @paper.created_at.strftime("%Y-%m-%d") %></p>
-</p>
-<% if ! @paper.pdf_url.nil? %>
-    <%= link_to raw('↓ PDF'),
-        @paper.pdf_url,
+
+<% if logged_in? && current_user.is_editor? && @paper.can_be_reviewed? && !current_user.wrote?(@paper) %>
+
+  <h3>Ask for reviews</h3>
+  <form action="review/new" method="post">
+    <div class="row">
+
+      <div class="col s6">
+        <label for="review_remarks">Remarks (optional)</label>
+        <textarea class="materialize-textarea" id="review_remarks" type="text" name="review[remarks]"></textarea>
+      </div>
+
+      <div class="col s6">
+        <label for="status">Status</label>
+        <div><% if @paper.status == 1 %>
+          Accepted
+          <% elsif @paper.status == 0 %>
+          Rejected
+          <% else %>
+          Pending
+        <% end %>
+      </div>
+
+        <label for="review_reviewers">Reviewers</label>
+        <select id="review_reviewers" name="review[reviewers]" multiple>
+          <% Person.all.each do |person| %>
+          <option value="<%= person.id %>"><%= person.full_name %></option>
+          <% end %>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn" type="submit" name="action">
+      Send review applications <i class="material-icons right">send</i>
+    </button>
+
+  </form>
+<% end %>
+
+<% if logged_in? %>
+<div class="center-align">
+
+  <% if current_user.should_review?(@paper) %>
+
+    <%= link_to 'Start reviewing',
+        new_reviewer_path(@paper.id),
+        class: "btn red" %>
+
+  <% elsif current_user.is_reviewing?(@paper) %>
+
+    <%= link_to 'Continue or edit your review',
+        edit_reviewer_path(@paper.get_review_by(current_user)),
+        class: "btn red" %>
+
+ <% elsif current_user.reviewed?(@paper) %>
+
+    <%= link_to 'See your review',
+        reviewer_path(@paper.get_review_by(current_user)),
         class: "btn" %>
-<% end %>
 
-<blockquote id="abstract">
-    <%= @paper.abstract %>
-</blockquote>
+  <% elsif current_user.wrote?(@paper) && @paper.has_reviews? %>
+
+    <%= link_to 'Read the reviews',
+        reviewers_path(@paper.id),
+        class: "btn " %>
+
+  <% end %>
+
+</div>
+<% end # end if logged_in? %>
+
+<h1>
+  <em><span itemprop="title"><%= @paper.title %></span></em>
+
+</h1>
 
 <div class="card blue-grey lighten-4">
-    <div class="card-content">
-        <p><%= @paper.html_content.html_safe %></p>
+  <div class="card-content row">
+    <div class="col s6">
+      <strong>Authors</strong>
+      <span itemprop="authors">
+        <%= @paper.get_authors_as_name_list %>
+      </span>
     </div>
-</div>
 
+    <div class="col s6">
+      <strong>Metadata</strong>
+      <% if !@paper.publication_date.nil? %>
+      <p itemprop="date-published" id="published-at">
+          Published on <span><%= @paper.publication_date.strftime("%d %B %Y") %></span>
+      </p>
+      <% end %>
+    </div>
 
-<% if current_user.should_review? @paper %>
+    <% if ! @paper.pdf_url.nil? %>
+        <%= link_to raw('↓ PDF'),
+            @paper.pdf_url,
+            class: "btn" %>
+    <% end %>
 
-<%= link_to 'Start the review',
-    new_reviewer_path(@paper.id),
-    class: "btn" %>
+  </div>
+</div> <!-- end card -->
 
-<% elsif current_user.is_reviewing? @paper %>
+<h3>Abstract</h3>
 
-<%= link_to 'Start the review',
-    edit_reviewer_path(@paper.get_review_by(current_user)),
-    class: "btn" %>
+<blockquote id="abstract">
+  <%= @paper.abstract %>
+</blockquote>
 
-<% elsif current_user.wrote? @paper %>
+<h3>Content</h3>
 
-<%= link_to 'See all reviews',
-    reviewers_path(@paper.id),
-    class: "btn" %>
-  <% end %>
-
-<div> </div>
-
-<%= link_to 'Back',
-    papers_path,
-    class: "btn-flat" %>
+<% if !@paper.html_content.nil? %>
+<blockquote id="content">
+  <p><%= @paper.html_content.html_safe %></p>
+</blockquote>
+<% end %>
