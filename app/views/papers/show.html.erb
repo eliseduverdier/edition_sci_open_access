@@ -8,7 +8,7 @@
 <p>
   <strong> <%= @paper.paper_type %> </strong>
   /
-  <%= @paper.category.name if !@paper.category.nil?  %>
+  <%= @paper.category.name unless @paper.category.blank?  %>
 </p>
 
 <% if logged_in? && current_user.wrote?(@paper) %>
@@ -26,7 +26,9 @@
 <% end %>
 
 
-<% if logged_in? && current_user.is_editor? && @paper.can_be_reviewed? && !current_user.wrote?(@paper) %>
+<% if && @paper.can_be_reviewed?
+      && current_user.is_editor?
+      && !current_user.wrote?(@paper) %>
 
   <h3>Ask for reviews</h3>
   <form action="review/new" method="post">
@@ -99,7 +101,6 @@
 
 <h1>
   <em><span itemprop="title"><%= @paper.title %></span></em>
-
 </h1>
 
 <div class="card blue-grey lighten-4">
@@ -113,14 +114,14 @@
 
     <div class="col s6">
       <strong>Metadata</strong>
-      <% if !@paper.publication_date.nil? %>
+      <% unless @paper.publication_date.empty? %>
       <p itemprop="date-published" id="published-at">
           Published on <span><%= @paper.publication_date.strftime("%d %B %Y") %></span>
       </p>
       <% end %>
     </div>
 
-    <% if ! @paper.pdf_url.nil? %>
+    <% unless @paper.pdf_url.blank? %>
         <%= link_to raw('↓ PDF'),
             @paper.pdf_url,
             class: "btn" %>
@@ -137,7 +138,7 @@
 
 <h3>Content</h3>
 
-<% if !@paper.html_content.nil? %>
+<% unless @paper.html_content.empty? %>
 <blockquote id="content">
   <p><%= @paper.html_content.html_safe %></p>
 </blockquote>

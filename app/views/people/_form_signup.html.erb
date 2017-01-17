@@ -12,10 +12,24 @@
     </div>
   <% end %>
 
+<div class="row">
+
+  <div class="input-field inline col s12 center-align">
+    <%= f.label 'Register as a' %>
+    <input type="radio" name="person[status]" id="person_status_reader" value="reader">
+      <label for="person_status_reader">reader</label>
+    <input type="radio" name="person[status]" id="person_status_researcher" value="researcher">
+      <label for="person_status_researcherresearcher">researcher</label>
+  </div>
+
   <div class="input-field col s12">
     <%= f.label :email %>
     <%= f.email_field :email %>
   </div>
+
+</div>
+
+<div class="row">
 
   <div class="input-field col s6">
     <%= f.label :password %>
@@ -27,6 +41,10 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
+</div>
+
+<div class="row">
+
   <div class="input-field col s6">
     <%= f.label :firstname %>
     <%= f.text_field :firstname %>
@@ -37,6 +55,9 @@
     <%= f.text_field :lastname %>
   </div>
 
+</div>
+
+
   <div class="actions">
     <%= f.submit 'Sign Up', :class => "btn"  %>
   </div>
@@ -44,4 +65,8 @@
   <p>
     Already have an account ? <%= link_to 'Log in !', login_path %>
   </p>
+
+
+
+
 <% end %>

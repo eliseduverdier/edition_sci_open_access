@@ -12,7 +12,7 @@ module PapersHelper
 
     # Get the list of possible paper types
     def get_paper_types
-        ['article', 'thesis', 'letter', 'clinical case study', 'clinical trial', 'opinion', 'other']
+        ['research article', 'thesis', 'letter', 'clinical case study', 'clinical trial', 'opinion', 'other']
         # + 'book review', 'Trade publication articles' (med), 'Technical Reports'
     end
 

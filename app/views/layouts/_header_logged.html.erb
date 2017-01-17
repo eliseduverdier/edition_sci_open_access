@@ -40,7 +40,7 @@
 
 <!-- User -->
 <ul id="list-session" class="dropdown-content">
-  <li><%= current_user.status %></li>
+  <li><span><%= current_user.status.capitalize %></span></li>
   <li><%= link_to "Profile", current_user %></li>
   <li><%= link_to "Log out", logout_path, method: :delete %></li>
 </ul>

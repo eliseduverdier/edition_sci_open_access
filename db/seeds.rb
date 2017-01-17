@@ -1,11 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
 categories = Category.create([
   { name: 'physics' },
   { name: 'philosophy' },
@@ -29,9 +24,7 @@ papers = Paper.create([
     uuid: 'LIN001',
   	title: 'Systems of Syntactic Analysis',
     status: 'accepted',
-  	abstract: 'During the past several decades, linguists have developed and applied widely techniques which enable them, to a considerable extent, to determine and state the structure of natural languages without semantic reference. It is of interest to inquire seriously into the formality of linguistic method and the adequacy of whatever part of it can be made purely formal, and to examine the possibilities of applying it, as has occasionally been suggested, to a wider range of problems. In order to pursue these aims it is first necessary to reconstruct carefully the set of procedures by which the linguist derives the statements of a linguistic grammar from the behaviour of language users, distinguishing clearly between formal and experimental in such a way that grammatical notions, appearing as definienda in a constructional system, will be formally derivable for any language from a fixed sample of linguistic material upon which the primitives of the system are experimentally defined. The present paper will be an attempt to formalize a certain part of the linguist’s generalized syntax language.
-
-From another point of view, this paper is an attempt to develop an adequate notion of syntactic category within an inscriptional nominalistic framework. The inscriptional approach seems natural for linguistics, particularly in view of the fact that an adequate extension of the results of this paper will have to deal with the problem of homonymity, i.e., with a statement of the conditions under which tokens of the same type must be assigned to different syntactic classes.',
+  	abstract: '<p>During the past several decades, linguists have developed and applied widely techniques which enable them, to a considerable extent, to determine and state the structure of natural languages without semantic reference. It is of interest to inquire seriously into the formality of linguistic method and the adequacy of whatever part of it can be made purely formal, and to examine the possibilities of applying it, as has occasionally been suggested, to a wider range of problems. In order to pursue these aims it is first necessary to reconstruct carefully the set of procedures by which the linguist derives the statements of a linguistic grammar from the behaviour of language users, distinguishing clearly between formal and experimental in such a way that grammatical notions, appearing as definienda in a constructional system, will be formally derivable for any language from a fixed sample of linguistic material upon which the primitives of the system are experimentally defined. The present paper will be an attempt to formalize a certain part of the linguist’s generalized syntax language.</p><p> From another point of view, this paper is an attempt to develop an adequate notion of syntactic category within an inscriptional nominalistic framework. The inscriptional approach seems natural for linguistics, particularly in view of the fact that an adequate extension of the results of this paper will have to deal with the problem of homonymity, i.e., with a statement of the conditions under which tokens of the same type must be assigned to different syntactic classes.</p>',
   	publication_date: '1953',
   	pdf_url: 'https://chomsky.info/wp-content/uploads/195309-.pdf',
   	category: Category.where(name: 'linguistics').take
@@ -40,7 +33,7 @@ From another point of view, this paper is an attempt to develop an adequate noti
     uuid: 'PHY002',
   	title: 'Description hamiltonienne de l’intéraction ondes-électrons dans un guide d’onde périodique',
     status: 'pending',
-  	abstract: 'L’intéraction entre un faiseau d’électrons et ...',
+  	abstract: 'L’intéraction entre un faiseau d’électrons et',
   	publication_date: '2016',
   	pdf_url: '',
   	category: Category.where(name: 'physics').take

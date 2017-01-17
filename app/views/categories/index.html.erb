@@ -2,9 +2,9 @@
 
 
     <% @categories.each do |category| %>
-    <span class="big-categories">
-        <%= link_to category.name, category %>
-    </span>
+        <%= link_to category.name,
+            category,
+            class: 'btn-large blue-grey ' %>
     <% end %>
 
 <br>

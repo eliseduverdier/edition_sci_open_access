@@ -13,7 +13,7 @@
  */
 
 @import "materialize/components/color";
-$primary-color: color("blue-grey", "darken-1") !default;
+$primary-color  : color("blue-grey", "darken-1") !default;
 $secondary-color: color("lime", "darken-2") !default;
 
 @import "materialize";
@@ -22,4 +22,12 @@ $secondary-color: color("lime", "darken-2") !default;
 
 ul.collection {
   li { @extend .collection-item; }
+}
+
+.btn {
+  @extend .waves-effect, .waves-light;
+}
+
+.btn-flat {
+  @extend .waves-effect, .waves-green;
 }

@@ -18,7 +18,7 @@
       <%= @person.email %>
     </div>
 
-    <% if ! @person.bio.nil? %>
+    <% unless !@person.bio.blank? %>
     <blockquote>
       <%= @person.bio %>
     </blockquote>
@@ -33,12 +33,12 @@
       <%= link_to 'Academia', @person.academia_url, class: "btn" %>
     </div>
 
-      <p><%= @person.level if !@person.level.nil? %></p>
-      <p><%= @person.country if !@person.country.nil? %></p>
+      <p><%= @person.level unless @person.level.blank? %></p>
+      <p><%= @person.country unless @person.country.blank? %></p>
   </div>
 </div>
 
-<% if !@person.get_papers.empty?  %>
+<% unless @person.get_papers.blank?  %>
 
     <% if is_logged_in_user?(@person) %>
     <h2>Your papers</h2>

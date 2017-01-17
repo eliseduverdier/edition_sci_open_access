@@ -32,8 +32,19 @@ class Person < ApplicationRecord
     #    PERSON STATUS
     ##################################################
 
+    # Checks if the user has the status editor
     def is_editor?
         self[:status] == 'editor'
+    end
+
+    # Checks if the user has the status admin
+    def is_admin?
+        self[:status] == 'admin' || self[:status] == 'editor'
+    end
+
+    # Checks if the user has the status researcher
+    def is_researcher?
+        self[:status] == 'researcher'
     end
 
 

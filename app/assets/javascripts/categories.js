@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+$(document).ready(function() {
+
+  $('form#new_category').on('submit', function(e){
+    var keywords = $('#keywords').material_chip('data');
+    console.log(keywords);
+    $('input[name="category[names]"').val(JSON.stringify(keywords))
+
+  });
+
+});

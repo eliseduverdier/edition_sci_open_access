@@ -18,17 +18,19 @@
 
   <div class="col s4">
 
-    <p><%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %></p>
-
-    <p><a href="#" class="btn">See your reviews</a></p>
-    <p><a href="#" class="btn">See your articles</a></p>
-
-    <div class="input-field inline">
-      <i class="material-icons prefix">search</i>
-
-      <input id="search" type="search" class="validate">
-      <label for="search" data-error="wrong" data-success="right">Search</label>
+    <div class="input-field">
+      <label for="search">
+        <i class="material-icons prefix">search</i>
+      </label>
+      <input id="search" type="search" placeholder="Search an article, an author, a keyword…">
     </div>
+
+    <% if current_user.is_researcher? %>
+      <p><%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %></p>
+
+      <p><a href="#" class="btn">See your reviews</a></p>
+      <p><a href="#" class="btn">See your articles</a></p>
+    <% end %>
 
     <p><a href="#" class="btn">Etc</a></p>
 

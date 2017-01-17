@@ -1,6 +1,8 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
+  before_action :is_admin, only: [:add, :create, :destroy]
+
   # GET /categories
   # GET /categories.json
   def index
@@ -24,16 +26,26 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
-    @category = Category.new(category_params)
-
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
-        format.json { render :show, status: :created, location: @category }
-      else
-        format.html { render :new }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
+    names = JSON.parse params[:category][:names]
+    parent = JSON.parse params[:category][:parent_category]
+    names.each do |key|
+      unless key.blank?
+        if parent
+          @category = Category.create(name: key['tag'], parent_category_id: parent)
+        else
+          @category = Category.create(name: key['tag'])
+        end
       end
+    end
+# computational linguistics     quantum mechanics
+    respond_to do |format|
+      # if @category.save
+        format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
+        format.json { render :show, status: :created, location: @category }
+      # else
+      #   format.html { render :new }
+      #   format.json { render json: @category.errors, status: :unprocessable_entity }
+      # end
     end
   end
 
@@ -69,6 +81,12 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :names, :parent_category)
+    end
+
+    def is_admin
+      unless logged_in? && current_user.status == 'editor'
+        redirect_to root_path, :flash => { :error => "You don’t have access to this page!" }
+      end
     end
 end

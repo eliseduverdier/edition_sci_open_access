@@ -1,37 +1,45 @@
 <p id="notice"><%= notice %></p>
 
-<h1>
-  <%= @category.name %>
-</h1>
 
-
-<table class="bordered">
-    <tbody>
-      <% Paper.where(category_id: @category.id).each do |paper| %>
-      <tr>
-          <tr>
-            <td><%= link_to 'Read',
-                paper,
-                class: "btn-flat"%></td>
-            <td><div class="chip"><%= paper.paper_type %></div></td>
-            <td><%= paper.title %></td>
-            <td>
-                <% if ! paper.pdf_url.empty? %>
-                <%= link_to 'PDF',
-                    paper.pdf_url,
-                    class: "btn-flat" %>
-                <% end %>
-            </td>
-      </tr>
+<nav>
+  <div class="nav-wrapper blue-grey lighten-2">
+    <div class="col s12">
+      <% if @category.parent_category %>
+      <a href="#!" class="breadcrumb"><%= @category.parent_category.name %></a>
       <% end %>
-  </tbody>
-</table>
+      <a href="#!" class="breadcrumb"><%= @category.name %></a>
+    </div>
+  </div>
+</nav>
 
+<ul class="collection">
+  <% Paper.where(category_id: @category.id).each do |paper| %>
+  <li>
+    <%= link_to 'Read',
+      paper,
+      class: "btn-flat"%>
 
+    <%= paper.title %>
+
+    <div class="chip right"><%= paper.paper_type %></div>
+
+    <% unless paper.pdf_url.blank? %>
+      <%= link_to 'PDF',
+        paper.pdf_url,
+        class: "btn-flat" %>
+    <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<% if current_user.is_admin? %>
 <%= link_to 'Edit',
-    edit_category_path(@category),
-    class: "btn-flat" %>
+  edit_category_path(@category),
+  class: "btn-flat" %>
 
-<%= link_to 'Back',
-    categories_path,
-    class: "btn-flat" %>
+<%= link_to 'Delete',
+  @category, method: :delete,
+  data: { confirm: 'Are you sure?' },
+  class: "btn-flat" %>
+
+<% end %>

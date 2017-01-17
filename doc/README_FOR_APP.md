@@ -27,7 +27,7 @@ Database description, meaning of attributes and possible values for each.
  * accepted_at ( when reviews are ok and editor says go )
  * conflict_interests
  * licence ( everything is in open access but licence can vary. CC: BY SA by default)
- 
+
 
 ## people
  * id
@@ -77,3 +77,25 @@ Database description, meaning of attributes and possible values for each.
 
 
 ## interests
+ * category_id
+ * person_id
+
+
+---
+
+# Views / actions
+
+## Papers
+ * all
+   * default: see all new articles
+   * can choose to see best by date papers
+   * or by categories
+ * show
+   * if article is published:
+   * if article is unpublished (undergoing peer review):
+   * if current_user wrote the article:
+ * new
+ * edit
+   * (only if current_user wrote the article)
+   * can modify the content and abstract only (not the title)
+   * can add authors (autocomplete which looks for user on the website)

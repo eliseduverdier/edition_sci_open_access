@@ -6,24 +6,24 @@
 
   <% @papers.each do |paper| %>
   <div class="col s12">
-    <div class="card blue-grey lighten-4">
+    <div class="card blue-grey lighten-5">
+
       <div class="card-content">
+        <div class="chip blue-grey"><%= paper.paper_type %></div>
         <span class="card-title"><%= paper.title %></span>
 
         <p>By <strong><%= paper.get_authors_as_name_list %></strong></p>
 
         <p>Published on <strong><%= paper.created_at.strftime("%d %B %Y") %></strong> </p>
-        <div class="chip blue-grey"><%= paper.paper_type %></div>
-        <div class="chip"><%= paper.category.name if !paper.category.nil? %></div>
-      </div>
+        <div class="chip right"><%= paper.category.name unless paper.category.blank? %></div>
 
-      <div class="card-action">
         <%= link_to 'Read', paper, class: "btn" %>
-        <% if !paper.pdf_url.nil? %>
+        <% unless paper.pdf_url.blank? %>
         <%= link_to '↓PDF', paper.pdf_url, class: "btn" %>
         <% end %>
       </div>
     </div>
+
   </div>
   <% end %>
 

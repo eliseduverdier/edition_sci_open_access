@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reviews you made</h1>
+
+
+<ul class="collection">
+
+  <% @reviewers.each do |review| %>
+  <li>
+
+    <%= link_to 'View', reviewers_path(review.paper.id), class: "btn-flat" %>
+    <%#= link_to 'edit', edit_reviewers_path(review.id), class: "btn" %>
+
+    <%= review.paper.title if review.paper %>
+    <span class="new badge grey" data-badge-caption=""><%#= review.progression if review.progression %></span>
+    <span class="new badge lime" data-badge-caption=""><%= get_status(review.status) if review.status %></span>
+    <%#= review.content %>
+
+  </li>
+  <% end %>
+
+</ul>

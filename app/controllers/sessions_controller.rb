@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_action :logged_in_user, only: [:create, :new, 'signup'] # people#new, session#new,create
+
   # GET "/login"
   def new
     render 'new'
@@ -21,5 +23,12 @@ class SessionsController < ApplicationController
   def destroy
     log_out
     redirect_to root_url
+  end
+
+  # Confirms a logged-in user.
+  def logged_in_user
+    if logged_in?
+      redirect_to 'static_pages#home', :flash => { :error => "You are already logged in!" }
+    end
   end
 end

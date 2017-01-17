@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113143656) do
+ActiveRecord::Schema.define(version: 20170117162341) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -24,8 +24,9 @@ ActiveRecord::Schema.define(version: 20170113143656) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "parent_category"
   end
 
   create_table "papers", force: :cascade do |t|

@@ -13,6 +13,8 @@ HelloApp::Application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  get    '/reviews/mine' => 'reviewers#mine'
+
   get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
   post   '/people/:id/edit_password' => 'people#update_password'
 
@@ -26,8 +28,8 @@ HelloApp::Application.routes.draw do
   get '/home',  to: 'static_pages#home'
   get '/about', to: 'static_pages#about'
 
+  get '/feedback', to: 'static_pages#feedback', :as => :feedback # ???
 
-  # match 'papers/:id/reviews/:review_id' => 'reviewers#new', :via => [:get]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,5 +1,3 @@
-<%#  form to edit category %>
-
 <%= form_for(category) do |f| %>
   <% if category.errors.any? %>
     <div id="error_explanation">
@@ -24,9 +22,14 @@
   </div>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.label :names %>
+    <%#= f.text_field :names %>
+    <div id="keywords" class="chips chips-placeholder"></div>
   </div>
+
+
+  <input type="hidden" name="category[names]" value="">
+
 
   <div class="actions">
     <%= f.submit 'Save', :class => 'btn' %>

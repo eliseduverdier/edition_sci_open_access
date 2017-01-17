@@ -1,5 +1,6 @@
 class PapersController < ApplicationController
   before_action :set_paper, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_author, only: [:edit, :update, :destroy]
 
   # GET /papers
   # GET /papers.json
@@ -87,5 +88,15 @@ class PapersController < ApplicationController
 
     def author_params
       params.require(:paper_id, :person_id)
+    end
+
+    # Confirms the author of the paper is logged-in user.
+    def logged_in_author
+      if !logged_in?
+        store_location
+        redirect_to login_url, :flash => { :error => "Please log in to access to this page!" }
+      elsif @person != current_user
+        redirect_to @paper, :flash => { :error => "You don’t have access to this page!" }
+      end
     end
 end

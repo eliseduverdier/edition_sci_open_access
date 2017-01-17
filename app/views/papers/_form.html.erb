@@ -10,55 +10,86 @@
       </ul>
     </div>
   <% end %>
+
+
 <div class="row">
-
-  <div class="field col s4">
-    <label for="paper_pub_date">Publication date</label>
-    <input type="date" id="paper_pub_date" name="paper[pub_date]" class="datepicker">
-  </div>
-
-  <div class="field col s4">
-    <label for="paper_category">Category</label>
-    <select id="paper_category" name="paper[category_id]">
-        <!-- <option disabled selected>Category</option> -->
-        <% Category.all.each do |cat| %>
-        <option value="<%=cat.id %>"><%= cat.name %></option>
-        <% end %>
-    </select>
-  </div>
-
-  <div class="field col s4">
-      <label for="paper_type">Type</label>
-      <select id="paper_type" name="paper[paper_type]">
-          <!-- <option disabled selected>Type</option> -->
-          <% get_paper_types.each do |type| %>
-          <option value="<%=type %>"><%= type %></option>
-          <% end %>
-      </select>
-  </div>
 
   <div class="field col s12">
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
 
+</div>
 
+
+<div class="row">
   <div class="field col s3">
-      <label for="keywords">Keywords</label>
-      <div id="keywords" class="chips chips-placeholder"></div>
+    <label for="paper_licence">Licence</label>
+    <select id="paper_licence" name="paper[licence]">
+        <% ['CC BY SA', 'MIT', 'GNU', '...'].each do |licence| %>
+        <option value="<%=licence %>"><%= licence %></option>
+        <% end %>
+    </select>
   </div>
 
-  <div class="field col s9">
+  <div class="field col s3">
+    <label for="paper_category">Category</label>
+    <select id="paper_category" name="paper[category_id]">
+        <option disabled selected>Category</option>
+        <% Category.all.each do |cat| %>
+        <option value="<%=cat.id %>"><%= cat.name %></option>
+        <% end %>
+    </select>
+  </div>
+
+  <div class="field col s3">
+    <label for="paper_conflicts">Conflicts of interest</label>
+    <input type="text" name="paper_conflicts" placeholder="Please declare any conflicts of interests">
+  </div>
+
+
+  <div class="field col s3">
+      <label for="paper_type">Type</label>
+      <select id="paper_type" name="paper[paper_type]">
+          <option disabled selected>Type</option>
+          <% get_paper_types.each do |type| %>
+          <option value="<%=type %>"><%= type %></option>
+          <% end %>
+      </select>
+    </div>
+
+</div>
+
+<div class="row">
+
+  <div class="field col s8">
     <%= f.label :abstract %>
     <%= f.text_area :abstract, class: "materialize-textarea" %>
   </div>
 
-  <div class="field col s10">
+  <div class="field col s4">
+      <label for="keywords">Keywords</label>
+      <div id="keywords" class="chips chips-placeholder"></div>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <div class="field col s8">
       <%= f.label 'Content (TODO LATEX EDITOR)' %>
       <%= f.text_area :html_content, class: "materialize-textarea" %>
   </div>
+  <div class="field col s4">
+      <label for="authors">authors</label>
+      <div id="authors" class="chips chips-placeholder"></div>
+  </div>
 
-  <div class="field col s2">
+</div>
+
+<div class="row">
+
+  <div class="field col s4">
     <div class="file-path-wrapper">
       <%= f.label 'Tex Source' %>
       <%= file_field_tag :tex_content, class: "file-path validate" %>
@@ -66,12 +97,16 @@
     </div>
   </div>
 
-  <div class="field col s10">
+</div>
+
+<div class="row">
+
+  <div class="field col s2 offset-s5">
     <div class="actions">
     <%= f.submit 'Save', :class => "btn"  %>
     </div>
   </div>
 
-
 </div>
+
 <% end %>

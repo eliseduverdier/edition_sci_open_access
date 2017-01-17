@@ -33,21 +33,23 @@
 <div class="row">
 
   <div class="input-field col s4">
-    <%= f.label :status %>
     <select class="" name="person[status]">
-        <option disabled selected></option>
+      <option disabled selected>Please choose an option</option>
       <% possible_website_status.each do |website_status| %>
       <option value="<%= website_status %>"><%= website_status %></option>
       <% end %>
     </select>
+    <%= f.label :status %>
   </div>
 
   <div class="input-field col s8">
-    Interests <br />
+    <select id="interests" name="person[interests]" multiple>
+      <option selected disabled>Please choose one or many options</option>
     <% Category.all.each do |category| %>
-      <input id="interest_<%= category.name %>" type="checkbox" name="person[interests]" value="<%= category.name %>">
-      <label for="interest_<%= category.name %>"><%= category.name %></label> <br />
+      <option value="<%= category.id %>"><%= category.name %></option>
     <% end %>
+  </select>
+  <label for="interests">Interests</label>
   </div>
 </div>
 
@@ -62,13 +64,13 @@
   </div>
 
   <div class="input-field col s4">
-    <%= f.label :level %>
     <select name="person[level]">
-        <option disabled selected></option>
-    <% possible_uni_status.each do |uni_status| %>
-        <option value="<%= uni_status %>"><%= uni_status %></option>
-    <% end %>
+      <option disabled selected>Please choose an option</option>
+      <% possible_uni_status.each do |uni_status| %>
+      <option value="<%= uni_status %>"><%= uni_status %></option>
+      <% end %>
     </select>
+    <%= f.label :level %>
   </div>
 
   <div class="input-field col s4">

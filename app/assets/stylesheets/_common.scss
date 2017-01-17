@@ -10,37 +10,52 @@ h2 { font-size: 2.5rem; }
 h3 { font-size: 2rem; }
 h4 { font-size: 1.5rem; }
 
-/* imitates materialize
-button,
-input[type="submit"] {
-    -webkit-appearance: none;
-    color: #fff;
-    background-color: black;
-    text-align: center;
-    letter-spacing: .5px;
-    transition: .2s ease-out;
-    cursor: pointer;
+// @mixin box_sizing {
+//   -moz-box-sizing:    border-box;
+//   -webkit-box-sizing: border-box;
+//   box-sizing:         border-box;
+// }
+// .debug_dump {
+//   clear: both;
+//   float: left;
+//   width: 100%;
+//   margin-top: 45px;
+//   @include box_sizing;
+//   background: #ddd;
+// }
 
-    border: none;
-    border-radius: 2px;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    padding: 0 2rem;
-    text-transform: uppercase;
-    vertical-align: middle;
+.flash {
+  margin-top: 10px;
+  color: #fff;
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  &.error, &.danger { background-color: darken(#f50, 20%); }
+  &.warning { background-color: darken(#fc0, 20%); }
+  &.success { background-color: darken(#cf0, 20%); }
 }
-*/
-@mixin box_sizing {
-  -moz-box-sizing:    border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing:         border-box;
+
+.notice {
+  margin-top: 10px;
+  background-color: #eee;
+  color: darken(#cf0, 20%);
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
-.debug_dump {
-  clear: both;
-  float: left;
-  width: 100%;
-  margin-top: 45px;
-  @include box_sizing;
-  background: #ddd;
+
+ul.dropdown-content li span {
+  color: rgba(0, 0, 0, 0.87);
+  cursor: default;
+  &:hover {
+    background-color: initial;
+  }
 }

@@ -8,6 +8,12 @@ class ReviewersController < ApplicationController
     @reviewers = Reviewer.all
   end
 
+  # GET /reviews/mine
+  # GET /reviews/mine.json
+  def mine
+    @reviewers = Reviewer.where(person_id: current_user.id).all
+  end
+
   # GET /papers/:paper_id/reviews/1
   # GET /papers/:paper_id/reviews/1.json
   def show
