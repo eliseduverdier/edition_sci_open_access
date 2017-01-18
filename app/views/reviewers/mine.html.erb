@@ -5,15 +5,20 @@
 
 <ul class="collection">
 
-  <% @reviewers.each do |review| %>
+  <% @reviews.each do |review| %>
   <li>
 
-    <%= link_to 'View', reviewers_path(review.paper.id), class: "btn-flat" %>
+    <%= link_to 'View', reviewer_path(review.paper.id, review.id), class: "btn-flat" %>
     <%#= link_to 'edit', edit_reviewers_path(review.id), class: "btn" %>
 
     <%= review.paper.title if review.paper %>
-    <span class="new badge grey" data-badge-caption=""><%#= review.progression if review.progression %></span>
-    <span class="new badge lime" data-badge-caption=""><%= get_status(review.status) if review.status %></span>
+
+    <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
+      <%= review.progression if review.progression %>
+    </span>
+    <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
+      <%= get_status(review.status) if review.status %>
+    </span>
     <%#= review.content %>
 
   </li>

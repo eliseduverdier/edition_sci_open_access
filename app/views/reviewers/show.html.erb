@@ -1,36 +1,44 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Review</h1>
-<p>
-  <strong>Person:</strong>
-  <%= @reviewer.person.firstname %> <%= @reviewer.person.lastname %>
-</p>
 
-<p>
-  <strong>Paper:</strong>
-  <%= link_to @reviewer.paper.title, @reviewer.paper %>
-</p>
+<div class="card blue-grey lighten-4">
+  <div class="card-content row">
 
-<p>
-  <strong>Status:</strong>
-  <%= get_status(@reviewer.status) %>
-</p>
+    <p>
+      Paper: <strong><%= link_to @reviewer.paper.title, @reviewer.paper %></strong>
+    </p>
 
-<blockquote>
-  <%= @reviewer.content %>
-</blockquote>
+    <% if current_user.is_editor? %>
+      <p>
+        Reviewed by <%= link_to "#{@reviewer.person.firstname} #{@reviewer.person.lastname}", @reviewer.person %>
+      </p>
+    <% end %>
 
-<%= link_to "Edit",
-    edit_reviewer_path(@reviewer),
-    class: "btn" %>
+    <p>
+      Status: <strong><%= get_status(@reviewer.status) %></strong>
+    </p>
 
-<%= link_to "Back to reviews",
-    reviewers_path,
-    class: "btn" %>
+    <p>
+      Progression: <strong><%= @reviewer.progression %></strong>
+    </p>
 
-<%#= link_to "Destroy",
-    # @reviewer,
-    # method: :delete,
-    # data: { confirm: 'Are you sure?' },
-    # class: "btn"
-%>
+    <blockquote>
+      <%= @reviewer.content %>
+    </blockquote>
+
+
+  </div>
+</div> <!-- end card -->
+
+<% if current_user.is_reviewer_of?(@reviewer.paper) && @reviewer.progression != 'done' %>
+  <%= link_to "Edit",
+      edit_reviewer_path(@reviewer),
+      class: "btn" %>
+
+  <%= link_to "Destroy",
+     @reviewer,
+     method: :delete,
+     data: { confirm: 'Are you sure?' },
+     class: "btn" %>
+<% end %>

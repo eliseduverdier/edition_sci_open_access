@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117162341) do
+ActiveRecord::Schema.define(version: 20170118095841) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -39,8 +39,14 @@ ActiveRecord::Schema.define(version: 20170117162341) do
     t.text     "html_content"
     t.string   "pdf_url"
     t.integer  "category_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "uuid"
+    t.string   "conflict_of_interest"
+    t.string   "licence"
+    t.string   "doi"
+    t.string   "keywords"
+    t.datetime "accepted_at"
     t.index ["category_id"], name: "index_papers_on_category_id"
   end
 
@@ -85,8 +91,9 @@ ActiveRecord::Schema.define(version: 20170117162341) do
     t.integer  "paper_id"
     t.string   "status"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "progression"
     t.index ["paper_id"], name: "index_reviewers_on_paper_id"
     t.index ["person_id"], name: "index_reviewers_on_person_id"
   end

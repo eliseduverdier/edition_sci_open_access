@@ -44,24 +44,40 @@ people = Person.create([
   {
     firstname: 'Albert',
     lastname: 'Einstein',
+    status: 'researcher',
     email: 'einstein@end.princeton.edu',
     password: '123456789'
   }, {
     firstname: 'Noam',
     lastname: 'Chomsky',
+    status: 'researcher',
     email: 'chomsky@mit.edu',
     password: '123456789'
   }, {
     firstname: 'Damien',
     lastname: 'Minenna',
+    status: 'researcher',
     email: 'd.minenna@blabla.amu.edu',
     password: '123456789'
   }, {
     firstname: 'Nicolas',
     lastname: 'Bourbaki',
+    status: 'reader',
     email: 'bourbaki@ens.edu',
     password: '123456789'
-  },
+  }, {
+    firstname: 'Ed',
+    lastname: 'Itor',
+    status: 'editor',
+    email: 'editor@test.edu',
+    password: '123456789'
+  }, {
+    firstname: 'Elise',
+    lastname: 'Duverdier',
+    status: 'admin',
+    email: 'elise@test.edu',
+    password: '123456789'
+  }
 ])
 
 authors = Author.create([
@@ -89,5 +105,15 @@ reviewers = Reviewer.create([
       paper: (Paper.where(uuid: 'PHY002').take),
       progression: 'ongoing',
       content: 'Quite interesting'
+  }, { # Einstein reviewed Chomsky's paper
+      person: (Person.where(lastname: 'Einstein').take),
+      paper: (Paper.where(uuid: 'LIN001').take),
+      progression: 'done',
+      status: 1, # major modif
+      content: 'Didn’t get that'
+  }, { # Chomsky has to review Damien's paper
+      person: (Person.where(lastname: 'Chomsky').take),
+      paper: (Paper.where(uuid: 'PHY002').take),
+      progression: 'pending',
   }
 ])

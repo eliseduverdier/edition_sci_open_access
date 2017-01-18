@@ -26,9 +26,7 @@
 <% end %>
 
 
-<% if && @paper.can_be_reviewed?
-      && current_user.is_editor?
-      && !current_user.wrote?(@paper) %>
+<% if logged_in? && @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper) %>
 
   <h3>Ask for reviews</h3>
   <form action="review/new" method="post">
@@ -92,7 +90,13 @@
 
     <%= link_to 'Read the reviews',
         reviewers_path(@paper.id),
-        class: "btn " %>
+        class: "btn" %>
+
+  <% elsif current_user.is_editor? %>
+
+    <%= link_to 'Read the reviews',
+        reviewers_path(@paper.id),
+        class: "btn" %>
 
   <% end %>
 
@@ -114,7 +118,7 @@
 
     <div class="col s6">
       <strong>Metadata</strong>
-      <% unless @paper.publication_date.empty? %>
+      <% unless @paper.publication_date.blank? %>
       <p itemprop="date-published" id="published-at">
           Published on <span><%= @paper.publication_date.strftime("%d %B %Y") %></span>
       </p>
@@ -138,7 +142,7 @@
 
 <h3>Content</h3>
 
-<% unless @paper.html_content.empty? %>
+<% unless @paper.html_content.blank? %>
 <blockquote id="content">
   <p><%= @paper.html_content.html_safe %></p>
 </blockquote>

@@ -2,12 +2,21 @@
 
 one:
   person: one
-  paper: one
+  paper: two
   status: MyString
+  progression: pending
   content: MyText
 
 two:
-  person: two
-  paper: two
+  person: three
+  paper: one
   status: MyString
+  progression: ongoing
+  content: MyText
+
+three:
+  person: two
+  paper: three
+  status: MyString
+  progression: done
   content: MyText

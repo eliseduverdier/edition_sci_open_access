@@ -1,21 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  paper_type: MyString
-  title: MyString
+  paper_type: article
+  title: PaperTitleOne
   abstract: MyText
-  status: MyString
-  tex_content: MyText
+  status: 0 # pending
   html_content: MyText
-  pdf_url: MyString
   category: one
 
 two:
-  paper_type: MyString
-  title: MyString
+  paper_type: article
+  title: PaperTitleTwo
   abstract: MyText
-  status: MyString
-  tex_content: MyText
+  status: 1 # being reviewd
   html_content: MyText
-  pdf_url: MyString
+  category: two
+
+three:
+  paper_type: article
+  title: PaperTitleThree
+  abstract: MyText
+  status: 2 # published
+  html_content: MyText
   category: two

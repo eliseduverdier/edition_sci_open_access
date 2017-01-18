@@ -2,9 +2,10 @@ require 'test_helper'
 
 class ReviewersControllerTest < ActionDispatch::IntegrationTest
     # TODO take into account namespace /papers/:paper_id/reviews
-  # setup do
-  #   @reviewer = reviewers(:one)
-  # end
+
+  setup do
+    @reviewer = reviewers(:one)
+  end
   #
   # test "should get index" do
   #   get reviewers_url

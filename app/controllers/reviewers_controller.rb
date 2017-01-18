@@ -4,14 +4,14 @@ class ReviewersController < ApplicationController
   # GET /papers/:paper_id/reviews
   # GET /papers/:paper_id/reviews.json
   def index
+    @reviews = Reviewer.where(paper_id: params[:paper_id])
     @paper = Paper.find(params[:paper_id])
-    @reviewers = Reviewer.all
   end
 
   # GET /reviews/mine
   # GET /reviews/mine.json
   def mine
-    @reviewers = Reviewer.where(person_id: current_user.id).all
+    @reviews = Reviewer.where(person_id: current_user.id).all
   end
 
   # GET /papers/:paper_id/reviews/1

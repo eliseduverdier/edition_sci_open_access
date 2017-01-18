@@ -15,7 +15,7 @@
   <div class="field">
     <%= f.label :status %>
     <p>
-      <input name="reviewer[status]" type="radio" id="accepted" value="" />
+      <input name="reviewer[status]" type="radio" id="accepted" value="3" />
       <label for="accepted">
         <i class="green-text tiny material-icons">check_circle</i>
         Accepted
@@ -23,27 +23,27 @@
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="minor" value="" />
+      <input name="reviewer[status]" type="radio" id="minor" value="2" />
       <label for="minor">
         <i class="yellow-text tiny material-icons">feedback</i> <!-- edit -->
         Need minor modifications
-        <!-- -->
+        <!-- the paper has some errors, but is overall scientificaly correct -->
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="major" value="" />
+      <input name="reviewer[status]" type="radio" id="major" value="1" />
       <label for="major">
         <i class="orange-text tiny material-icons">warning</i>
         Need major modifications
-        <!-- -->
+        <!-- This paper has many or serious flows in reasonning or protocol, but publishing could still be possible. Give a extensive list of the points to change  -->
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="refused" value="" />
+      <input name="reviewer[status]" type="radio" id="refused" value="0" />
       <label for="refused">
         <i class="red-text tiny material-icons">error</i>
         Refused
-        <!-- This paper has serious flaws in it. Please explain precisely why -->
+        <!-- This paper has serious flaws in it, and cannot be published. Please explain precisely why -->
       </label>
     </p>
     <!-- <select name="reviewer[status]">

@@ -1,42 +1,31 @@
+<%# See all reviews for paper %>
 <p id="notice"><%= notice %></p>
 
 <h1>Reviews for «<%= @paper.title %> »</h1>
 
-<%
-    @reviews = Reviewer.where(paper_id: @paper.id)
-%>
+<ul class="collection">
+<% @reviews.each do |review| %>
+  <li>
 
-<table class="bordered">
-  <thead>
-    <tr>
-      <th></th>
-      <!-- <th>By</th> Anonymous ! -->
-      <th>Status</th>
-      <th>Content</th>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
+    <%= link_to 'Read',
+      reviewer_path(review.paper.id, review.id),
+      class: "waves-effect waves-light btn-flat"  %>
 
-  <tbody>
-    <% @reviews.each do |review| %>
-      <tr>
-        <td><%= link_to 'Read',
-            "/papers/#{@paper.id}/reviews/#{review.id}",
-            class: "waves-effect waves-light btn-flat"  %></td>
-        <%#= review.person.full_name if !review.person.nil? %>
-        <td><%= get_status(review.status) %></td>
-        <td><%= review.content %></td>
-      </tr>
+    <% if current_user.is_editor? %>
+    <span class="title">By <%= review.person.full_name if !review.person.nil? %></span>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+    <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
+      <%= review.progression if review.progression %>
+    </span>
+    <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
+      <%= get_status(review.status) if review.status %>
+    </span>
+  </li>
+<% end %>
+</ul>
+
 
 <%= link_to "Back to paper",
-    "/papers/#{@paper.id}",
-    class: "btn" %>
-
-<%= link_to "Add a Review",
-    "/papers/#{@paper.id}/reviews/new",
+    paper_path(@paper),
     class: "btn" %>

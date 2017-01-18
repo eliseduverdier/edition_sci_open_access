@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  before_action :logged_in_user, only: [:create, :new, 'signup'] # people#new, session#new,create
+  before_action :logged_in_user, only: [:create, :new] # people#new, session#new,create
 
   # GET "/login"
   def new

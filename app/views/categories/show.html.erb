@@ -32,7 +32,7 @@
   <% end %>
 </ul>
 
-<% if current_user.is_admin? %>
+<% if logged_in? && current_user.is_admin? %>
 <%= link_to 'Edit',
   edit_category_path(@category),
   class: "btn-flat" %>

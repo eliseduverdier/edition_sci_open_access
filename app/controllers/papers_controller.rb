@@ -1,6 +1,9 @@
 class PapersController < ApplicationController
   before_action :set_paper, only: [:show, :edit, :update, :destroy]
+
+  # permissions to access
   before_action :logged_in_author, only: [:edit, :update, :destroy]
+  before_action :is_researcher, only: [:new, :create]
 
   # GET /papers
   # GET /papers.json
@@ -99,4 +102,13 @@ class PapersController < ApplicationController
         redirect_to @paper, :flash => { :error => "You don’t have access to this page!" }
       end
     end
+
+    # Confirms the author of the paper is logged-in user.
+    def is_researcher
+      unless logged_in? &&  current_user.status == 'researcher'
+        redirect_to root_path, :flash => { :error => "You need to be a researcher for this action!" }
+      end
+    end
+
+
 end

@@ -16,4 +16,15 @@ module PapersHelper
         # + 'book review', 'Trade publication articles' (med), 'Technical Reports'
     end
 
+
+    def get_hash_status
+      {
+       -1 => 'pending - not reviewed',
+        0 => 'pending - being reviewed',
+        1 => 'pending - reviewed',
+        2 => 'published', # accepted
+        3 => 'refused',
+      }
+    end
+
 end

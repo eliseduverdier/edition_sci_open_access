@@ -71,19 +71,24 @@ class Person < ApplicationRecord
     # Returns true if the user has to review the paper
     def should_review?(paper)
       review = paper.get_review_by(self)
-      !review.nil? && (review[:status] == 'pending' || review[:status] == '1')
+      !review.nil? && ['pending', '1'].include?(review[:status])
     end
 
     # Returns true if the user should review the paper
     def is_reviewing?(paper)
       review = paper.get_review_by(self)
-      !review.nil? && (review[:status] == 'ongoing' || review[:status] == '2')
+      !review.nil? && ['ongoing', '2'].include?(review[:status])
     end
 
     # Returns true if the user reviewed the paper
     def reviewed?(paper)
       review = paper.get_review_by(self)
-      !review.nil? && (review[:status] == 'done' || review[:status] == '3')
+      !review.nil? && ['done', '3'].include?(review[:status])
+    end
+
+    # Returns true if the user is reviewer of the paper
+    def is_reviewer_of?(paper)
+      paper.get_review_by(self)
     end
 
 

@@ -2,24 +2,48 @@
 
 one:
   email: name_one@mail.com
-  firstname: MyString
-  lastname: MyString
+  firstname: MyFirstname
+  lastname: MyLastname
   password: abcdefghijkl
-  status: MyString
-  bio: MyText
-  level: MyText
-  country: MyString
-  academia_url: MyString
-  research_gate_url: MyString
+  status: researcher
+  bio: MyBio
 
 two:
   email: name_two@mail.com
-  firstname: MyString
-  lastname: MyString
+  firstname: MyFirstname
+  lastname: MyLastname
   password: abcdefghijkl
-  status: MyString
-  bio: MyText
-  level: MyText
-  country: MyString
-  academia_url: MyString
-  research_gate_url: MyString
+  status: researcher
+  bio: MyBio
+
+three:
+  email: name_three@mail.com
+  firstname: MyFirstname
+  lastname: MyLastname
+  password: abcdefghijkl
+  status: researcher
+  bio: MyBio
+
+reader:
+  email: reader@mail.com
+  firstname: MyFirstname
+  lastname: MyLastname
+  password: abcdefghijkl
+  status: reader
+  bio: MyBio
+
+editor:
+  email: editor@mail.com
+  firstname: MyFirstname
+  lastname: MyLastname
+  password: abcdefghijkl
+  status: editor
+  bio: MyBio
+
+admin:
+  email: admin@mail.com
+  firstname: MyFirstname
+  lastname: MyLastname
+  password: abcdefghijkl
+  status: admin
+  bio: MyBio

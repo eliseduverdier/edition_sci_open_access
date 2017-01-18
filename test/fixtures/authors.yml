@@ -9,3 +9,8 @@ two:
   person: two
   paper: two
   status: MyString
+
+three:
+  person: three
+  paper: three
+  status: MyString
