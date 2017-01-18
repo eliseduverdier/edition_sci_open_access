@@ -1,0 +1,34 @@
+<ul class="collection">
+<% papers.each do |paper| %>
+  <li class="collection-item avatar">
+
+
+  <a href="#" id="save_to_reading_list">
+    <i title="Add to your reading list" class="material-icons circle blue-grey lighten-2">bookmark</i>
+  </a>
+
+  <span class="title"><%= paper.title %></span>
+
+  <span class="new badge <%= paper_get_color_status(paper.status) %>" data-badge-caption="">
+    <%= get_paper_status(paper.status) if paper.status %>
+  </span>
+
+  <span class="new badge blue-grey" data-badge-caption=""><%= paper.paper_type %></span>
+  <span class="new badge" data-badge-caption=""><%= paper.category.name unless paper.category.blank? %></span>
+
+  <p>
+    <span itemprop="authors">
+      <% paper.get_authors.each do |author| %>
+      <%= link_to "#{author.full_name}", author %>
+      <% end %>
+    </span>
+  </p>
+  <p> <%= paper.created_at.strftime("%d %B %Y") %></strong> </p>
+
+  <%#= link_to 'Read', paper_path(paper), class: "btn" %>
+
+  <!-- <a href="#!" title="Add to your reading list" class="secondary-content"><i class="material-icons">book</i></a> -->
+</li>
+
+<% end %>
+</ul>

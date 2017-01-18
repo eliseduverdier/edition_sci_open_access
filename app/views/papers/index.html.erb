@@ -3,28 +3,7 @@
 <h1>All papers</h1>
 
 
-<ul class="collection">
+<%= render 'papers/elements/paper_list', :papers => @papers %>
 
-  <% @papers.each do |paper| %>
-
-  <li class="collection-item avatar">
-    <i class="material-icons circle blue-grey">forward</i>
-    <!-- <i class="material-icons circle blue-grey lighten-2">book</i> -->
-
-    <%= link_to 'Read', paper, class: "btn" %>
-
-    <span class="title"><%= paper.title %></span>
-
-    <span class="new badge blue-grey" data-badge-caption=""><%= paper.paper_type %></span>
-    <span class="new badge" data-badge-caption=""><%= paper.category.name unless paper.category.blank? %></span>
-
-    <p>
-      By <strong><%= paper.get_authors_as_name_list %></strong>
-        <p>Published on <strong><%= paper.created_at.strftime("%d %B %Y") %></strong> </p>
-    </p>
-
-    <!-- <a href="#!" title="Add to your reading list" class="secondary-content"><i class="material-icons">book</i></a> -->
-  </li>
-  <% end %>
 
 </ul>

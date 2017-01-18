@@ -17,14 +17,19 @@ module PapersHelper
     end
 
 
-    def get_hash_status
-      {
-       -1 => 'pending - not reviewed',
-        0 => 'pending - being reviewed',
-        1 => 'pending - reviewed',
-        2 => 'published', # accepted
-        3 => 'refused',
-      }
+    def get_paper_status(status)
+      case status
+      when -1
+        'pending - not reviewed'
+      when 0
+        'pending - being reviewed'
+      when 1
+        'pending - reviewed'
+      when 2
+        'published' # accepted
+      when 3
+        'refused'
+      end
     end
 
 end

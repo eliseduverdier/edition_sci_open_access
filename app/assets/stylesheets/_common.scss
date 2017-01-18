@@ -24,7 +24,7 @@ h4 { font-size: 1.5rem; }
 //   background: #ddd;
 // }
 
-.flash {
+div.flash, div.notice-bg {
   margin-top: 10px;
   color: #fff;
   border-radius: 2px;
@@ -39,10 +39,9 @@ h4 { font-size: 1.5rem; }
   &.success { background-color: darken(#cf0, 20%); }
 }
 
-.notice {
+div.notice {
   margin-top: 10px;
   background-color: #eee;
-  color: darken(#cf0, 20%);
   border-radius: 2px;
   height: 36px;
   line-height: 36px;
@@ -50,6 +49,9 @@ h4 { font-size: 1.5rem; }
   letter-spacing: .5px;
   text-transform: uppercase;
   vertical-align: middle;
+  &.error, &.danger { color: darken(#f50, 20%); }
+  &.warning { color: darken(#fc0, 20%); }
+  &.success { color: darken(#cf0, 20%); }
 }
 
 ul.dropdown-content li span {
@@ -58,4 +60,35 @@ ul.dropdown-content li span {
   &:hover {
     background-color: initial;
   }
+}
+
+span.notice {
+  margin: 10px;
+  padding: 15px;
+  background-color: #eee;
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  &.error, &.danger { color: darken(#f50, 20%); }
+  &.warning { color: darken(#fc0, 20%); }
+  &.success { color: darken(#cf0, 20%); }
+}
+span.notice-bg {
+  padding: 15px;
+  margin: 10px;
+  color: #fff;
+  border-radius: 2px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  &.error, &.danger { background-color: darken(#f50, 20%); }
+  &.warning { background-color: darken(#fc0, 20%); }
+  &.success { background-color: darken(#cf0, 20%); }
 }

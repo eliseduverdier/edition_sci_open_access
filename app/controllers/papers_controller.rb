@@ -1,21 +1,40 @@
 class PapersController < ApplicationController
-  before_action :set_paper, only: [:show, :edit, :update, :destroy]
+  before_action :set_paper,        only: [:show, :edit, :update, :destroy]
 
   # permissions to access
   before_action :logged_in_author, only: [:edit, :update, :destroy]
-  before_action :is_researcher, only: [:new, :create]
+  before_action :is_researcher,    only: [:new, :create]
+  before_action :is_editor,        only: [:index_pending, :index_refused, :index_all]
 
   # GET /papers
   # GET /papers.json
   def index
-    @papers = Paper.all
+    @papers = Paper.where(status: 2)
   end
 
   # GET /papers/pending
   # GET /papers/pending.json
   def index_pending
-    @papers = Paper.where(status: 'pending')
+    @papers = Paper.where(status: [-1, 0, 1])
+    render :index
   end
+
+  # GET /papers/refused
+  # GET /papers/refused.json
+  def index_refused
+    @papers = Paper.where(status: 3)
+    render :index
+  end
+
+  # GET /papers/all
+  # GET /papers/all.json
+  def index_all
+    @papers = Paper.all
+    render :index
+  end
+
+
+##########################################################
 
 
   # GET /papers/1
@@ -27,6 +46,9 @@ class PapersController < ApplicationController
   def new
     @paper = Paper.new
   end
+
+
+##########################################################
 
   # GET /papers/1/edit
   def edit
@@ -78,6 +100,8 @@ class PapersController < ApplicationController
     end
   end
 
+  ##########################################################
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paper
@@ -92,23 +116,5 @@ class PapersController < ApplicationController
     def author_params
       params.require(:paper_id, :person_id)
     end
-
-    # Confirms the author of the paper is logged-in user.
-    def logged_in_author
-      if !logged_in?
-        store_location
-        redirect_to login_url, :flash => { :error => "Please log in to access to this page!" }
-      elsif @person != current_user
-        redirect_to @paper, :flash => { :error => "You don’t have access to this page!" }
-      end
-    end
-
-    # Confirms the author of the paper is logged-in user.
-    def is_researcher
-      unless logged_in? &&  current_user.status == 'researcher'
-        redirect_to root_path, :flash => { :error => "You need to be a researcher for this action!" }
-      end
-    end
-
 
 end

@@ -2,31 +2,31 @@
 
 <h1>Review</h1>
 
+
+<p>
+  Paper: <strong><%= link_to @reviewer.paper.title, @reviewer.paper %></strong>
+</p>
+
+<% if current_user.is_editor? %>
+  <p>
+    Reviewed by <%= link_to "#{@reviewer.person.firstname} #{@reviewer.person.lastname}", @reviewer.person %>
+  </p>
+<% end %>
+
+<span class="notice-bg inline <%= review_get_color_progression(@reviewer.progression) %>">
+  <%= @reviewer.progression if @reviewer.progression %>
+</span>
+
+<span class="notice-bg inline <%= review_get_color_status(@reviewer.status) %>">
+  <%= get_review_status(@reviewer.status) if @reviewer.status %>
+</span>
+
 <div class="card blue-grey lighten-4">
   <div class="card-content row">
-
-    <p>
-      Paper: <strong><%= link_to @reviewer.paper.title, @reviewer.paper %></strong>
-    </p>
-
-    <% if current_user.is_editor? %>
-      <p>
-        Reviewed by <%= link_to "#{@reviewer.person.firstname} #{@reviewer.person.lastname}", @reviewer.person %>
-      </p>
-    <% end %>
-
-    <p>
-      Status: <strong><%= get_status(@reviewer.status) %></strong>
-    </p>
-
-    <p>
-      Progression: <strong><%= @reviewer.progression %></strong>
-    </p>
 
     <blockquote>
       <%= @reviewer.content %>
     </blockquote>
-
 
   </div>
 </div> <!-- end card -->

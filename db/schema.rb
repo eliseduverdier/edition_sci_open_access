@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20170118095841) do
     t.text     "content"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "uuid"
     t.string   "progression"
     t.index ["paper_id"], name: "index_reviewers_on_paper_id"
     t.index ["person_id"], name: "index_reviewers_on_person_id"

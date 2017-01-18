@@ -1,7 +1,7 @@
 module ReviewersHelper
 
     # Get status meaning from number
-    def get_status(status)
+    def get_review_status(status)
         if status.to_i == 3
             'Accepted'
         elsif status.to_i == 2
@@ -16,7 +16,7 @@ module ReviewersHelper
     end
 
     # Get status and their meaning
-    def get_hash_status
+    def get_review_hash_status
       {
         3 => 'Accepted',
         2 => 'Need minor modifications',
@@ -26,7 +26,7 @@ module ReviewersHelper
     end
 
     # Get progression and their meaning (not used for now)
-    def get_hash_status
+    def get_review_hash_progression
       {
         0 => 'pending',
         1 => 'ongoing',

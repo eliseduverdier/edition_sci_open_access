@@ -18,9 +18,11 @@ HelloApp::Application.routes.draw do
   get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
   post   '/people/:id/edit_password' => 'people#update_password'
 
-  resources :papers do
-    get 'pending' => 'papers#index_pending'
-  end
+    get 'papers/pending', to:  'papers#index_pending'
+    get 'papers/all',     to:  'papers#index_all'
+    get 'papers/refused', to:  'papers#index_refused'
+    resources :papers #do
+  #end
 
   resources :categories
 

@@ -66,16 +66,16 @@ people = Person.create([
     email: 'bourbaki@ens.edu',
     password: '123456789'
   }, {
-    firstname: 'Ed',
-    lastname: 'Itor',
-    status: 'editor',
-    email: 'editor@test.edu',
-    password: '123456789'
-  }, {
     firstname: 'Elise',
     lastname: 'Duverdier',
     status: 'admin',
-    email: 'elise@test.edu',
+    email: 'elise@test.com',
+    password: '123456789'
+  }, {
+    firstname: 'Ed',
+    lastname: 'Itor',
+    status: 'editor',
+    email: 'editor@test.com',
     password: '123456789'
   }
 ])

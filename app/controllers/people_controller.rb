@@ -131,47 +131,4 @@ class PeopleController < ApplicationController
         params.require(:person).permit(:password)
     end
 
-
-    ### Verifications for logged-ins and status
-
-
-    # Confirms a logged-in user.
-    def is_logged_in
-      store_location
-      if !logged_in?
-        redirect_to login_url, :flash => { :error => "Please log in to access to this page!" }
-      end
-    end
-
-    def is_logged_in_user
-      store_location
-      if !logged_in?
-        redirect_to login_url, :flash => { :error => "Please log in to access to this page!" }
-      elsif @person != current_user
-        redirect_to @user, :flash => { :error => "You don’t have access to this page!" }
-      end
-    end
-
-    # Confirms the logged-in user is an editor.
-    def is_admin
-      unless logged_in? && current_user.is_admin?
-        redirect_to root_path, :flash => { :error => "You need to be admin to have access to this page!" }
-      end
-    end
-
-    # Confirms the logged-in user is an editor.
-    def is_editor
-      unless logged_in? && current_user.is_editor
-        redirect_to root_path, :flash => { :error => "You don’t have access to this page (only for editors) !" }
-      end
-    end
-
-    # Confirms the logged-in user is an editor.
-    def is_researcher
-      unless logged_in? && current_user.is_researcher
-        redirect_to root_path, :flash => { :error => "You don’t have access to this page (only for researcher) !" }
-      end
-    end
-
-
 end

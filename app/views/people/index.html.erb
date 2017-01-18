@@ -17,7 +17,7 @@
     <%= person.firstname %> <%= person.lastname %>
 
     <% unless person.status.blank? %>
-      <span class="new badge <%= get_status_color(person.status) %>" data-badge-caption=""><%= person.status %></span>
+      <span class="new badge <%= get_person_status_color(person.status) %>" data-badge-caption=""><%= person.status %></span>
     <% end %>
 
     <span class="badge"><%= person.email %></span>

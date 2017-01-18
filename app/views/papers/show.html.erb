@@ -11,7 +11,10 @@
   <%= @paper.category.name unless @paper.category.blank?  %>
 </p>
 
-<% if logged_in? && current_user.wrote?(@paper) %>
+<% if logged_in? %>
+
+<%#  AUTHOR: EDIT PAPER  %>
+<% if current_user.wrote?(@paper) %>
   <div class="right-align">
       <%= link_to 'Edit',
           edit_paper_path(@paper),
@@ -25,8 +28,8 @@
   </div>
 <% end %>
 
-
-<% if logged_in? && @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper) %>
+<%# EDITOR: ASK REVIEWS  %>
+<% if  @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper) %>
 
   <h3>Ask for reviews</h3>
   <form action="review/new" method="post">
@@ -65,7 +68,7 @@
   </form>
 <% end %>
 
-<% if logged_in? %>
+<%#  SEE REVIEWS  %>
 <div class="center-align">
 
   <% if current_user.should_review?(@paper) %>
@@ -112,7 +115,9 @@
     <div class="col s6">
       <strong>Authors</strong>
       <span itemprop="authors">
-        <%= @paper.get_authors_as_name_list %>
+        <% @paper.get_authors.each do |author| %>
+        <%= link_to "#{author.full_name}", author %>
+        <% end %>
       </span>
     </div>
 

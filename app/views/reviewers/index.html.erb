@@ -19,7 +19,7 @@
       <%= review.progression if review.progression %>
     </span>
     <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
-      <%= get_status(review.status) if review.status %>
+      <%= get_review_status(review.status) if review.status %>
     </span>
   </li>
 <% end %>

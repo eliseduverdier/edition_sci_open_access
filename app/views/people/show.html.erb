@@ -47,21 +47,8 @@
     <h2>Published papers</h2>
     <% end %>
 
-    <div class="collection">
-      <% @person.get_papers.each do |paper| %>
-      <a class="collection-item" href="<%= paper_path(paper) %>">
-            <%= paper.title %>
-            <% if !paper.publication_date.nil? %>
-              <span class="badge"> Published on <%= paper.publication_date.strftime("%d %B %Y") %> </span>
-            <% end %>
-            <% if !paper.category.nil? %>
-              <span class="badge"><%= paper.category.name %> </span>
-            <% end %>
-      </a>
-      <%#= link_to paper.title, paper, class: "collection-item avatar" %>
-      <% end # end each paper %>
+    <%= render 'papers/elements/paper_list', :papers => @person.get_papers %>
 
-    </div>
 <% else %>
 
     <%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %>

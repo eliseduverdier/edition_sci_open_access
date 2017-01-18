@@ -20,8 +20,8 @@ $secondary-color: color("lime", "darken-2") !default;
 
 // .btn-flat { background-color: #eee; }
 
-ul.collection {
-  li { @extend .collection-item; }
+ul.collection li {
+   @extend .collection-item;
 }
 
 .btn {
@@ -30,4 +30,8 @@ ul.collection {
 
 .btn-flat {
   @extend .waves-effect, .waves-green;
+}
+
+.i {
+  @extend i.material-icons;
 }

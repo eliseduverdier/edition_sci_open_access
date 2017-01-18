@@ -22,7 +22,7 @@ module PeopleHelper
 
 
   # different color for status
-  def get_status_color(status)
+  def get_person_status_color(status)
     if status == 'admin'
       'black'
     elsif status == 'editor'

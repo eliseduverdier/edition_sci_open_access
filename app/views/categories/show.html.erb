@@ -12,25 +12,7 @@
   </div>
 </nav>
 
-<ul class="collection">
-  <% Paper.where(category_id: @category.id).each do |paper| %>
-  <li>
-    <%= link_to 'Read',
-      paper,
-      class: "btn-flat"%>
-
-    <%= paper.title %>
-
-    <div class="chip right"><%= paper.paper_type %></div>
-
-    <% unless paper.pdf_url.blank? %>
-      <%= link_to 'PDF',
-        paper.pdf_url,
-        class: "btn-flat" %>
-    <% end %>
-    </li>
-  <% end %>
-</ul>
+<%= render 'papers/elements/paper_list', :papers => Paper.where(category_id: @category.id) %>
 
 <% if logged_in? && current_user.is_admin? %>
 <%= link_to 'Edit',
