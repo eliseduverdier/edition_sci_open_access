@@ -1,0 +1,12 @@
+<h1>Open Access Edition</h1>
+
+<p>Hi <%= @person.firstname %>,</p>
+
+<p>
+  Thanks for joinging in !
+  To finalise your subscription, please click on the link below:
+</p>
+
+<p>
+  <%= link_to "Activate", edit_account_activation_url(@person.activation_token, email: @person.email) %>
+</p>

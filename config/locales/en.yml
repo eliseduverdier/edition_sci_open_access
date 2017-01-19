@@ -3,3 +3,4 @@
 
 en:
   hello: "Hello world"
+  en.user_mailer.account_activation.subject: "Welcome"

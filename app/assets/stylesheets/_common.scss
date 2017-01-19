@@ -37,6 +37,7 @@ div.flash, div.notice-bg {
   &.error, &.danger { background-color: darken(#f50, 20%); }
   &.warning { background-color: darken(#fc0, 20%); }
   &.success { background-color: darken(#cf0, 20%); }
+  &.info { background-color: darken(#0cf, 20%); }
 }
 
 div.notice {
@@ -52,6 +53,7 @@ div.notice {
   &.error, &.danger { color: darken(#f50, 20%); }
   &.warning { color: darken(#fc0, 20%); }
   &.success { color: darken(#cf0, 20%); }
+  &.info { color: darken(#0cf, 20%); }
 }
 
 ul.dropdown-content li span {
@@ -76,6 +78,7 @@ span.notice {
   &.error, &.danger { color: darken(#f50, 20%); }
   &.warning { color: darken(#fc0, 20%); }
   &.success { color: darken(#cf0, 20%); }
+  &.info { color: darken(#0cf, 20%); }
 }
 span.notice-bg {
   padding: 15px;
@@ -91,4 +94,5 @@ span.notice-bg {
   &.error, &.danger { background-color: darken(#f50, 20%); }
   &.warning { background-color: darken(#fc0, 20%); }
   &.success { background-color: darken(#cf0, 20%); }
+  &.info { background-color: darken(#0cf, 20%); }
 }

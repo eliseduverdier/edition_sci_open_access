@@ -3,6 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
+
+  # include SessionsHelper
+
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
@@ -20,19 +23,7 @@ class ActiveSupport::TestCase
   # +user+ Person to log as
   def logged_as(user)
     session[:user_id] = user.id
-  end
-
-  # helper method
-  def sign_in_as(name)
-    post login_url, params: { sig: people(name).perishable_signature }
-  end
-
-
-  # Log in as a particular user.
-  # +user+      User to log as
-  # +password+  Password's user
-  def log_in_as(user, password: 'azertyuiop')
-    post login_path, params: { session: { email: user.email, password: password } }
+    # post login_path, params: { session: { email: user.email, password: user.password } }
   end
 
 end
@@ -40,14 +31,13 @@ end
 
 class ActionDispatch::IntegrationTest
 
+  # include SessionsHelper
 
   fixtures :all
 
-  # Log in as a particular user.
-  # +user+      User to log as
-  # +password+  Password's user
-  def log_in_as(user, password: 'azertyuiop')
-    post login_path, params: { session: { email: user.email, password: password } }
+  # Log in as a particular person.
+  def log_in_as(user)
+    post login_path, params: { session: { email: user.email, password: user.password } }
   end
 
 end

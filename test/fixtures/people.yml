@@ -4,46 +4,52 @@ one:
   email: name_one@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: researcher
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 two:
   email: name_two@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: researcher
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 three:
   email: name_three@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: researcher
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 reader:
   email: reader@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: reader
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 editor:
   email: editor@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: editor
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>
 
 admin:
   email: admin@mail.com
   firstname: MyFirstname
   lastname: MyLastname
-  password: abcdefghijkl
+  password_digest: <%= Person.digest('123456789') %>
   status: admin
-  bio: MyBio
+  activated: true
+  activated_at: <%= Time.zone.now %>

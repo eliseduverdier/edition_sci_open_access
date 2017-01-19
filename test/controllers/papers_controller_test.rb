@@ -4,6 +4,9 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
   include SessionsHelper
 
+  # skip_before_filter :logged_in_as_correct_user, only => [:edit, :edit_password, :update, :destroy]
+  # skip_before_filter :is_logged_in, only => [:index]
+  # skip_before_filter :already_logged_in, only => [:new, :create]
 
   setup do
     @paper = papers(:one)
@@ -23,13 +26,14 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should get new" do
-    sign_in_as(:one)
+    log_in_as(people(:one))
     get new_paper_url
     assert_response :success
   end
 
   test "should create paper" do
-    sign_in_as(:one)
+    log_in_as(people(:one))
+
     assert_difference('Paper.count') do
       post papers_url, params: { paper: {
         title: @paper.title,
@@ -49,13 +53,13 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should get edit" do
-    sign_in_as(:one)
+    log_in_as(people(:one))
     get edit_paper_url(@paper)
     assert_response :success
   end
 
   test "should update paper" do
-    sign_in_as(:one)
+    log_in_as(people(:one))
     patch paper_url(@paper), params: { paper: {
       title: @paper.title,
       abstract: @paper.abstract,
@@ -71,7 +75,8 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should destroy paper" do
-    sign_in_as(:one)
+    log_in_as(people(:one))
+
     assert_difference('Paper.count', -1) do
       delete paper_url(@paper)
     end

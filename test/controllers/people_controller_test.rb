@@ -4,8 +4,12 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   include SessionsHelper
 
-  setup do
-    @person = people(:one)
+  # skip_before_action :logged_in_as_correct_user, only: [:edit, :edit_password, :update, :destroy]
+  # skip_before_action :is_logged_in, only: [:index]
+  # skip_before_action :already_logged_in, only: [:new, :create]
+
+    setup do
+      @person = people(:one)
   end
 
   test "should not get list of all people" do
@@ -14,7 +18,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "Admin should get list of all people" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     get people_url
     assert_response :success
   end
@@ -27,7 +31,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
 
   test "should sign up an account" do
     assert_difference('Person.count') do
-      post signup, params: { person: {
+      post signup_path, params: { person: {
         email: 'new@mail.com',
         firstname: @person.firstname,
         lastname: @person.lastname,
@@ -50,13 +54,13 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should be able to edit their own profile" do
-    logged_as(@person)
+    log_in_as(@person)
     get edit_person_url(@person)
     assert_response :success
   end
 
   test "should be able to update their own profile" do
-    logged_as(@person)
+    log_in_as(@person)
     patch person_url(@person), params: { person: {
       academia_url: @person.academia_url,
       bio: @person.bio,
@@ -80,7 +84,7 @@ class PeopleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should be able to delete their own profile" do
-    logged_as(@person)
+    log_in_as(@person)
     assert_difference('Person.count', -1) do
       delete person_url(@person)
     end

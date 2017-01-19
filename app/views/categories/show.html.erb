@@ -12,7 +12,7 @@
   </div>
 </nav>
 
-<%= render 'papers/elements/paper_list', :papers => Paper.where(category_id: @category.id) %>
+<%= render 'papers/elements/paper_list', :papers => @papers %>
 
 <% if logged_in? && current_user.is_admin? %>
 <%= link_to 'Edit',

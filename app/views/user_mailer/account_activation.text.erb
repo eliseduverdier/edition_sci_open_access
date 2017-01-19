@@ -1,0 +1,13 @@
+-------------------
+Open Access Edition
+===================
+
+Hi <%= @person.firstname %>,
+
+Thanks for joinging in !
+
+To finalise your subscription, please visit the link below:
+
+<%= edit_account_activation_url(@person.activation_token, email: @person.email) %>
+
+-------------------

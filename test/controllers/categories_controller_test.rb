@@ -4,6 +4,8 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   include SessionsHelper
 
+  # skip_before_filter :is_admin, :only => [:add, :create, :destroy]
+
   setup do
     @category = categories(:one)
   end
@@ -14,13 +16,13 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     get new_category_url
     assert_response :success
   end
 
   test "should create category" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     assert_difference('Category.count') do
       post categories_url, params: { category: { name: @category.name } }
     end
@@ -35,19 +37,19 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     get edit_category_url(@category)
     assert_response :success
   end
 
   test "should update category" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     patch category_url(@category), params: { category: { name: @category.name } }
     assert_redirected_to category_url(@category)
   end
 
   test "should destroy category" do
-    logged_as(people(:admin))
+    log_in_as(people(:admin))
     assert_difference('Category.count', -1) do
       delete category_url(@category)
     end

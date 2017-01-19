@@ -1,36 +1,48 @@
 HelloApp::Application.routes.draw do
 
-  resources :reading_lists
-  resources :reading_list_folders
+  root 'static_pages#home'
+  get '/home',  to: 'static_pages#home'
+  get '/about', to: 'static_pages#about'
+  get '/feedback', to: 'static_pages#feedback', :as => :feedback # ???
+
+  #####################
+
   resources :reviewers, path: 'papers/:paper_id/reviews'
-  resources :authors
-  resources :people # todo: avoid seeing other people's info
+  get    '/reviews/mine' => 'reviewers#mine'
+
+
+  #####################
+
+  resources :people
+  get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
+  post   '/people/:id/edit_password' => 'people#update_password'
 
   get   '/signup',  to: 'people#new'
   post  '/signup',  to: 'people#create'
+  resources :account_activations#, only: [:edit]
 
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  get    '/reviews/mine' => 'reviewers#mine'
 
-  get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
-  post   '/people/:id/edit_password' => 'people#update_password'
+  #####################
 
-    get 'papers/pending', to:  'papers#index_pending'
-    get 'papers/all',     to:  'papers#index_all'
-    get 'papers/refused', to:  'papers#index_refused'
-    resources :papers #do
-  #end
+  get 'papers/pending', to:  'papers#index_pending'
+  get 'papers/all',     to:  'papers#index_all'
+  get 'papers/refused', to:  'papers#index_refused'
+  resources :papers
+
+  #####################
 
   resources :categories
 
-  root 'static_pages#home'
-  get '/home',  to: 'static_pages#home'
-  get '/about', to: 'static_pages#about'
+  #####################
 
-  get '/feedback', to: 'static_pages#feedback', :as => :feedback # ???
+  resources :reading_lists
+  resources :reading_list_folders
+
+
 
 
   # The priority is based upon order of creation:

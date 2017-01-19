@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170118095841) do
+ActiveRecord::Schema.define(version: 20170119142427) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -66,6 +66,9 @@ ActiveRecord::Schema.define(version: 20170118095841) do
     t.string   "university"
     t.string   "academic_status"
     t.string   "password_digest"
+    t.string   "activation_digest"
+    t.boolean  "activated"
+    t.datetime "activated_at"
     t.index ["email"], name: "index_people_on_email", unique: true
   end
 
@@ -93,8 +96,8 @@ ActiveRecord::Schema.define(version: 20170118095841) do
     t.text     "content"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.string   "uuid"
     t.string   "progression"
+    t.string   "uuid"
     t.index ["paper_id"], name: "index_reviewers_on_paper_id"
     t.index ["person_id"], name: "index_reviewers_on_person_id"
   end

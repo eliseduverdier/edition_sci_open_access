@@ -1,10 +1,11 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
-  # permissions to access
-  before_action :is_logged_in_user, only: [:edit, :edit_password, :update, :destroy]
 
-  before_action :is_logged_in, only: [:index]
+  # permissions to access
+  before_action :logged_in_as_correct_user, only: [:edit, :edit_password, :update, :destroy]
+  # before_action :is_logged_in, only: [:index]
+  before_action :already_logged_in, only: [:new, :create]
 
 
   # GET /people
@@ -13,11 +14,11 @@ class PeopleController < ApplicationController
     if current_user.is_admin?
       @people = Person.all
     elsif current_user.is_editor?
-      @people = Person.where.not(status: ['admin'])
+      @people = Person.where.not(status: ['admin']).where.not(activated: nil)
     elsif current_user.is_researcher?
-      @people = Person.where(status: ['researcher', 'editor'])
+      @people = Person.where(status: ['researcher', 'editor']).where.not(activated: nil)
     else # reader
-      @people = Person.where(status: 'researcher')
+      @people = Person.where(status: 'researcher').where.not(activated: nil)
     end
   end
 
@@ -58,15 +59,18 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_params)
 
-    respond_to do |format|
-      if @person.save
-        log_in @person
-        format.html { redirect_to @person, notice: 'Thanks for joining us!' }
-        format.json { render :show, status: :created, location: @person }
-      else
-        format.html { render :new }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.save
+      @person.send_activation_email
+      flash[:info] = "Please check your email to activate your account."
+      # flash[:info] += "Activation token: /#{@person.activation_token}/#{CGI.@person.email}"
+      redirect_to root_url
+
+      # log_in @person
+      # format.html { redirect_to @person, notice: 'Thanks for joining us!' }
+      # format.json { render :show, status: :created, location: @person }
+    else
+      flash[:error] = "There was a problem during registration."
+      render :new
     end
   end
 
@@ -130,5 +134,15 @@ class PeopleController < ApplicationController
     def person_params_edit_password
         params.require(:person).permit(:password)
     end
+
+    ### Access rights
+
+    # Confirms a logged-in user.
+    def already_logged_in
+      if logged_in?
+        redirect_to root_path, :flash => { :error => "You are already logged in! Please log out first." }
+      end
+    end
+
 
 end
