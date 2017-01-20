@@ -14,7 +14,8 @@ class Person < ApplicationRecord
 
   validates :password,
       presence: true,
-      length: { minimum: 8, maximum: 256 }
+      length: { minimum: 8, maximum: 256 },
+      on: :create
 
   # digests the password
   has_secure_password
@@ -49,7 +50,7 @@ class Person < ApplicationRecord
     update_attribute(:activated,    true)
     update_attribute(:activated_at, Time.zone.now)
   end
-  
+
   # Sends activation email.
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
@@ -81,7 +82,7 @@ class Person < ApplicationRecord
 
   # Checks if the user has the status admin
   def is_admin?
-    self[:status] == 'admin' || self[:status] == 'editor'
+    self[:status] == 'admin'
   end
 
   # Checks if the user has the status researcher

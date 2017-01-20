@@ -4,10 +4,10 @@ module PeopleHelper
   # Param:
   # +person+:: +Person+
   # +size+::
-  def gravatar_for(person, size: 50)
+  def gravatar_for(person, size: 50, class_sup: '')
     gravatar_id = Digest::MD5::hexdigest(person.email)
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}&d=identicon"
-    image_tag(gravatar_url, alt: "#{person.firstname} #{person.lastname}", class: "gravatar")
+    image_tag(gravatar_url, alt: "#{person.firstname} #{person.lastname}", class: "gravatar #{class_sup}")
   end
 
   # Get possibles values for university status

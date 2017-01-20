@@ -1,7 +1,6 @@
 <% provide(:title, "#{@person.firstname} #{@person.lastname}") %>
-<p id="notice"><%= notice %></p>
 
-<% if !@person.status.nil? %>
+<% unless @person.status.blank? %>
 <div class="chip">
     <%= @person.status %>
 </div>
@@ -18,7 +17,7 @@
       <%= @person.email %>
     </div>
 
-    <% unless !@person.bio.blank? %>
+    <% unless @person.bio.blank? %>
     <blockquote>
       <%= @person.bio %>
     </blockquote>
@@ -28,15 +27,23 @@
   <div class="col s2">
 
     <div class="center">
+      <% unless @person.research_gate_url.blank? %>
       <%= link_to 'ResearchGate', @person.research_gate_url, class: "btn" %>
+      <% end %>
       <br /> <br />
+      <% unless @person.academia_url.blank? %>
       <%= link_to 'Academia', @person.academia_url, class: "btn" %>
+      <% end %>
     </div>
 
-      <p><%= @person.level unless @person.level.blank? %></p>
-      <p><%= @person.country unless @person.country.blank? %></p>
+    <p><%= @person.level unless @person.level.blank? %></p>
+    <p><%= @person.country unless @person.country.blank? %></p>
   </div>
 </div>
+
+<% if logged_in? && current_user.is_admin? && !@person.activated %>
+  <%= link_to 'Activate', person_activate_path(@person), class: 'btn red' %>
+<% end %>
 
 <% unless @person.get_papers.blank?  %>
 

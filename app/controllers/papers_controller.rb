@@ -7,27 +7,23 @@ class PapersController < ApplicationController
   before_action :is_editor,        only: [:index_pending, :index_refused, :index_all]
 
   # GET /papers
-  # GET /papers.json
   def index
     @papers = Paper.where(status: 2)
   end
 
   # GET /papers/pending
-  # GET /papers/pending.json
   def index_pending
     @papers = Paper.where(status: [-1, 0, 1])
     render :index
   end
 
   # GET /papers/refused
-  # GET /papers/refused.json
   def index_refused
     @papers = Paper.where(status: 3)
     render :index
   end
 
   # GET /papers/all
-  # GET /papers/all.json
   def index_all
     @papers = Paper.all
     render :index
@@ -60,33 +56,24 @@ class PapersController < ApplicationController
     @paper = Paper.new(paper_params)
     @paper.status = 0 # pending
 
-    respond_to do |format|
-      if @paper.save
+    if @paper.save
+      # save author
+      @author = Author.new(paper_id: @paper.id, person_id: current_user.id)
+      @author.save
 
-        # save author
-        @author = Author.new(paper_id: @paper.id, person_id: current_user.id)
-        @author.save
-
-        format.html { redirect_to @paper, notice: 'Paper was successfully created.' }
-        format.json { render :show, status: :created, location: @paper }
-      else
-        format.html { render :new }
-        format.json { render json: @paper.errors, status: :unprocessable_entity }
-      end
+      redirect_to @paper, notice: 'Paper was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /papers/1
   # PATCH/PUT /papers/1.json
   def update
-    respond_to do |format|
-      if @paper.update(paper_params)
-        format.html { redirect_to @paper, notice: 'Paper was successfully updated.' }
-        format.json { render :show, status: :ok, location: @paper }
-      else
-        format.html { render :edit }
-        format.json { render json: @paper.errors, status: :unprocessable_entity }
-      end
+    if @paper.update(paper_params)
+      redirect_to @paper, notice: 'Paper was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -94,10 +81,7 @@ class PapersController < ApplicationController
   # DELETE /papers/1.json
   def destroy
     @paper.destroy
-    respond_to do |format|
-      format.html { redirect_to papers_url, notice: 'Paper was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to papers_url, notice: 'Paper was successfully destroyed.'
   end
 
   ##########################################################
@@ -115,6 +99,15 @@ class PapersController < ApplicationController
 
     def author_params
       params.require(:paper_id, :person_id)
+    end
+
+    def logged_in_author
+      if !logged_in?
+        store_location
+        redirect_to login_url, :flash => { :error => t('people.unauthorized') }
+      elsif !@paper.get_authors.include? current_user
+        redirect_to @paper, :flash => { :error => t('paper.edit.forbidden') }
+      end
     end
 
 end

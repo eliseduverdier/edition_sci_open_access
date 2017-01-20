@@ -4,6 +4,7 @@ HelloApp::Application.routes.draw do
   get '/home',  to: 'static_pages#home'
   get '/about', to: 'static_pages#about'
   get '/feedback', to: 'static_pages#feedback', :as => :feedback # ???
+  get '/contact', to: 'static_pages#contact', :as => :contact
 
   #####################
 
@@ -14,8 +15,8 @@ HelloApp::Application.routes.draw do
   #####################
 
   resources :people
-  get    '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
-  post   '/people/:id/edit_password' => 'people#update_password'
+  get   '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
+  post  '/people/:id/edit_password' => 'people#update_password'
 
   get   '/signup',  to: 'people#new'
   post  '/signup',  to: 'people#create'
@@ -25,6 +26,7 @@ HelloApp::Application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  get   '/people/:id/activate' => 'people#activate', :as => :person_activate
 
   #####################
 

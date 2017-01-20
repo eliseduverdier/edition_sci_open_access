@@ -4,26 +4,22 @@ class PeopleController < ApplicationController
 
   # permissions to access
   before_action :logged_in_as_correct_user, only: [:edit, :edit_password, :update, :destroy]
-  # before_action :is_logged_in, only: [:index]
+  before_action :is_logged_in, only: [:index]
   before_action :already_logged_in, only: [:new, :create]
 
 
   # GET /people
-  # GET /people.json
   def index
     if current_user.is_admin?
       @people = Person.all
     elsif current_user.is_editor?
-      @people = Person.where.not(status: ['admin']).where.not(activated: nil)
-    elsif current_user.is_researcher?
+      @people = Person.where.not(status: ['reader']).where.not(activated: nil)
+    else # is_researcher or reader
       @people = Person.where(status: ['researcher', 'editor']).where.not(activated: nil)
-    else # reader
-      @people = Person.where(status: 'researcher').where.not(activated: nil)
     end
   end
 
   # GET /people/1
-  # GET /people/1.json
   def show
   end
 
@@ -38,80 +34,80 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit_password
   def edit_password
-      @person = current_user
+    @person = current_user
   end
 
   # PATCH/PUT /people/1/edit_password
   def update_password
-    respond_to do |format|
-      if @person.update(person_params_edit_password)
-        format.html { redirect_to @person, notice: 'Your profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @person }
-      else
-        format.html { render :edit_password }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.update(person_params_edit_password)
+      redirect_to @person, notice: 'Your profile was successfully updated.'
+    else
+      render :edit_password
     end
   end
 
   # POST /people
-  # POST /people.json
   def create
     @person = Person.new(person_params)
 
     if @person.save
       @person.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
+      flash[:info] = t('people.create.need_activation')
       # flash[:info] += "Activation token: /#{@person.activation_token}/#{CGI.@person.email}"
-      redirect_to root_url
+      redirect_to root_url # TODO thanks for joining page
 
       # log_in @person
-      # format.html { redirect_to @person, notice: 'Thanks for joining us!' }
-      # format.json { render :show, status: :created, location: @person }
+      # redirect_to @person, notice: 'Thanks for joining us!'
     else
-      flash[:error] = "There was a problem during registration."
+      flash[:error] = t('people.create.error')
       render :new
     end
   end
 
   # PATCH/PUT /people/1
-  # PATCH/PUT /people/1.json
   def update
-    respond_to do |format|
-      if @person.update(person_params_edit)
-        format.html { redirect_to @person, notice: 'Your profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @person }
-      else
-        format.html { render :edit }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.update(person_params_edit)
+      redirect_to @person, notice: t('people.update.success')
+    else
+      render :edit
     end
   end
 
   #  ??? PATCH/PUT /people/1
-  # PATCH/PUT /people/1.json
   def update_password
-    respond_to do |format|
-      if @person.update(person_params_edit)
-        format.html { redirect_to @person, notice: 'Your profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @person }
-      else
-        format.html { render :edit }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
-      end
+    if @person.update(person_params_edit)
+      redirect_to @person, notice: t('people.update.password.success')
+    else
+      render :edit
     end
   end
 
   # DELETE /people/1
-  # DELETE /people/1.json
   def destroy
     @person.destroy
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Your profile was successfully deleted.' }
-      format.json { head :no_content }
+    redirect_to root_path, notice: t('people.delete.success')
+  end
+
+  ####################################
+  #     ajax
+  ####################################
+
+  # GET /people/1/activates
+  # called by ajax, return json
+  def activate
+    @person = Person.find(params[:id])
+    if @person.nil?
+      redirect_to people_path, notice: t('people.profile.not_found')
+    else
+      @person.activate
+        redirect_to @person, notice: t('people.update.success')
     end
   end
 
+
+  ####################################
+  #     PRIVATE
+  ####################################
 
   private
     # Use callbacks to share common setup or constraints between actions.

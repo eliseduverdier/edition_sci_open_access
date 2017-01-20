@@ -2,26 +2,39 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>admin/ List of registered users</h1>
+<h1>
+  <% if logged_in? %>
+    <% if current_user.is_admin? %> List of all users
+    <% elsif current_user.is_editor? %> List of researchers, editors, admins
+    <% else %> List of researchers and editors
+    <% end %>
+  <% end %>
+</h1>
 
 <ul class="collection">
+
   <% @people.each do |person| %>
-  <li>
+  <li class="avatar">
 
-  <%= link_to 'View',
-    person,
-    class: "btn-flat" %>
-
-    <%= gravatar_for(person, size: 32) %>
+    <%= gravatar_for(person, size: 32, class_sup: 'circle') %>
 
     <%= person.firstname %> <%= person.lastname %>
+    <br />
+
+    <%= link_to 'View',
+      person,
+      class: "btn-flat" %>
 
     <% unless person.status.blank? %>
       <span class="new badge <%= get_person_status_color(person.status) %>" data-badge-caption=""><%= person.status %></span>
     <% end %>
 
+
     <% if logged_in? && current_user.is_admin? %>
-      <%= "[Not activated]" unless person.activated %>
+      <span class="new badge deep-orange darken-3" data-badge-caption="">
+        <a href="<%  %>"></a>
+        <%= "Not activated" unless person.activated %>
+      </span>
     <% end %>
 
     <span class="badge"><%= person.email %></span>

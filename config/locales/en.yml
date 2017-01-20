@@ -3,4 +3,24 @@
 
 en:
   hello: "Hello world"
-  en.user_mailer.account_activation.subject: "Welcome"
+
+
+  ## ACTIONS
+
+  # People
+  people.update.success: 'Your profile was successfully updated.'
+  people.delete.success: 'Your profile was successfully deleted.'
+  people.update.password.success: 'Your password was successfully updated.'
+  people.create.error: 'Sorry, there was a problem during registration.'
+  people.create.need_activation: 'Please check your email to activate your account.' #  #{@person.activation_token} '
+  people.profile.not_found: 'Sorry, there was an error while retrieving the profile'
+
+# before_actions
+  people.unauthorized: 'Please log in to access to this page'
+
+  # Papers
+  paper.edit.forbidden: 'You don’t have the right to edit '
+
+
+  # Mails
+  user_mailer.account_activation.subject: "Welcome"

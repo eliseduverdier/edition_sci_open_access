@@ -1,0 +1,17 @@
+<% provide(:title, "Contact") %>
+
+<h1>Contact</h1>
+
+<form action="<%= contact_path %>" method="get">
+
+
+<label for="object">Object</label>
+<input type="text" id="object" name="object">
+
+<label for="message">Your message</label>
+<textarea name="message" id="message" Your messagecols="30" rows="10" class="materialize-textarea" length="2000"></textarea>
+
+<input type="submit" class="btn" value="Send">
+
+
+</form>

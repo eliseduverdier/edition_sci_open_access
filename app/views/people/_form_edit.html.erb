@@ -33,13 +33,18 @@
 <div class="row">
 
   <div class="input-field col s4">
-    <select class="" name="person[status]">
+   <!--  <select class="" name="person[status]">
       <option disabled selected>Please choose an option</option>
       <% possible_website_status.each do |website_status| %>
       <option value="<%= website_status %>"><%= website_status %></option>
       <% end %>
     </select>
-    <%= f.label :status %>
+    <%= f.label :status %>-->
+    <p><span>Your status:</span> <%= @person.status %></p>
+
+    <% if @person.is_editor? || @person.is_reader? %>
+    <%= link_to 'Ask to become an editor', contact_path %>
+    <% end %>
   </div>
 
   <div class="input-field col s8">
@@ -70,7 +75,7 @@
       <option value="<%= uni_status %>"><%= uni_status %></option>
       <% end %>
     </select>
-    <%= f.label :level %>
+    <%= f.label 'University status' %>
   </div>
 
   <div class="input-field col s4">
