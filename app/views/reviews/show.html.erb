@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Review</h1>
+
+
+<p>
+  Paper: <strong><%= link_to @review.paper.title, @review.paper %></strong>
+</p>
+
+<% if current_user.is_editor? %>
+  <p>
+    Reviewed by <%= link_to "#{@review.reviewer.full_name}", @review.reviewer %>
+  </p>
+<% end %>
+
+<span class="notice-bg inline <%= review_get_color_progression(@review.progression) %>">
+  <%= @review.progression if @review.progression %>
+</span>
+
+<span class="notice-bg inline <%= review_get_color_status(@review.status) %>">
+  <%= get_review_status(@review.status) if @review.status %>
+</span>
+
+<div class="card blue-grey lighten-4">
+  <div class="card-content row">
+
+    <blockquote>
+      <%= @review.content %>
+    </blockquote>
+
+  </div>
+</div> <!-- end card -->
+
+<% if current_user.is_reviewer_of?(@review.paper) && @review.progression != 'done' %>
+  <%= link_to "Edit",
+      edit_review_path(@review),
+      class: "btn" %>
+
+  <%= link_to "Destroy",
+     @review,
+     method: :delete,
+     data: { confirm: 'Are you sure?' },
+     class: "btn-flat waves-effect waves-red" %>
+<% end %>

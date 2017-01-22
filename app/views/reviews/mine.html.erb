@@ -8,8 +8,8 @@
   <% @reviews.each do |review| %>
   <li>
 
-    <%= link_to 'View', reviewer_path(review.paper.id, review.id), class: "btn-flat" %>
-    <%#= link_to 'edit', edit_reviewers_path(review.id), class: "btn" %>
+    <%= link_to 'View', review_path(review.paper.id, review.id), class: "btn-flat" %>
+    <%#= link_to 'edit', edit_reviews_path(review.id), class: "btn" %>
 
     <%= review.paper.title if review.paper %>
 

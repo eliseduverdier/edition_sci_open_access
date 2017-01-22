@@ -12,7 +12,7 @@
   </div>
 </nav>
 
-<%= render 'papers/elements/paper_list', :papers => @papers %>
+<%= render 'papers/partials/paper_list', :papers => @papers %>
 
 <% if logged_in? && current_user.is_admin? %>
 <%= link_to 'Edit',
@@ -22,6 +22,6 @@
 <%= link_to 'Delete',
   @category, method: :delete,
   data: { confirm: 'Are you sure?' },
-  class: "btn-flat" %>
+  class: "btn-flat waves-effect waves-red" %>
 
 <% end %>

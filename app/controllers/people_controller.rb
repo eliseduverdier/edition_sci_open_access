@@ -13,11 +13,21 @@ class PeopleController < ApplicationController
     if current_user.is_admin?
       @people = Person.all
     elsif current_user.is_editor?
-      @people = Person.where.not(status: ['reader']).where.not(activated: nil)
+      @people = Person.where.not(status: 'reader').where.not(activated: nil)
     else # is_researcher or reader
       @people = Person.where(status: ['researcher', 'editor']).where.not(activated: nil)
     end
   end
+
+# GET /people/:id/papers
+  def papers
+    person = Person.find(params[:id])
+    @papers = person.get_papers
+    @title = "Papers from #{person.full_name}"
+    render :template => 'papers/index'
+  end
+
+
 
   # GET /people/1
   def show

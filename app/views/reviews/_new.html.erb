@@ -1,0 +1,64 @@
+<%# inserted from papers/show %>
+
+<h3>Ask for reviews</h3>
+
+<%#= form_for @review, :url => reviews_path(paper_id: params[:paper_id]) do |f| %>
+<!--
+<div class="row">
+
+  <div class="col s6">
+    <label for="review_remarks">Remarks (optional)</label>
+    <textarea class="materialize-textarea" id="review_remarks" type="text" name="review[remarks]"></textarea>
+  </div>
+
+  <div class="col s6">
+    <label for="review_reviewers">Reviewers</label>
+    <select id="review_reviewers" name="review[reviewers]" multiple>
+      <% Person.where(status: 'researcher').all.each do |person| %>
+      <option value="<%= person.id %>"><%= person.full_name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <button class="btn" type="submit" name="action">
+    Send review applications <i class="material-icons right">send</i>
+  </button>
+
+</div> -->
+
+<%# end %>
+
+<form action="review/new" method="post">
+  <div class="row">
+
+    <div class="col s6">
+      <label for="review_remarks">Remarks (optional)</label>
+      <textarea class="materialize-textarea" id="review_remarks" type="text" name="review[remarks]"></textarea>
+    </div>
+
+    <div class="col s6">
+      <label for="status">Status</label>
+      <div><% if @paper.status == 1 %>
+        Accepted
+        <% elsif @paper.status == 0 %>
+        Rejected
+        <% else %>
+        Pending
+      <% end %>
+    </div>
+
+      <label for="review_reviewers">Reviewers</label>
+      <select id="review_reviewers" name="review[reviewers]" multiple>
+        <% Person.where(status: 'researcher').all.each do |person| %>
+        <option value="<%= person.id %>"><%= person.full_name %></option>
+        <% end %>
+      </select>
+    </div>
+
+  </div>
+
+  <button class="btn" type="submit" name="action">
+    Send review applications <i class="material-icons right">send</i>
+  </button>
+
+</form>

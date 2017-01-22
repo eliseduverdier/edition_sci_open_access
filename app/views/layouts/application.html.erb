@@ -3,22 +3,28 @@
 <head>
   <title><%= full_title(yield(:title)) %></title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" >
   <%= favicon_link_tag("favicon.svg") %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <meta name="theme-color" content="#0b8668" />
 </head>
 <body>
 
-<% if logged_in? %>
-  <%= render 'layouts/header_logged'  %>
-<% else %>
-  <%= render 'layouts/header'  %>
-<% end %>
+  <% if logged_in? %>
+    <% if current_user.is_editor? %>
+    <%= render 'layouts/header_editor'  %>
+    <% else %>
+    <%= render 'layouts/header_logged'  %>
+    <% end %>
+  <% else %>
+    <%= render 'layouts/header'  %>
+  <% end %>
 
   <%#= debug(params) if Rails.env.development? %>
 
-  <div class="container">
+  <main class="container">
 
     <% flash.each do |key, value| %>
       <%= content_tag :div, value, class: "flash #{key}" %>
@@ -26,8 +32,9 @@
 
     <%= yield %>
 
-  </div>
+  </main>
 
+  <%= render 'layouts/footer'  %>
 
 </body>
 </html>

@@ -3,13 +3,13 @@ HelloApp::Application.routes.draw do
   root 'static_pages#home'
   get '/home',  to: 'static_pages#home'
   get '/about', to: 'static_pages#about'
-  get '/feedback', to: 'static_pages#feedback', :as => :feedback # ???
-  get '/contact', to: 'static_pages#contact', :as => :contact
+  get '/feedback', to: 'static_pages#feedback'
+  get '/contact', to: 'static_pages#contact'
 
   #####################
 
-  resources :reviewers, path: 'papers/:paper_id/reviews'
-  get    '/reviews/mine' => 'reviewers#mine'
+  resources :reviews, path: 'papers/:paper_id/reviews'
+  get    '/reviews/mine' => 'reviews#mine', :as => :user_reviews
 
 
   #####################
@@ -17,6 +17,7 @@ HelloApp::Application.routes.draw do
   resources :people
   get   '/people/:id/edit_password' => 'people#edit_password', :as => :edit_password
   post  '/people/:id/edit_password' => 'people#update_password'
+  get   '/people/:id/papers' => 'people#papers', :as => :user_papers
 
   get   '/signup',  to: 'people#new'
   post  '/signup',  to: 'people#create'

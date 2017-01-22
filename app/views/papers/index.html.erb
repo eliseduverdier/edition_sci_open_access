@@ -1,9 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, "Papers") %>
 
-<h1>All papers</h1>
+<h1><%= @title || 'Papers' %></h1>
 
-
-<%= render 'papers/elements/paper_list', :papers => @papers %>
+<%= render 'papers/partials/paper_list', :papers => @papers %>
 
 
 </ul>

@@ -1,0 +1,12 @@
+<% provide(:title, "Reviewing « #{@paper.title} »") %>
+
+
+Write review for
+<h1>
+  <%= @paper.title %>
+</h1>
+
+<%= render 'form', review: @review %>
+
+<%= link_to 'Show', @review %> |
+<%= link_to 'Back', reviews_path %>

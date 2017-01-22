@@ -1,5 +1,13 @@
 <% if logged_in? %>
-    <%= render 'static_pages/home_logged'  %>
+  <% if current_user.is_researcher? %>
+    <%= render 'static_pages/home_researcher' %>
+  <% elsif current_user.is_editor? %>
+    <%= render 'static_pages/home_editor' %>
+  <% elsif current_user.is_admin? %>
+    <%= render 'static_pages/home_admin' %>
+  <% else %>
+    <%= render 'static_pages/home_reader' %>
+  <% end %>
 <% else %>
-    <%= render 'static_pages/home'  %>
+  <%= render 'static_pages/home'  %>
 <% end %>

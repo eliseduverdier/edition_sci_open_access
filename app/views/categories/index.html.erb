@@ -9,6 +9,9 @@
 
 <br>
 
+<% if logged_in? && current_user.is_admin? %>
+<div class="divider"> </div>
 <%= link_to 'Add a Category',
     new_category_path,
     class: 'btn' %>
+<% end %>

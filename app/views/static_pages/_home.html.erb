@@ -1,30 +1,41 @@
-<% provide(:title, "Welcome") %>
 
-<div class="center-align">
+<div class="row">
+  <div class="col offset-l2 l7 m8 s12">
+    <div class="landing-text">
 
-    <h1>Open Science</h1>
-    <h3>Scientific publications in open-access</h3>
-    <%= image_tag("OpenAccess_black.svg", size: "60x100") %>
+      <h1>open science</h1>
 
-    <h2>
-        This site is for ...
-    </h2>
-    <div class="row">
-        <div class="col s4">
-            Automatization of peer review process, to allow a scientific journal to be open-access.
-        </div>
-        <div class="col s4">
-            Guarantee quality of work and conflict-free reviews
-        </div>
-        <div class="col s4">
-            Allow researchers to publish freely, and redears to access knowlegde
-        </div>
+      <h3 class="color1 strong">open access scientific revue</h3>
+    <%#= image_tag("OpenAccess_black.svg", size: "60x100") %>
+
+      <h4 class="text-grey darken-3 strong">free publishing for researchers</h4>
+      <h4 class="text-grey darken-3">free reading for the public</h4>
+      <h3 class="color2 strong">community based peer review</h3>
+
+    </div>
+  </div>
+
+  <div class="col m2 s12">
+
+    <div class="center-align" style="text-align: center; padding-top: 3em;">
+      <%= link_to "Log in", login_path, class: 'btn-large color1bg' %>
+      <p>or</p>
+      <%= link_to "Sign up", signup_path, class: 'btn-large color2bg' %>
     </div>
 
-    <div class="divider"></div>
+  </div>
+</div>
 
-    <%= link_to "Log in", login_path, class: 'btn-large teal' %>
-    <br /> or <br />
-    <%= link_to "Sign up", signup_path, class: 'btn-large lime' %>
+<div class="divider"></div>
 
+<div class="row">
+  <div class="col m4">
+    We allow researcher to publish freely, as we believe good science should be made available without fees.<div class="divider"></div>
+  </div>
+  <div class="col m4">
+    We guarantee a quality of work and conflict-free reviews, by a community based peer reviewed, automation to help the process, while helping respecting the anonymysity but promoting transparence during the process.<div class="divider"></div>
+  </div>
+  <div class="col m4">
+    The public is allowed to access the works as they are foundation of our society blabla bla.<div class="divider"></div>
+  </div>
 </div>

@@ -9,9 +9,12 @@
 
   <span class="title"><%= paper.title %></span>
 
-  <span class="new badge <%= paper_get_color_status(paper.status) %>" data-badge-caption="">
+  <%# if logged_in? && current_user.is_editor? %>
+  <% if paper.status.to_i != 2 %>
+  <span class="new badge <%= paper_get_color_status(paper.status) %>" data-badge-caption="status">
     <%= get_paper_status(paper.status) if paper.status %>
   </span>
+  <% end %>
 
   <span class="new badge blue-grey" data-badge-caption=""><%= paper.paper_type %></span>
   <span class="new badge" data-badge-caption=""><%= paper.category.name unless paper.category.blank? %></span>

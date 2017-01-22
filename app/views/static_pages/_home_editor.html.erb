@@ -1,0 +1,39 @@
+<%
+  provide(:title, "Welcome #{@current_user.firstname}")
+  #@pending_reviews = get_pending_reviews_ask_by_editor
+%>
+
+<div class="row">
+  <div class="col s8">
+    <h2> Welcome <%= @current_user.firstname %></h2>
+
+    <h3>Latest articles</h3>
+    <blockquote>
+      Here is a list of the last articles published that might interest you
+    </blockquote>
+
+    <%# if @pending_reviews.count > 0 %>
+    <h3>Reviews you asked</h3>
+      Find below the works currently reviewed under your supervision:
+    <%#= render 'reviews/partials/review_list', :reviews => @pending_reviews %>
+    <%# end %>
+
+  </div>
+
+  <div class="col s4">
+
+    <div class="input-field">
+      <label for="search">
+        <i class="material-icons prefix">search</i>
+      </label>
+      <input id="search" type="search" placeholder="Search an article, an author, a keyword…">
+    </div>
+
+    <h3>Papers</h3>
+    <p> <%= link_to 'All', papers_all_path, class: 'btn' %> </p>
+    <p> <%= link_to 'Pending', papers_pending_path, class: 'btn' %> </p>
+    <p> <%= link_to 'Refused', papers_refused_path, class: 'btn' %> </p>
+    <p> <%= link_to 'Published', papers_path, class: 'btn' %> </p>
+
+  </div>
+</div>

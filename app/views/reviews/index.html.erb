@@ -1,0 +1,12 @@
+<%# See all reviews for paper %>
+<p id="notice"><%= notice %></p>
+
+<h1>Reviews for «<%= @paper.title %> »</h1>
+
+
+<%= render 'reviews/partials/review_list', :reviews => @reviews %>
+
+  
+<%= link_to "Back to paper",
+    paper_path(@paper),
+    class: "btn" %>

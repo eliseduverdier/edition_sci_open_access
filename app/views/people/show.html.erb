@@ -1,21 +1,18 @@
 <% provide(:title, "#{@person.firstname} #{@person.lastname}") %>
 
-<% unless @person.status.blank? %>
-<div class="chip">
-    <%= @person.status %>
-</div>
-<% end %>
 
 <div class="row">
-  <div class="col s2">
+  <div class="col s3">
     <%= gravatar_for(@person, size: 150)  %>
   </div>
 
-  <div class="col s8">
+  <div class="col s5">
     <h2 class="header"><%= @person.firstname %> <%= @person.lastname %></h2>
-    <div class="chip">
-      <%= @person.email %>
-    </div>
+    <%#= @person.email # private %>
+
+    <% unless @person.status.blank? %>
+    <h3> <%= @person.status %> </h3>
+    <% end %>
 
     <% unless @person.bio.blank? %>
     <blockquote>
@@ -24,7 +21,21 @@
     <% end %>
   </div>
 
-  <div class="col s2">
+  <div class="col s4">
+
+    <% if is_logged_in_user? @person %>
+
+<h2>Manage your profile</h2>
+
+    <p><%= link_to 'Edit profile', edit_person_path(@person), class: "btn" %></p>
+
+    <p><%= link_to 'Change your password', edit_password_path(@person), class: "btn" %></p>
+
+    <p><%= link_to 'Delete profile',
+        @person, method: :delete,
+        data: { confirm: 'Are you sure?' },
+        class: "btn-flat waves-effect waves-red" %></p>
+<% end %>
 
     <div class="center">
       <% unless @person.research_gate_url.blank? %>
@@ -54,31 +65,10 @@
     <h2>Published papers</h2>
     <% end %>
 
-    <%= render 'papers/elements/paper_list', :papers => @person.get_papers %>
+    <%= render 'papers/partials/paper_list', :papers => @person.get_papers %>
 
 <% else %>
 
     <%= link_to 'Publish a paper', new_paper_path, class: "btn-large" %>
 
 <% end %>
-
-
-<% if is_logged_in_user? @person %>
-<div>
-<h2>Manage your profile</h2>
-
-    <%= link_to 'Edit profile',
-        edit_person_path(@person),
-        class: "btn" %>
-
-    <%= link_to 'Change your password',
-        edit_password_path(@person),
-        class: "btn" %>
-
-    <%= link_to 'Delete profile',
-        @person, method: :delete,
-        data: { confirm: 'Are you sure?' },
-        class: "btn-flat" %>
-<% end %>
-
-</div>

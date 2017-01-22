@@ -1,11 +1,11 @@
-<%= form_for @reviewer, :url => reviewer_path  do |f| %>
+<%= form_for @review, :url => review_path  do |f| %>
 
   <% # POST: Error return ? %>
-  <% if reviewer.errors.any? %>
+  <% if review.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(reviewer.errors.count, "error") %> prohibited this reviewer from being saved:</h2>
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
       <ul>
-      <% reviewer.errors.full_messages.each do |message| %>
+      <% review.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -15,7 +15,7 @@
   <div class="field">
     <%= f.label :status %>
     <p>
-      <input name="reviewer[status]" type="radio" id="accepted" value="3" />
+      <input name="review[status]" type="radio" id="accepted" value="3" />
       <label for="accepted">
         <i class="green-text tiny material-icons">check_circle</i>
         Accepted
@@ -23,7 +23,7 @@
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="minor" value="2" />
+      <input name="review[status]" type="radio" id="minor" value="2" />
       <label for="minor">
         <i class="yellow-text tiny material-icons">feedback</i> <!-- edit -->
         Need minor modifications
@@ -31,7 +31,7 @@
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="major" value="1" />
+      <input name="review[status]" type="radio" id="major" value="1" />
       <label for="major">
         <i class="orange-text tiny material-icons">warning</i>
         Need major modifications
@@ -39,14 +39,14 @@
       </label>
     </p>
     <p>
-      <input name="reviewer[status]" type="radio" id="refused" value="0" />
+      <input name="review[status]" type="radio" id="refused" value="0" />
       <label for="refused">
         <i class="red-text tiny material-icons">error</i>
         Refused
         <!-- This paper has serious flaws in it, and cannot be published. Please explain precisely why -->
       </label>
     </p>
-    <!-- <select name="reviewer[status]">
+    <!-- <select name="review[status]">
         <option disabled selected>— Choice —</option>
         <option value="3">Accepted</option>
         <option value="2">Need minor modifications</option>
@@ -57,14 +57,14 @@
 
   <div class="field">
     <%= f.label 'Comments on the article' %>
-    <textarea id="content" name="reviewer[content]" class="materialize-textarea" length="5000">
-<%= @reviewer.content %></textarea>
+    <textarea id="content" name="review[content]" class="materialize-textarea" length="5000">
+<%= @review.content %></textarea>
   </div>
 
    <div class="switch">
     <label>
       Mark as Done:
-      <input name="reviewer[progression]" type="checkbox" value="done">
+      <input name="review[progression]" type="checkbox" value="done">
       <span class="lever"></span>
       If selected, you will not be able to modify your review after saving
     </label>

@@ -1,0 +1,38 @@
+<ul class="collection">
+<% reviews.each do |review| %>
+  <li>
+
+    <p class="title"><%= review.paper.title %></p>
+
+    <p> Authors:
+      <span itemprop="authors">
+        <% review.paper.get_authors.each do |author| %>
+        <%= link_to "#{author.full_name}", author %>
+        <% end %>
+      </span>
+    </p>
+<%
+  editor = Person.find(review.editor_id)
+  reviewer = Person.find(review.reviewer_id)
+%>
+
+    <p>Editor: <%= link_to editor.full_name, editor %></p>
+    <% if current_user.is_editor? || current_user.is_admin? %>
+    <p>Reviewer: <%= reviewer.full_name %></p>
+    <% end %>
+
+    <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
+      <%= review.progression if review.progression %>
+    </span>
+    <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
+      <%= get_review_status(review.status) if review.status %>
+    </span>
+
+    <%= link_to 'Read',
+    review_path(review.paper.id, review.id),
+    class: "waves-effect waves-light btn-flat"  %>
+
+  </li>
+
+<% end %>
+</ul>

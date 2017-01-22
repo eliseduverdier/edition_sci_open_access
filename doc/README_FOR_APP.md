@@ -62,9 +62,10 @@ Database description, meaning of attributes and possible values for each.
  * status      (first_author, null)
 
 
-## reviewers
+## reviews
  * id
- * person_id   [people.id]
+ * reviewer_id   [people.id]
+ * editor_id   [people.id]
  * paper_id    [paper.id]
  * status     
      * 0: refused

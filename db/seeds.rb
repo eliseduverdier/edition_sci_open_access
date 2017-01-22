@@ -1,11 +1,17 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
- Category.create([
-  { name: 'physics' },
-  { name: 'philosophy' },
-  { name: 'linguistics' },
-  { name: 'maths' },
+Category.create([
+  { name: 'physics', parent_category: nil},
+  { name: 'linguistics', parent_category: nil},
+  { name: 'maths', parent_category: nil},
+])
+Category.create([
+  { name: 'mechanics', parent_category: Category.where(name: 'physics').take},
+  { name: 'semantics', parent_category: Category.where(name: 'linguistics').take},
+  { name: 'topology', parent_category: Category.where(name: 'maths').take},
+  { name: 'algebra', parent_category: Category.where(name: 'maths').take},
+  { name: 'groups', parent_category: Category.where(name: 'algebra').take},
 ])
 
 Paper.create([
@@ -18,7 +24,7 @@ Paper.create([
     html_content: '<h1>HTML Ipsum Presents</h1> <p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p> <h2>Header Level 2</h2> <ol> <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li> <li>Aliquam tincidunt mauris eu risus.</li> </ol> ',
   	publication_date: '1905',
   	pdf_url: '',
-  	category: Category.where(name: 'physics').take
+  	category: Category.where(name: 'mechanics').take
   }, {
     paper_type: 'article',
     uuid: 'LIN001',
@@ -49,13 +55,13 @@ Paper.create([
   	category: Category.where(name: 'linguistics').take
   }, {
     paper_type: 'article',
-    uuid: 'PHY003',
-  	title: 'Physics article 003',
+    uuid: 'MAT001',
+  	title: 'Algebra article 001',
     status: 3,
   	abstract: 'Very bad paper pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> ',
   	publication_date: '2016',
   	pdf_url: '',
-  	category: Category.where(name: 'physics').take
+  	category: Category.where(name: 'algebra').take
   },
 ])
 
@@ -68,7 +74,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }, {
     firstname: 'Noam',
     lastname: 'Chomsky',
@@ -77,7 +83,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }, {
     firstname: 'Damien',
     lastname: 'Minenna',
@@ -86,7 +92,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }, {
     firstname: 'Nicolas',
     lastname: 'Bourbaki',
@@ -95,7 +101,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }, {
     firstname: 'Elise',
     lastname: 'Duverdier',
@@ -104,7 +110,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }, {
     firstname: 'Ed',
     lastname: 'Itor',
@@ -113,7 +119,7 @@ Person.create([
     password: '123456789',
     password_confirmation: '123456789',
     activated: true,
-     activated_at: Time.zone.now
+    activated_at: Time.zone.now
   }
 ])
 
@@ -129,34 +135,44 @@ Author.create([
       paper: Paper.where(uuid: 'PHY002').take
   }, {
       person: Person.where(lastname: 'Einstein').take,
-      paper: Paper.where(uuid: 'PHY003').take
+      paper: Paper.where(uuid: 'MAT001').take
   }, {
       person: Person.where(lastname: 'Chomsky').take,
       paper: Paper.where(uuid: 'LIN002').take
   }
 ])
 
-Reviewer.create([
-  {  # Damien did review Einstein's paper
-      person: (Person.where(lastname: 'Minenna').take),
-      paper: (Paper.where(uuid: 'PHY001').take),
-      status: 3, # accepted
+Review.create([
+  {  # Damien reviewed Einstein's paper
+      paper: Paper.where(uuid: 'PHY001').take,
+      reviewer_id: (Person.where(lastname: 'Minenna').take).id,
+      editor_id: (Person.where(firstname: 'Ed').take).id,
       progression: 'done',
+      status: 3, # accepted
       content: 'Nice paper'
+  }, {# Damien has to review Chomsky's paper
+      paper: Paper.where(uuid: 'LIN001').take,
+      reviewer_id: (Person.where(lastname: 'Minenna').take).id,
+      editor_id: (Person.where(firstname: 'Ed').take).id,
+      progression: 'pending',
+      content: 'Nice paper, haven’t decided yet / will set a status later.'
   }, { # Einstein is reviewing Damien's paper
-      person: (Person.where(lastname: 'Einstein').take),
-      paper: (Paper.where(uuid: 'PHY002').take),
+      paper: Paper.where(uuid: 'PHY002').take,
+      reviewer_id: (Person.where(lastname: 'Einstein').take).id,
+      editor_id: (Person.where(firstname: 'Ed').take).id,
       progression: 'ongoing',
       content: 'Quite interesting'
   }, { # Einstein reviewed Chomsky's paper
-      person: (Person.where(lastname: 'Einstein').take),
-      paper: (Paper.where(uuid: 'LIN001').take),
+      paper: Paper.where(uuid: 'LIN001').take,
+      reviewer_id: (Person.where(lastname: 'Einstein').take).id,
+      editor_id: (Person.where(firstname: 'Ed').take).id,
       progression: 'done',
       status: 1, # major modif
       content: 'Didn’t get that'
   }, { # Chomsky has to review Damien's paper
-      person: (Person.where(lastname: 'Chomsky').take),
-      paper: (Paper.where(uuid: 'PHY002').take),
+      paper: Paper.where(uuid: 'PHY002').take,
+      reviewer_id: (Person.where(lastname: 'Chomsky').take).id,
+      editor_id: (Person.where(firstname: 'Ed').take).id,
       progression: 'pending',
   }
 ])

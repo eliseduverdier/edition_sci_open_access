@@ -1,0 +1,72 @@
+<nav>
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo">
+      <%= image_tag("OpenAccess.svg", size: "30x45") %>
+      <!-- <i class="material-icons">lock_open</i> -->
+      Open Science
+    </a>
+    <a href="#" data-activates="nav-mobile" class="button-collapse">
+      <i class="material-icons">menu</i>
+    </a>
+
+    <ul class="right hide-on-med-and-down">
+      <li><%= link_to "Papers ⯆", papers_path,
+        class: "dropdown-button",
+        :'data-activates' => "list-papers" %></li>
+      <li><%= link_to "People", people_path %></li>
+      <li><%= link_to "Categories ⯆",
+        categories_path,
+        class: "dropdown-button",
+        :'data-activates' => "list-categories" %> </li>
+      <li><%= link_to "Reading Lists", reading_lists_path %> </li>
+      <li><%= link_to "About", about_path %></li>
+      <!-- </ul>
+
+      <ul class="right"> -->
+      <li><%= link_to "#{current_user.firstname} ⯆",
+        current_user,
+        class: "dropdown-button",
+        :'data-activates' => "list-session" %></li>
+      <li><%= gravatar_for current_user, size: 64 %></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- DROPDOWNS -->
+<!-- Papers -->
+<ul id="list-papers" class="dropdown-content">
+  <li><%= link_to 'Pending', papers_pending_path %></li>
+  <li><%= link_to 'Refused', papers_refused_path %></li>
+  <li><%= link_to 'Published', papers_path %></li>
+  <li><%= link_to 'All', papers_all_path %></li>
+</ul>
+
+<!-- Categories -->
+<ul id="list-categories" class="dropdown-content">
+  <li><%=link_to ' View all', categories_path %></li>
+<% Category.all.each do |category| %>
+  <li><%= link_to category.name.capitalize, category_path(category) %></li>
+<% end %>
+</ul>
+
+<!-- User -->
+<ul id="list-session" class="dropdown-content">
+  <li><span><%= current_user.status.capitalize %></span></li>
+  <li><%= link_to "Profile", current_user %></li>
+  <li><%= link_to "Log out", logout_path, method: :delete %></li>
+</ul>
+
+<!-- Nav Mobile -->
+<ul id="nav-mobile" class="side-nav">
+  <li><%= link_to 'Papers', papers_path %> </li>
+  <li><%= link_to 'Profile', current_user %></li>
+  <li><%=link_to 'Categories', categories_path, class: 'collapsible-header' %></li>
+  <div class="collapsible-body" style="display: block;">
+    <ul>
+    <% Category.all.each do |category| %>
+      <li><%= link_to category.name.capitalize, category_path(category) %></li>
+    <% end %>
+    </ul>
+  </div>
+  <li><%= link_to "Log out", logout_path, method: :delete %></li>
+</ul>

@@ -2,3 +2,8 @@ nav a.brand-logo img {
     vertical-align: middle;
     margin-left: 15px;
 }
+@media only screen and (max-width: 601px) {
+  nav a.brand-logo .title {
+    display: none;
+  }
+}

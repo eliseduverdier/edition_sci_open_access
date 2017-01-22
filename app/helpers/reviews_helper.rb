@@ -1,4 +1,4 @@
-module ReviewersHelper
+module ReviewsHelper
 
     # Get status meaning from number
     def get_review_status(status)

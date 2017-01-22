@@ -7,15 +7,16 @@ class Person < ApplicationRecord
   validates :firstname, presence: true
   validates :lastname, presence: true
 
-  validates :email, presence: true,
-      format: { with: VALID_EMAIL_REGEX, message: "incorrect format" },
-      length: { minimum: 6, maximum: 128 },
-      uniqueness: { case_sensitive: false }
+  validates :email,
+    presence: true,
+    format: { with: VALID_EMAIL_REGEX, message: "incorrect format" },
+    length: { minimum: 6, maximum: 128 },
+    uniqueness: { case_sensitive: false }
 
   validates :password,
-      presence: true,
-      length: { minimum: 8, maximum: 256 },
-      on: :create
+    presence: true,
+    length: { minimum: 8, maximum: 256 },
+    on: :create
 
   # digests the password
   has_secure_password
@@ -109,6 +110,17 @@ class Person < ApplicationRecord
     end
     return list
   end
+
+  # Get all the reviews written by a person
+  def get_reviews
+    Review.where(reviewer_id: self[:id])
+  end
+
+  def get_pending_reviews
+    Review.where(reviewer_id: self[:id]).where.not(progression: 'done')
+  end
+
+
 
 
   # Returns true if the user wrote the paper

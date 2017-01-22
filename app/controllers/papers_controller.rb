@@ -8,23 +8,27 @@ class PapersController < ApplicationController
 
   # GET /papers
   def index
+    @title = "Published papers"
     @papers = Paper.where(status: 2)
   end
 
   # GET /papers/pending
   def index_pending
+    @title = "Pending papers"
     @papers = Paper.where(status: [-1, 0, 1])
     render :index
   end
 
   # GET /papers/refused
   def index_refused
+    @title = "Refused papers"
     @papers = Paper.where(status: 3)
     render :index
   end
 
   # GET /papers/all
   def index_all
+    @title = "All papers"
     @papers = Paper.all
     render :index
   end

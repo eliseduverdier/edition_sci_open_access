@@ -22,9 +22,9 @@ $(document).ready(function() {
 
   // nav
   $(".dropdown-button").dropdown({
-    belowOrigin: true
+    //belowOrigin: true
   });
-  
+
   $(".button-collapse").sideNav();
 
 

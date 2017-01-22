@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119142427) do
+ActiveRecord::Schema.define(version: 20170121133727) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -24,9 +24,10 @@ ActiveRecord::Schema.define(version: 20170119142427) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "parent_category"
+    t.integer  "parent_category_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["parent_category_id"], name: "index_categories_on_parent_category"
   end
 
   create_table "papers", force: :cascade do |t|
@@ -89,17 +90,18 @@ ActiveRecord::Schema.define(version: 20170119142427) do
     t.index ["reading_list_folder_id"], name: "index_reading_lists_on_reading_list_folder_id"
   end
 
-  create_table "reviewers", force: :cascade do |t|
-    t.integer  "person_id"
+  create_table "reviews", force: :cascade do |t|
     t.integer  "paper_id"
+    t.integer  "reviewer_id"
+    t.integer  "editor_id"
     t.string   "status"
     t.text     "content"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "progression"
-    t.string   "uuid"
-    t.index ["paper_id"], name: "index_reviewers_on_paper_id"
-    t.index ["person_id"], name: "index_reviewers_on_person_id"
+    t.index ["paper_id"], name: "index_reviews_on_paper_id"
+    t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
+    t.index ["editor_id"], name: "index_reviews_on_editor_id"
   end
 
 end

@@ -24,48 +24,15 @@
           @paper, method: :delete,
           data: { confirm: 'Are you sure? Please enter the reson why below.
             A confirmation to the editor will then be sent.' },
-          class: "btn-flat" %>
+          class: "btn-flat waves-effect waves-red" %>
   </div>
 <% end %>
 
 <%# EDITOR: ASK REVIEWS  %>
 <% if  @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper) %>
 
-  <h3>Ask for reviews</h3>
-  <form action="review/new" method="post">
-    <div class="row">
+  <%= render 'reviews/new' %>
 
-      <div class="col s6">
-        <label for="review_remarks">Remarks (optional)</label>
-        <textarea class="materialize-textarea" id="review_remarks" type="text" name="review[remarks]"></textarea>
-      </div>
-
-      <div class="col s6">
-        <label for="status">Status</label>
-        <div><% if @paper.status == 1 %>
-          Accepted
-          <% elsif @paper.status == 0 %>
-          Rejected
-          <% else %>
-          Pending
-        <% end %>
-      </div>
-
-        <label for="review_reviewers">Reviewers</label>
-        <select id="review_reviewers" name="review[reviewers]" multiple>
-          <% Person.all.each do |person| %>
-          <option value="<%= person.id %>"><%= person.full_name %></option>
-          <% end %>
-        </select>
-      </div>
-
-    </div>
-
-    <button class="btn" type="submit" name="action">
-      Send review applications <i class="material-icons right">send</i>
-    </button>
-
-  </form>
 <% end %>
 
 <%#  SEE REVIEWS  %>
@@ -74,31 +41,31 @@
   <% if current_user.should_review?(@paper) %>
 
     <%= link_to 'Start reviewing',
-        new_reviewer_path(@paper.id),
+        new_review_path(@paper.id),
         class: "btn red" %>
 
   <% elsif current_user.is_reviewing?(@paper) %>
 
     <%= link_to 'Continue or edit your review',
-        edit_reviewer_path(@paper.get_review_by(current_user)),
+        edit_review_path(@paper.get_review_by(current_user)),
         class: "btn red" %>
 
  <% elsif current_user.reviewed?(@paper) %>
 
     <%= link_to 'See your review',
-        reviewer_path(@paper.get_review_by(current_user)),
+        review_path(@paper.get_review_by(current_user)),
         class: "btn" %>
 
   <% elsif current_user.wrote?(@paper) && @paper.has_reviews? %>
 
     <%= link_to 'Read the reviews',
-        reviewers_path(@paper.id),
+        reviews_path(@paper.id),
         class: "btn" %>
 
   <% elsif current_user.is_editor? %>
 
     <%= link_to 'Read the reviews',
-        reviewers_path(@paper.id),
+        reviews_path(@paper.id),
         class: "btn" %>
 
   <% end %>
@@ -110,7 +77,7 @@
   <em><span itemprop="title"><%= @paper.title %></span></em>
 </h1>
 
-<div class="card blue-grey lighten-4">
+<div class="card">
   <div class="card-content row">
     <div class="col s6">
       <strong>Authors</strong>
@@ -145,10 +112,24 @@
   <%= @paper.abstract %>
 </blockquote>
 
-<h3>Content</h3>
+<div class="divider"></div>
 
-<% unless @paper.html_content.blank? %>
-<blockquote id="content">
-  <p><%= @paper.html_content.html_safe %></p>
-</blockquote>
-<% end %>
+<% if @paper.status.to_i == 2 %>
+
+  <h3>Content</h3>
+
+  <blockquote id="content">
+    <p><%= @paper.html_content.html_safe  unless @paper.html_content.blank? %></p>
+  </blockquote>
+
+<% elsif @paper.status.to_i == 3 %>
+
+  <p class="notice error">This paper has been refused</p>
+  <p>It is therefore not accessible to the public.
+  You can <%= link_to 'Read the reviews here', reviews_path(@paper.id) %> (TODO anonymise them).</p>
+
+<% else %>
+
+  This paper is currently under review. It will be made available one the peer-review process is finished.
+
+<% end %><!-- end content -->

@@ -3,10 +3,14 @@ module SessionsHelper
   # Logs in the given user.
   def log_in(user)
     session[:user_id] = user.id
+    # redirect_back_or(root_path)
   end
 
   # Get current user
   def current_user
+    # unless session[:user_id]
+    #   redirect_to(login_path)
+    # end
     @current_user ||= Person.find_by(id: session[:user_id])
   end
 
@@ -21,7 +25,6 @@ module SessionsHelper
   #     end
   #   end
   # end
-
 
 
   # Returns true if a user is logged in, false otherwise.

@@ -14,24 +14,70 @@
 
 @import "materialize/components/color";
 $primary-color  : color("blue-grey", "darken-1") !default;
-$secondary-color: color("lime", "darken-2") !default;
-
+$secondary-color: #0b8668 !default;
 @import "materialize";
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+html {
+  font-family: 'Montserrat', Trebuchet, sans-serif;
+}
 
 // .btn-flat { background-color: #eee; }
 
-ul.collection li {
-   @extend .collection-item;
+ul.collection li { @extend .collection-item; }
+
+// won't work, need JS
+// try to get waves effect on all buttons...
+// .btn { @extend .waves-effect; }
+// .btn-flat { @extend .waves-effect; }
+// // try to get icons without having to add class...
+// .i { @extend i.material-icons; }
+
+
+// COLORS
+.color1bg { background-color: #0b8668; }
+.color1 { color: #0b8668; }
+.color2bg { background-color: #c68d00; }
+.color2 { color: #c68d00; }
+.color3bg { background-color: #546e7a; }
+.color3 { color: #546e7a; }
+
+// ETC
+div.divider {
+  margin: 10px 0;
+}
+// MAIN
+main.container {
+  margin-top: 10px;
 }
 
-.btn {
-  @extend .waves-effect, .waves-light;
+// FOOTER
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
-.btn-flat {
-  @extend .waves-effect, .waves-green;
+main {
+  flex: 1 0 auto;
 }
 
-.i {
-  @extend i.material-icons;
+footer {
+  &.page-footer {
+    padding-top: 0;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+  a {
+    font-weight: 100;
+    padding-right: 5px;
+    &:after {
+      margin-left: 10px;
+      content: '/';
+    }
+    &:last-child:after {
+      content : ''
+    }
+  }
 }

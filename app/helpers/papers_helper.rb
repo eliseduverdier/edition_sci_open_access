@@ -18,7 +18,7 @@ module PapersHelper
 
 
     def get_paper_status(status)
-      case status
+      case status.to_i
       when -1
         'pending - not reviewed'
       when 0

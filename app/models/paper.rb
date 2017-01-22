@@ -6,14 +6,14 @@ class Paper < ApplicationRecord
     list = Array.new()
     authors = Author.where(paper_id: self[:id])
     authors.each do |author|
-        list.push(Person.where(id: author.person_id).take)
+      list.push(Person.where(id: author.person_id).take)
     end
     return list
   end
 
   # Get the review for a given paper and person
   def get_review_by(person)
-    Reviewer.where(paper_id: self[:id], person_id: person.id).take
+    Review.where(paper_id: self[:id], reviewer_id: person.id).take
   end
 
 
@@ -38,7 +38,7 @@ class Paper < ApplicationRecord
 
 
   def has_reviews?
-    Reviewer.where(paper_id: self[:id]).count > 0
+    Review.where(paper_id: self[:id]).count > 0
 
   end
 
