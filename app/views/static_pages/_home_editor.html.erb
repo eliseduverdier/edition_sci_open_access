@@ -1,6 +1,6 @@
 <%
   provide(:title, "Welcome #{@current_user.firstname}")
-  #@pending_reviews = get_pending_reviews_ask_by_editor
+  @pending_reviews = current_user.get_pending_reviews_asked_by_editor
 %>
 
 <div class="row">
@@ -12,11 +12,13 @@
       Here is a list of the last articles published that might interest you
     </blockquote>
 
-    <%# if @pending_reviews.count > 0 %>
     <h3>Reviews you asked</h3>
+    <% if @pending_reviews.count > 0 %>
       Find below the works currently reviewed under your supervision:
-    <%#= render 'reviews/partials/review_list', :reviews => @pending_reviews %>
-    <%# end %>
+    <%= render 'reviews/partials/review_list', :reviews => @pending_reviews, :from => 'home_editor' %>
+    <% else %>
+    You have no pending reviews on your supervision.
+    <% end %>
 
   </div>
 

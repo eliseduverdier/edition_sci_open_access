@@ -1,15 +1,7 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="/" class="brand-logo">
-      <%= image_tag("heptagon_white.svg", size: "45") %>
-      <span class="title">
-        Open Science
-      </span>
-    </a>
 
-    <a href="#" data-activates="nav-mobile" class="button-collapse">
-      <i class="material-icons">menu</i>
-    </a>
+    <%= render 'layouts/partials/menu_title' %>
 
     <ul class="right hide-on-med-and-down">
       <li><%= link_to "Papers", papers_path %> </li>
@@ -18,12 +10,16 @@
         class: "dropdown-button",
         :'data-activates' => "list-categories" %> </li>
       <li><%= link_to "About", about_path %></li>
+
+      <% if path_is('static_pages', 'home') %>
       <li><%= link_to "Log in", login_path, class: 'btn color1bg' %></li>
       <li><%= link_to "Sign up", signup_path, class: 'btn color2bg' %></li>
+      <% end %>
     </ul>
   </div>
 </nav>
 
+<!-- DROPDOWNS -->
 <!-- Categories -->
 <ul id="list-categories" class="dropdown-content">
   <li><%=link_to ' View all', categories_path %></li>

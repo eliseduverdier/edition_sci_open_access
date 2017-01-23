@@ -22,7 +22,12 @@
     <%= render 'layouts/header'  %>
   <% end %>
 
-  <%#= debug(params) if Rails.env.development? %>
+  <%=
+  unless (params[:debug].nil?)
+    debug(params)
+    Rails.application.routes.recognize_path(request.original_url)
+  end
+  %>
 
   <main class="container">
 

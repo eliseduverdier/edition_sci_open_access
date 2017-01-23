@@ -1,13 +1,7 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="/" class="brand-logo">
-      <%= image_tag("OpenAccess.svg", size: "30x45") %>
-      <!-- <i class="material-icons">lock_open</i> -->
-      Open Science
-    </a>
-    <a href="#" data-activates="nav-mobile" class="button-collapse">
-      <i class="material-icons">menu</i>
-    </a>
+
+    <%= render 'layouts/partials/menu_title' %>
 
     <ul class="right hide-on-med-and-down">
       <li><%= link_to "Papers", papers_path %> </li>
@@ -18,9 +12,6 @@
         :'data-activates' => "list-categories" %> </li>
       <li><%= link_to "Reading Lists", reading_lists_path %> </li>
       <li><%= link_to "About", about_path %></li>
-      <!-- </ul>
-
-      <ul class="right"> -->
       <li><%= link_to "#{current_user.firstname} ↓",
         current_user,
         class: "dropdown-button",
@@ -30,12 +21,13 @@
   </div>
 </nav>
 
+<!-- DROPDOWNS -->
 <!-- Categories -->
 <ul id="list-categories" class="dropdown-content">
   <li><%=link_to ' View all', categories_path %></li>
-<% Category.all.each do |category| %>
-  <li><%= link_to category.name.capitalize, category_path(category) %></li>
-<% end %>
+  <% Category.where(parent_category: nil).all.each do |category| %>
+    <li><%= link_to category.name.capitalize, category_path(category) %></li>
+  <% end %>
 </ul>
 
 <!-- User -->

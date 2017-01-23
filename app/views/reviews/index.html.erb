@@ -4,9 +4,9 @@
 <h1>Reviews for «<%= @paper.title %> »</h1>
 
 
-<%= render 'reviews/partials/review_list', :reviews => @reviews %>
+<%= render 'reviews/partials/review_list', :reviews => @reviews, :from => 'paper' %>
 
-  
+
 <%= link_to "Back to paper",
     paper_path(@paper),
     class: "btn" %>

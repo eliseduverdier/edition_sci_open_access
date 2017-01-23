@@ -117,10 +117,12 @@ class Person < ApplicationRecord
   end
 
   def get_pending_reviews
-    Review.where(reviewer_id: self[:id]).where.not(progression: 'done')
+    Review.where(reviewer_id: id).where.not(progression: 'done')
   end
 
-
+  def get_pending_reviews_asked_by_editor
+    Review.where(editor_id: id).where.not(progression: 'done')
+  end
 
 
   # Returns true if the user wrote the paper

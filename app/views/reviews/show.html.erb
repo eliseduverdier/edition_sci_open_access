@@ -1,3 +1,7 @@
+<%
+  editor = Person.find(@review.editor_id)
+  reviewer = Person.find(@review.reviewer_id)
+%>
 <p id="notice"><%= notice %></p>
 
 <h1>Review</h1>
@@ -6,20 +10,27 @@
 <p>
   Paper: <strong><%= link_to @review.paper.title, @review.paper %></strong>
 </p>
+<p>
+  Review asked by <%= link_to editor.full_name, editor %>
+</p>
 
 <% if current_user.is_editor? %>
   <p>
-    Reviewed by <%= link_to "#{@review.reviewer.full_name}", @review.reviewer %>
+    Reviewed by <%= link_to "#{reviewer.full_name}", reviewer %>
   </p>
 <% end %>
 
+<p>Progression:
 <span class="notice-bg inline <%= review_get_color_progression(@review.progression) %>">
   <%= @review.progression if @review.progression %>
 </span>
+</p>
 
-<span class="notice-bg inline <%= review_get_color_status(@review.status) %>">
-  <%= get_review_status(@review.status) if @review.status %>
-</span>
+<p>Status:
+  <span class="notice-bg inline <%= review_get_color_status(@review.status) %>">
+    <%= get_review_status(@review.status) if @review.status %>
+  </span>
+</p>
 
 <div class="card blue-grey lighten-4">
   <div class="card-content row">

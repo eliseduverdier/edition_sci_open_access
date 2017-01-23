@@ -12,10 +12,12 @@
       Here is a list of the last articles published that might interest you
     </blockquote>
 
-    <% if @pending_reviews.count > 0 %>
     <h3>Your current reviews</h3>
+    <% if @pending_reviews.count > 0 %>
       Find below the works you are currently reviewing
-    <%= render 'reviews/partials/review_list', :reviews => @pending_reviews %>
+    <%= render 'reviews/partials/review_list', :reviews => @pending_reviews, :from => 'home_reviewer' %>
+    <% else %>
+    You have no pending reviews !
     <% end %>
 
   </div>

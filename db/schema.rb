@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170121133727) do
+ActiveRecord::Schema.define(version: 20170123143954) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -96,12 +96,13 @@ ActiveRecord::Schema.define(version: 20170121133727) do
     t.integer  "editor_id"
     t.string   "status"
     t.text     "content"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "progression"
+    t.text     "editor_remarks"
+    t.index ["editor_id"], name: "index_reviews_on_editor_id"
     t.index ["paper_id"], name: "index_reviews_on_paper_id"
     t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
-    t.index ["editor_id"], name: "index_reviews_on_editor_id"
   end
 
 end

@@ -35,11 +35,13 @@ class Paper < ApplicationRecord
     %w[article letter other].include? self[:paper_type] # && self[:status] != 1
   end
 
-
-
-  def has_reviews?
-    Review.where(paper_id: self[:id]).count > 0
-
+  # Count the reviews a paper have (all status and progression)
+  def count_reviews
+    Review.where(paper_id: id).count
   end
 
+  # Does the paper have any reviews ?
+  def has_reviews?
+    self.count_reviews.count > 0
+  end
 end
