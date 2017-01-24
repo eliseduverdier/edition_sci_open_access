@@ -13,100 +13,80 @@
 
 
 <div class="row">
-
   <div class="field col s12">
     <%= f.label :title %>
     <%= f.text_field :title %>
   </div>
-
 </div>
 
 
 <div class="row">
-  <div class="field col s3">
-    <label for="paper_licence">Licence</label>
-    <select id="paper_licence" name="paper[licence]">
-        <% ['CC BY SA', 'MIT', 'GNU', '...'].each do |licence| %>
-        <option value="<%=licence %>"><%= licence %></option>
-        <% end %>
-    </select>
+  <div class="field col l3 m6 s12">
+    <%= f.label :licence %>
+    <%= select("paper", "licence", licence_choice.collect {|licence| licence}, {prompt: 'Select a licence'}) %>
   </div>
 
-  <div class="field col s3">
-    <label for="paper_category">Category</label>
-    <select id="paper_category" name="paper[category_id]">
-        <option disabled selected>Category</option>
-        <% Category.all.each do |cat| %>
-        <option value="<%=cat.id %>"><%= cat.name %></option>
-        <% end %>
-    </select>
+  <div class="field col l3 m6 s12">
+    <%= f.label :category %>
+    <%= select("paper", "category", Category.all.collect {|cat| [cat.name, cat.id]}, {prompt: 'Select a category'}) %>
   </div>
 
-  <div class="field col s3">
-    <label for="paper_conflicts">Conflicts of interest</label>
-    <input type="text" name="paper_conflicts" placeholder="Please declare any conflicts of interests">
+  <div class="field col l3 m6 s12">
+    <%= f.label :conflict_of_interest %>
+    <%= f.text_field :conflict_of_interest %>
   </div>
 
 
-  <div class="field col s3">
-      <label for="paper_type">Type</label>
-      <select id="paper_type" name="paper[paper_type]">
-          <option disabled selected>Type</option>
-          <% get_paper_types.each do |type| %>
-          <option value="<%=type %>"><%= type %></option>
-          <% end %>
-      </select>
+  <div class="field col l3 m6 s12">
+    <%= f.label :paper_type %>
+    <%= select("paper", "paper_type", get_paper_types.collect {|type| type }, {prompt: 'Select a paper type'}) %>
+</div>
+
+<div class="row">
+  <div class="col s12 l8">
+
+    <div class="field">
+      <%= f.label :abstract %>
+      <%= f.text_area :abstract, class: "materialize-textarea" %>
     </div>
 
-</div>
-
-<div class="row">
-
-  <div class="field col s8">
-    <%= f.label :abstract %>
-    <%= f.text_area :abstract, class: "materialize-textarea" %>
-  </div>
-
-  <div class="field col s4">
-      <label for="keywords">Keywords</label>
-      <div id="keywords" class="chips chips-placeholder"></div>
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="field col s8">
+    <div class="field">
       <%= f.label 'Content (TODO LATEX EDITOR)' %>
       <%= f.text_area :html_content, class: "materialize-textarea" %>
-  </div>
-  <div class="field col s4">
-      <label for="authors">authors</label>
-      <div id="authors" class="chips chips-placeholder"></div>
-  </div>
-
-</div>
-
-<div class="row">
-
-  <div class="field col s4">
-    <div class="file-path-wrapper">
-      <%= f.label 'Tex Source' %>
-      <%= file_field_tag :tex_content, class: "file-path validate" %>
-        <input class="file-path validate" type="text" placeholder="Upload one or more files">
     </div>
   </div>
 
+  <div class="col s12 l4">
+    <div class="field">
+      <label for="keywords">Keywords</label>
+      <div id="keywords" class="chips chips-placeholder" data-name="Keyword"></div>
+    </div>
+
+    <div class="field">
+      <label for="authors">Authors</label>
+      <div id="authors" class="chips chips-placeholder" data-name="Author"></div>
+    </div>
+
+    <div class="field">
+      <div class="file-field input-field">
+        <div class="btn">
+          <%= f.label 'Tex Source' %>
+          <%= file_field_tag :tex_content, class: "file-path validate", multiple: "true" %>
+        </div><br />
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" placeholder="Upload one or more files">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
-
-  <div class="field col s2 offset-s5">
+  <div class="field col s12">
     <div class="actions">
     <%= f.submit 'Save', :class => "btn"  %>
     </div>
   </div>
-
 </div>
 
 <% end %>

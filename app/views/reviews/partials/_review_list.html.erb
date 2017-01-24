@@ -17,6 +17,13 @@ reviewer = Person.find(review.reviewer_id)
         <%= link_to "#{author.full_name}", author %>
         <% end %>
       </span>
+
+
+      <span class="badge" data-badge-caption="">
+        <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
+      </span>
+
+      
     <br />
       <%= from == 'home_reviewer' ? 'Asked by' : 'Editor' %>
       <%= link_to editor.full_name, editor %> <%= "(you)" if editor == current_user %>

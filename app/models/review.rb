@@ -4,7 +4,7 @@ class Review < ApplicationRecord
   belongs_to :person, foreign_key: "reviewer_id"
   belongs_to :person, foreign_key: "editor_id"
 
-
+  # Getters
   def reviewer
     Person.where(id: reviewer_id)
   end

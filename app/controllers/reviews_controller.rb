@@ -35,8 +35,7 @@ class ReviewsController < ApplicationController
   # creates the reviews with a "pending" status
   # Done by EDITOR
   def create
-    p params[:review]
-    if (params[:review][:reviewers]) # many reviewers (start)
+    if (params[:review][:reviewers])
       params[:review][:reviewers].each do |reviewer_id|
         @review = Review.new(review_params)
           @review.paper_id = params[:paper_id]
@@ -45,21 +44,17 @@ class ReviewsController < ApplicationController
           @review.status = 'pending'
           @review.save
       end # end loop
-    # else # one reviewer (when editor adds one, for example)
-    #   @review = Review.new(
-    #       paper_id: params[:paper_id],
-    #       reviewer_id: review_params[:reviewer],
-    #       editor_id: current_user.id,
-    #       status: 'pending')
     end
 
     redirect_to paper_path( :id => params[:paper_id]), notice: 'Review was successfully created.'
   end
 
   # PATCH/PUT /papers/:paper_id/reviews/1
-  # update the reviews
+  # update the review
   # Done by REVIEWER
   def update
+    # if the review is marked as done
+    @review.paper.status = params[:review][:status] == 'done' ? 1 : 0
     if @review.update(review_edit_params)
       redirect_to @review, notice: 'The review was successfully updated.'
     else
@@ -74,21 +69,24 @@ class ReviewsController < ApplicationController
     redirect_to reviews_url, notice: 'The review was successfully deleted.'
   end
 
+  ####################################################
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_review
-      @review = Review.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_review
+    @review = Review.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    # For creation
-    def review_params
-      params.require(:review).permit(:reviewer, :reviewers, :status, :editor_remarks)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  # For creation
+  def review_params
+    params.require(:review).permit(:reviewers, :status, :editor_remarks)
+  end
 
-    # For edition
-    def review_edit_params
-      params.require(:review).permit(:reviewer_id, :reviewer_ids, :status, :status, :content, :progression)
-    end
+  # For edition
+  def review_edit_params
+    params.require(:review).permit(:reviewer, :status, :content, :progression)
+  end
+
+
 end

@@ -58,7 +58,7 @@ class PapersController < ApplicationController
   # POST /papers.json
   def create
     @paper = Paper.new(paper_params)
-    @paper.status = 0 # pending
+    @paper.status = -1 # pending, not reviewed
 
     if @paper.save
       # save author

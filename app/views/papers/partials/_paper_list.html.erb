@@ -22,7 +22,7 @@
   <p>
     <span itemprop="authors">
       <% paper.get_authors.each do |author| %>
-      <%= link_to "#{author.full_name}", author %>
+      <%= link_to "#{author.full_name}", author if author%>
       <% end %>
     </span>
   </p>

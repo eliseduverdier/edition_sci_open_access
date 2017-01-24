@@ -6,9 +6,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong> <%= @paper.paper_type unless @paper.category.blank? %> </strong>
-  /
-  <%= @paper.category.name unless @paper.category.blank? %>
+  <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong>
+
+  <span class="new badge <%= paper_get_color_status(@paper.status) %>" data-badge-caption="status">
+    <%= get_paper_status(@paper.status) if @paper.status %>
+  </span>
+
+  <%= link_to @paper.category.name, @paper.category unless @paper.category.blank? %>
 </p>
 
 <% if logged_in? %>
@@ -29,46 +33,40 @@
 <% end # if if author %>
 
 <%# EDITOR: ASK REVIEWS  %>
-<%= if  @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper)
+<%= if @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper)
   render 'reviews/new'
 end %>
 
 <%#  SEE REVIEWS  %>
 <div class="center-align">
 
-<%= if current_user.should_review?(@paper)
+  <%= if current_user.should_review?(@paper)
 
-    link_to 'Start reviewing',
-      new_review_path(@paper.id),
-      class: "btn red"
+      link_to 'Start reviewing',
+        new_review_path(@paper.id),
+        class: "btn red"
 
-  elsif current_user.is_reviewing?(@paper)
+    elsif current_user.is_reviewing?(@paper)
 
-    link_to 'Continue or edit your review',
-      edit_review_path(@paper.get_review_by(current_user)),
-      class: "btn red"
+      link_to 'Continue or edit your review',
+        edit_review_path(@paper.get_review_by(current_user)),
+        class: "btn color2bg"
 
-  elsif current_user.reviewed?(@paper)
+    elsif current_user.reviewed?(@paper)
 
-    link_to 'See your review',
-      review_path(@paper.get_review_by(current_user)),
-      class: "btn"
+      link_to 'See your review',
+        review_path(@paper.get_review_by(current_user)),
+        class: "btn"
 
-  elsif current_user.wrote?(@paper) && @paper.has_reviews?
+    elsif current_user.is_editor? || (current_user.wrote?(@paper) && @paper.has_reviews?)
 
-    link_to 'Read the reviews',
-      reviews_path(@paper.id),
-      class: "btn"
+      link_to 'Read the reviews',
+        reviews_path(@paper.id),
+        class: "btn"
 
-  elsif current_user.is_editor?
-
-    link_to 'Read the reviews',
-      reviews_path(@paper.id),
-      class: "btn"
-
-end %>
-
+  end %>
 </div>
+
 <% end # end if logged_in? %>
 
 <h1>

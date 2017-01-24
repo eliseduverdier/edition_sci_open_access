@@ -66,9 +66,9 @@ class Person < ApplicationRecord
   # +initials+:: bool  ->   true: J. Smith / false: John Smith
   def full_name(initials = false)
     if (initials)
-      self[:firstname][0,1] + '. ' + self[:lastname]
+      firstname[0,1] + '. ' + lastname
     else
-      self[:firstname] + ' ' + self[:lastname]
+      firstname + ' ' + lastname
     end
   end
 
@@ -78,27 +78,28 @@ class Person < ApplicationRecord
 
   # Checks if the user has the status editor
   def is_editor?
-    self[:status] == 'editor'
+    status == 'editor' || is_admin?
   end
 
   # Checks if the user has the status admin
   def is_admin?
-    self[:status] == 'admin'
+    status == 'admin'
   end
 
   # Checks if the user has the status researcher
   def is_researcher?
-    self[:status] == 'researcher'
+    status == 'researcher'
   end
 
   # Checks if the user has the status researcher
   def is_reader?
-    self[:status] == 'reader'
+    status == 'reader'
   end
 
 
   ##################################################
   #    RELATIONS TO PAPERS
+  # usually applied to current_user
   ##################################################
 
   # Get all the papers written by a person
@@ -110,6 +111,15 @@ class Person < ApplicationRecord
     end
     return list
   end
+
+      ##### PAPERS #####
+
+  # Returns true if the user wrote the paper
+  def wrote?(paper)
+    paper.get_authors.include? self
+  end
+
+      ##### REVIEWS #####
 
   # Get all the reviews written by a person
   def get_reviews
@@ -124,11 +134,6 @@ class Person < ApplicationRecord
     Review.where(editor_id: id).where.not(progression: 'done')
   end
 
-
-  # Returns true if the user wrote the paper
-  def wrote?(paper)
-    paper.get_authors.include? self
-  end
 
   # Returns true if the user has to review the paper
   def should_review?(paper)
@@ -150,8 +155,29 @@ class Person < ApplicationRecord
 
   # Returns true if the user is reviewer of the paper
   def is_reviewer_of?(paper)
-    paper.get_review_by(self)
+    ! Review.where(paper_id: paper.id, reviewer_id: id).nil?
   end
+
+  # Returns true if the user is reviewer of the paper
+  def is_editor_of?(paper)
+    ! Review.where(paper_id: paper.id, editor_id: id).nil?
+  end
+
+
+
+
+    ##### REVIEWS #####
+
+  # Returns true if the user wrote the review
+  def wrote_review?(review)
+    review.reviewer_id = id
+  end
+
+  # Returns true if the user asked the review
+  def asked_review?(review)
+    review.reviewer_id = id
+  end
+
 
 
   private

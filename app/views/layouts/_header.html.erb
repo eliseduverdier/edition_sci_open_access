@@ -11,7 +11,7 @@
         :'data-activates' => "list-categories" %> </li>
       <li><%= link_to "About", about_path %></li>
 
-      <% if path_is('static_pages', 'home') %>
+      <% unless path_is('static_pages', 'home') %>
       <li><%= link_to "Log in", login_path, class: 'btn color1bg' %></li>
       <li><%= link_to "Sign up", signup_path, class: 'btn color2bg' %></li>
       <% end %>

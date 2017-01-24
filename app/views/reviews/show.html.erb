@@ -42,7 +42,7 @@
   </div>
 </div> <!-- end card -->
 
-<% if current_user.is_reviewer_of?(@review.paper) && @review.progression != 'done' %>
+<% if current_user.wrote_review?(@review) && @review.progression != 'done'%>
   <%= link_to "Edit",
       edit_review_path(@review),
       class: "btn" %>
@@ -51,5 +51,5 @@
      @review,
      method: :delete,
      data: { confirm: 'Are you sure?' },
-     class: "btn-flat waves-effect waves-red" %>
+     class: "btn-flat waves-effect waves-red" unless current_user.asked_review?(@review%>
 <% end %>

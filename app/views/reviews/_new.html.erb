@@ -1,38 +1,35 @@
-<%# inserted from papers/show %>
+<%
+  # rendered in from papers/show
 
-<h3>Ask for reviews</h3>
+  # current_reviews = @paper.get_reviews
+  possible_reviewers = get_possible_reviewers_for(@paper)
+%>
 
-The paper has currently <%= @paper.count_reviews %> reviews.
+<div class="card">
+  <div class="card-content">
 
-<%= form_for Review.new,
-     :url => reviews_path(@paper.id) do |f| %>
+  <p class="card-title">Ask for reviews</p>
 
-<div class="row">
+  The paper has currently <%= @paper.count_reviews %> reviews.
 
-  <div class="col m5">
-    <label for="review_remarks">Remarks (optional)</label>
-    <textarea class="materialize-textarea" id="review_remarks" type="text" name="review[editor_remarks]"></textarea>
-  </div>
+  <%= form_for Review.new, :url => reviews_path(@paper.id) do |f| %>
 
-  <div class="col m7">
-    <label for="review_reviewers">Reviewers</label>
-    <select id="review_reviewers" name="review[reviewers][]" multiple>
-        <option disabled selected>Please choose</option>
-      <% get_possible_reviewers_for(@paper).each do |person| %>
-      <option value="<%= person.id %>"><%= person.full_name %></option>
-      <% end %>
-    </select>
-  </div>
-</div>
-<div class="row">
-  <div class="col m12">
-    <button class="btn color2bg" type="submit" name="action">
-      Send review applications <i class="material-icons right">send</i>
+    <%= f.label :editor_remarks %>
+    <%= f.text_area :editor_remarks, class: "materialize-textarea" %>
+
+    <%= f.label :reviewers %>
+    <%= select("review", "reviewers",
+          possible_reviewers.collect {|person| [person.full_name, person.id]},
+          {prompt: 'Please choose reviewers'}) %>
+
+    <button type="submit" class="btn color2bg">
+      Ask reviews <i class="material-icons right">send</i>
     </button>
-  </div>
+
+
+  <% end %>
+
 </div>
-
-
-<% end %>
+</div>
 
 <div class="divider"></div>

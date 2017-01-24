@@ -32,12 +32,14 @@ $(document).ready(function() {
   $('.chips').material_chip();
 
   $('.chips-placeholder').material_chip({
-    placeholder: 'Enter a keyword',
-    secondaryPlaceholder: '+Keyword',
+    // placeholder: 'Enter a keyword',
+    secondaryPlaceholder: $(this) ? $(this).getAttribute('data-name') : 'Add',
   });
+
   var chip = {
     tag: 'chip content',
   };
+
   $('.chips-initial').material_chip('data');
 
 });

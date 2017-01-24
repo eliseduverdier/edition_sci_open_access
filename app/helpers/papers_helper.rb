@@ -1,9 +1,17 @@
 module PapersHelper
 
-  # Get the authors IDs of a paper
+  # Get the authors-of-a-paper IDs
   def get_authors_id(paper)
     list = []
     authors = paper.get_authors
+    authors.each { |author| list.push(author.id) }
+    return list
+  end
+
+  # Get the reviewers-of-a-paper IDs
+  def get_reviewers_id(paper)
+    list = []
+    authors = paper.get_reviewers
     authors.each { |author| list.push(author.id) }
     return list
   end
@@ -39,9 +47,23 @@ module PapersHelper
     end
   end
 
-
+  # Get researcher who did not wrote the paper, and are not already  reviewing it
   def get_possible_reviewers_for(paper)
-    Person.where(status: 'researcher').where.not(id: get_authors_id(paper)).all
+    Person
+      .where(status: 'researcher')
+      .where.not(id: get_authors_id(paper))
+      .where.not(id: get_reviewers_id(paper))
+      .all
+  end
+
+
+  def licence_choice
+    [
+      'CC BY SA',
+      'MIT',
+      'GNU',
+      '...'
+    ]
   end
 
 end
