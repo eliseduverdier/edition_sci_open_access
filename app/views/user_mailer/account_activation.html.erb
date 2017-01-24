@@ -1,12 +1,74 @@
-<h1>Open Access Edition</h1>
+<style>
+  /* COLORS */
+  .color1bg { background-color: #0b8668; }
+  .color1 { color: #0b8668; }
+  .color2bg { background-color: #c68d00; }
+  .color2 { color: #c68d00; }
+  .color3bg { background-color: #546e7a; }
+  .color3 { color: #546e7a; }
 
-<p>Hi <%= @person.firstname %>,</p>
+  html {
+    border: 20px #0b8668 solid;
+    padding: 20px;
+  }
+  body{
+    margin: 10px auto 300px;
+    max-width: 500px;
+
+    font-family: sans-serif;
+    color: black;
+  }
+  /* COMPONENT */
+  hr {
+    /*border: 20px #0b8668 solid;*/
+    height: 10px;
+    background: #0b8668;
+    border: none;
+  }
+  .btn {
+    border-radius: 2px;
+    padding: 10px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .btn:hover {
+    background-color: #546e7a;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+</style>
+
+<h1>
+  <%= image_tag("heptagon_orange.svg", size: "30") %>
+  Open Science
+</h1>
+
+<hr>
+
+<p>
+  Hi
+  <%= @person.firstname %>,
+</p>
 
 <p>
   Thanks for joinging in !
+</p>
+<p>
   To finalise your subscription, please click on the link below:
 </p>
 
 <p>
-  <%= link_to "Activate", edit_account_activation_url(@person.activation_token, email: @person.email) %>
+  <%= link_to "Activate your account",
+      edit_account_activation_url(@person.activation_token, email: @person.email),
+      class: 'btn color2bg' %>
 </p>
+<small>
+  If the link is not accessible, please visit the url <code><%=edit_account_activation_url(@person.activation_token, email: @person.email) %></code>
+</small>

@@ -19,7 +19,7 @@ Database description, meaning of attributes and possible values for each.
  * abstract
  * keywords          (list encoded in json)
  * status
-    *-1: pending, not reviewed
+    * -1: pending, not reviewed
     * 0: pending, reviewed
     * 1: pending: reviews finished
     * 2: accepted
@@ -97,7 +97,9 @@ Database description, meaning of attributes and possible values for each.
  * person_id
 
 
----
+# Mails
+Available mails can be previewed here ` http://localhost:3000/rails/mailers/`
+
 
 # Views / actions
 
