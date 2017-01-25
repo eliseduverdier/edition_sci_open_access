@@ -47,9 +47,11 @@ class Paper < ApplicationRecord
   # Returns true if the paper should be reviewed:
   #  * if it is not already accepted
   #  * if its type is reviewable (not an opinion paper for example)
-  #  * if it doesn't have 5 reviews already
+  #  * if it doesn't have <max_reviews> reviews already
   def can_be_reviewed?
-    paper_type != 'opinion' && status.to_i < 2 && self.count_reviews < 5
+    paper_type != 'opinion' &&
+        is_under_review? &&
+        self.count_reviews < Rails.configuration.options['reviews']['max_reviewers']
   end
 
 
@@ -67,10 +69,46 @@ class Paper < ApplicationRecord
   # REVIEW PROCESS
   #####################################
 
-  def reviews_done?
-    get_reviews
+  # Checks if a paper has more than <min_reviews> reviews,
+  #   and all of them are done
+  def all_reviews_done?
+    reviews = Review.where(paper_id: id)
+    total = reviews.count
+    total > Rails.configuration.options['reviews']['min_reviewers'] &&
+        reviews.where(progression: 'done').count == total
   end
 
+  # Review starteted
+  def reviews_started?
+    Review.where(paper_id: id, progression: ['ongoing', 'done']).count > 0
+  end
 
+  def publish
+    self.update(status: 2)
+  end
+
+  def refuse
+    self.update(status: 3)
+  end
+
+  def is_pending_opinion?
+    paper_type == 'opinion' && status.to_i < 2
+  end
+
+  #####################################
+  # STATUS
+  #####################################
+
+  def is_published?
+    status.to_i == 2
+  end
+
+  def is_under_review?
+    status.to_i < 2
+  end
+
+  def is_refused?
+    status.to_i == 3
+  end
 
 end

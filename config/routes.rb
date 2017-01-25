@@ -10,6 +10,11 @@ HelloApp::Application.routes.draw do
 
   resources :reviews, path: 'papers/:paper_id/reviews'
   get    '/reviews/mine' => 'reviews#mine', :as => :user_reviews
+  post   'papers/:paper_id/review_opinion' => 'reviews#validate_opinion', :as => :review_opinion
+
+  post   'papers/:paper_id/accept' => 'paper#accept', :as => :accept_paper
+  post   'papers/:paper_id/refuse' => 'paper#refuse', :as => :refuse_paper
+  post   'papers/:paper_id/ask_revision' => 'paper#ask_revision', :as => :ask_paper_revision
 
 
   #####################

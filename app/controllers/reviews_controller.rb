@@ -31,22 +31,37 @@ class ReviewsController < ApplicationController
     @paper = Paper.find(params[:paper_id])
   end
 
+  ###############################################################
+
   # POST /papers/:paper_id/reviews
   # creates the reviews with a "pending" status
   # Done by EDITOR
   def create
     if (params[:review][:reviewers])
       params[:review][:reviewers].each do |reviewer_id|
-        @review = Review.new(review_params)
-          @review.paper_id = params[:paper_id]
+        unless reviewer_id.blank?
+          @review = Review.new(review_params)
+          @review.paper_id    = params[:paper_id]
           @review.reviewer_id = reviewer_id
-          @review.editor_id = current_user.id
-          @review.status = 'pending'
+          @review.editor_id   = current_user.id
+          @review.progression = 'pending'
           @review.save
+        end
       end # end loop
     end
 
     redirect_to paper_path( :id => params[:paper_id]), notice: 'Review was successfully created.'
+  end
+
+
+  def validate_opinion
+    status = params[:review][:status]
+    @review = new_opinion(status)
+    if @review.save
+      redirect_to paper_path(
+        :id => params[:paper_id]),
+        notice: status == 3 ? 'The paper was successfully published.' : 'The paper was refused.'
+    end
   end
 
   # PATCH/PUT /papers/:paper_id/reviews/1
@@ -54,8 +69,8 @@ class ReviewsController < ApplicationController
   # Done by REVIEWER
   def update
     # if the review is marked as done
-    @review.paper.status = params[:review][:status] == 'done' ? 1 : 0
     if @review.update(review_edit_params)
+      @review.update(progression: params[:review][:progression] == 'done' ? 'done' : 'ongoing')
       redirect_to @review, notice: 'The review was successfully updated.'
     else
       render :edit
@@ -77,7 +92,8 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  # PARAMS # Never trust parameters from the scary internet, only allow the white list through.
+
   # For creation
   def review_params
     params.require(:review).permit(:reviewers, :status, :editor_remarks)
@@ -86,6 +102,29 @@ class ReviewsController < ApplicationController
   # For edition
   def review_edit_params
     params.require(:review).permit(:reviewer, :status, :content, :progression)
+  end
+
+  def review_opinion_params
+    params.require(:review).permit(:status, :editor_remarks)
+  end
+
+  ####################
+
+  # Create a new revieww for an opinion
+  # +Params+
+  # +Status+  2 for accepted, 3 for refused
+  def new_opinion(status)
+    review = Review.new(review_opinion_params)
+    review.paper_id    = params[:paper_id]
+    review.reviewer_id = current_user.id
+    review.editor_id   = current_user.id
+    review.progression = 'done'
+    if (status.to_i == 3) # review -> accepted
+      Paper.find(params[:paper_id]).update(status: 2) # published accepted
+    elsif (status.to_i == 0) # review -> refused
+      Paper.find(params[:paper_id]).update(status: 3) # refused
+    end
+    return review
   end
 
 

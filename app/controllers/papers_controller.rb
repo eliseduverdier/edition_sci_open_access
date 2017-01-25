@@ -47,15 +47,14 @@ class PapersController < ApplicationController
     @paper = Paper.new
   end
 
-
-##########################################################
-
   # GET /papers/1/edit
   def edit
   end
 
+
+##########################################################
+
   # POST /papers
-  # POST /papers.json
   def create
     @paper = Paper.new(paper_params)
     @paper.status = -1 # pending, not reviewed
@@ -72,7 +71,15 @@ class PapersController < ApplicationController
   end
 
   # PATCH/PUT /papers/1
-  # PATCH/PUT /papers/1.json
+  def update
+    if @paper.update(paper_params)
+      redirect_to @paper, notice: 'Paper was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  # PATCH/PUT /papers/1
   def update
     if @paper.update(paper_params)
       redirect_to @paper, notice: 'Paper was successfully updated.'
@@ -82,7 +89,6 @@ class PapersController < ApplicationController
   end
 
   # DELETE /papers/1
-  # DELETE /papers/1.json
   def destroy
     @paper.destroy
     redirect_to papers_url, notice: 'Paper was successfully destroyed.'

@@ -1,0 +1,3 @@
+  reviews:
+    min_reviewers: 2
+    max_reviewers: 4

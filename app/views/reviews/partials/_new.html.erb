@@ -20,7 +20,8 @@
     <%= f.label :reviewers %>
     <%= select("review", "reviewers",
           possible_reviewers.collect {|person| [person.full_name, person.id]},
-          {prompt: 'Please choose reviewers'}) %>
+          {prompt: 'Please choose reviewers'},
+          {:multiple => true}) %>
 
     <button type="submit" class="btn color2bg">
       Ask reviews <i class="material-icons right">send</i>
@@ -29,7 +30,5 @@
 
   <% end %>
 
+  </div>
 </div>
-</div>
-
-<div class="divider"></div>

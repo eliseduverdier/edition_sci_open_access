@@ -3,10 +3,10 @@ if logged_in?
 
     if current_user.is_researcher?
       render 'static_pages/home_researcher'
-    elsif current_user.is_editor?
-      render 'static_pages/home_editor'
     elsif current_user.is_admin?
       render 'static_pages/home_admin'
+    elsif current_user.is_editor?
+      render 'static_pages/home_editor'
     else
       render 'static_pages/home_reader'
    end

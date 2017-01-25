@@ -1,5 +1,27 @@
+<!--
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+-->
+
+# Overview
+The site welcomes users, who can be readers, researchers or editors.
+
+The researchers can submit their papers, which will wait for peer reviews.
+
+The editors can read the submitted papers and
+
+# Workflow
+
+- between 3 and 5 reviews by article, proposed to researchers by same or different editors
+- no one (except reviewer & admin) can read an unfinished review
+- when all reviews (if >3) are each done:
+  - froze the process, ask to editor to read reviews:
+     - validate or refuse the paper (no status change (don't publish/refuse)).
+  - send author a notif: "please correct your paper according to the reviews", or "sorry your paper has been rejected"
+  - if ok: author corrects its paper and send notif to reviewer (process_status: done)
+  - editor sees the changes: publishes paper !
+
+*end*
 
 # Database
 Database description, meaning of attributes and possible values for each.
@@ -64,7 +86,7 @@ Database description, meaning of attributes and possible values for each.
 
 ## reviews
  * id
- * reviewer_id   [people.id]
+ * reviewer_id [people.id]
  * editor_id   [people.id]
  * paper_id    [paper.id]
  * status     
@@ -124,6 +146,32 @@ Database description, meaning of attributes and possible values for each.
    * if researcher and has been added as co-author to the article
  * delete
    * only if: author or co-author, paper is unpublished with no peer-reviews, or peer-reviews are started but after notification / need to give reason.
+
+## Reviews
+**editor**
+  * **paper/:id**
+    * if pending, and not enough reviews already: can send reviews to researchers
+    * if reviews are done: can accept/refuse the paper, but mostly sends it for modification to the author
+  * **paper/:id** can validate or refuse an opinion paper (if pending)
+  * **paper/:id/reviews** can see all the reviews of a paper
+  * **paper/mine** can see all of the reviews they asked and which one are still pending
+  * can see when all reviews are done, and asks to author
+  * and decide to publish the paper.
+
+**researcher**
+  on their articles:
+  * **paper/:id/reviews**
+    they can see
+
+
+  on other's article:
+  * can edit a copy of the base article: their modification will be highligthed.
+
+
+
+
+**reader**
+  * reviews are private: only editors, author of the article in question, and the reviewer can see them.
 
 ## Persons
  * (admin) see a list of all persons

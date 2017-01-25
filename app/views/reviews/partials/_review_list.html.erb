@@ -1,15 +1,10 @@
 <ul class="collection">
   <% reviews.each do |review| %>
 
-<%
-editor = Person.find(review.editor_id)
-reviewer = Person.find(review.reviewer_id)
-%>
 
   <li>
-    <% unless from == 'paper'%>
-    <p class="title"><%= link_to review.paper.title, review.paper %></p>
-    <% end %>
+    <% unless path_is('reviews', 'index') %>
+     <p class="title"><%= link_to review.paper.title, review.paper %></p>
 
     <p> Authors:
       <span itemprop="authors">
@@ -17,28 +12,29 @@ reviewer = Person.find(review.reviewer_id)
         <%= link_to "#{author.full_name}", author %>
         <% end %>
       </span>
+    <% end %>
 
 
       <span class="badge" data-badge-caption="">
         <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
       </span>
 
-      
-    <br />
+      <br />
+
       <%= from == 'home_reviewer' ? 'Asked by' : 'Editor' %>
-      <%= link_to editor.full_name, editor %> <%= "(you)" if editor == current_user %>
+      <%= link_to review.editor.full_name, review.editor %> <%= "(you)" if review.editor == current_user %>
     <br />
     <% if (current_user.is_editor? || current_user.is_admin?) && from != 'home_reviewer' %>
       Reviewer:
-      <%= link_to reviewer.full_name, reviewer %>
+      <%= link_to review.reviewer.full_name, review.reviewer %> <%= "(you)" if review.reviewer == current_user %>
     <% end %>
     </p>
 
     <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
-      <%= 'progression: '+review.progression if review.progression %>
+      <%= "progression: #{review.progression}" if review.progression %>
     </span>
     <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
-      <%= 'status: '+get_review_status(review.status) if review.status %>
+      <%= "status: #{get_review_status(review.status)}" if review.status %>
     </span>
 
     <%= link_to 'Read review',

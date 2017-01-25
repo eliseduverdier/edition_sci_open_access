@@ -1,0 +1,31 @@
+<%
+  # rendered in from papers/show
+
+  # current_reviews = @paper.get_reviews
+%>
+
+<div class="card">
+  <div class="card-content">
+
+  <p class="card-title">Review this paper</p>
+  <p class="precision">As an editor, you can review opinion papers.
+    To be accepted, this paper should present ... this and that...</p>
+
+  <%= form_for Review.new, :url => review_opinion_path(@paper.id) do |f| %>
+
+    <%= f.label :editor_remarks %>
+    <%= f.text_area :editor_remarks, class: "materialize-textarea" %>
+
+    <button type="submit" name="review[status]" value="3" class="btn color2bg">
+      Validate paper <i class="material-icons right">done</i>
+    </button>
+
+    <button type="submit" name="review[status]" value="0" class="btn red darken-1">
+      Refuse paper <i class="material-icons right">clear</i>
+    </button>
+
+
+  <% end %>
+
+  </div>
+</div>

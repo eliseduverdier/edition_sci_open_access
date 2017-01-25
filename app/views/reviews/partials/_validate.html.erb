@@ -1,0 +1,38 @@
+<%
+reviews = @paper.get_reviews
+%>
+
+<div class="card">
+  <div class="card-content">
+
+    <p>
+      This paper has been reviewed <%= reviews.count %> times.
+    </p>
+
+    Results:
+    <% reviews.order(status: :desc).each do |review| %>
+    <div class="">
+      <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
+      <%= get_review_status(review.status) %>
+      (by <%= review.reviewer.full_name %>)
+    </div>
+    <% end %>
+
+    <div class="divider"></div>
+
+    <p>
+      <a href="<%= ask_paper_revision_path(@paper.id) %>" class="btn color2bg">
+        Ask a revision to the author <i class="material-icons right">send</i>
+      </a>
+
+      <a href="<%= accept_paper_path(@paper.id) %>" class="btn green">
+        Accept the article <i class="material-icons right">done</i>
+      </a>
+
+      <a href="<%= refuse_paper_path(@paper.id) %>" class="btn red">
+        Refuse the article <i class="material-icons right">clear</i>
+      </a>
+    </p>
+
+  </div>
+</div>

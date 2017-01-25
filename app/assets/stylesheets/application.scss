@@ -18,11 +18,13 @@ $secondary-color: #0b8668 !default;
 @import "materialize";
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
 html {
   font-family: 'Montserrat', Trebuchet, sans-serif;
 }
-
-// .btn-flat { background-color: #eee; }
+h1, h2, h3, h4 {
+  font-family: 'Montserrat Alternates';
+}
 
 ul.collection li { @extend .collection-item; }
 
@@ -41,6 +43,8 @@ ul.collection li { @extend .collection-item; }
 .color2 { color: #c68d00; }
 .color3bg { background-color: #546e7a; }
 .color3 { color: #546e7a; }
+
+.btn-flat.visible { background-color: #eee; }
 
 // ETC
 div.divider {

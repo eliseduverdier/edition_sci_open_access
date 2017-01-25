@@ -2,7 +2,6 @@
     authors = @paper.get_authors_as_name_list(initials: true)
     provide(:title, "« #{@paper.title} » by #{authors}" )
 %>
-
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -16,30 +15,29 @@
 </p>
 
 <% if logged_in? %>
-
 <%#  AUTHOR: EDIT PAPER  %>
 <% if current_user.wrote?(@paper) %>
   <div class="right-align">
-      <%= link_to 'Edit',
-          edit_paper_path(@paper),
-          class: "btn-flat" %>
-
-      <%= link_to 'Delete',
-          @paper, method: :delete,
-          data: { confirm: 'Are you sure? Please enter the reason why below.
-            A confirmation to the editor will then be sent.' },
+      <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
+      <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
           class: "btn-flat waves-effect waves-red" %>
   </div>
 <% end # if if author %>
 
-<%# EDITOR: ASK REVIEWS  %>
-<%= if @paper.can_be_reviewed? && current_user.is_editor? && !current_user.wrote?(@paper)
-  render 'reviews/new'
+<%=
+# EDITOR: ASK REVIEWS
+if current_user.is_editor? && !current_user.wrote?(@paper)
+  if @paper.all_reviews_done?
+    render 'reviews/partials/validate'
+  elsif @paper.can_be_reviewed?
+    render 'reviews/partials/new'
+  elsif @paper.is_pending_opinion?  # EDITOR: IF OPINION, ONLY VALIDATE
+    render 'reviews/partials/new_opinion'
+  end
 end %>
 
 <%#  SEE REVIEWS  %>
 <div class="center-align">
-
   <%= if current_user.should_review?(@paper)
 
       link_to 'Start reviewing',
@@ -49,13 +47,13 @@ end %>
     elsif current_user.is_reviewing?(@paper)
 
       link_to 'Continue or edit your review',
-        edit_review_path(@paper.get_review_by(current_user)),
+        edit_review_path(@paper.id, @paper.get_review_by(current_user)),
         class: "btn color2bg"
 
     elsif current_user.reviewed?(@paper)
 
       link_to 'See your review',
-        review_path(@paper.get_review_by(current_user)),
+        review_path(@paper.id, @paper.get_review_by(current_user)),
         class: "btn"
 
     elsif current_user.is_editor? || (current_user.wrote?(@paper) && @paper.has_reviews?)
@@ -65,19 +63,40 @@ end %>
         class: "btn"
 
   end %>
-</div>
-
+  </div>
 <% end # end if logged_in? %>
+
+<% if @paper.is_refused? %>
+
+  <p class="notice error">This paper has been refused</p>
+  <p>It is therefore not accessible to the public.
+  You can <%= link_to 'Read the reviews here', reviews_path(@paper.id) %> (TODO anonymise them).</p>
+
+<% elsif @paper.is_under_review? %>
+  <p class="notice">
+    This paper is currently under review.
+    It will be made available once the peer-review process is finished.
+  </p>
+<% end %>
 
 <h1>
   <em><span itemprop="title"><%= @paper.title %></span></em>
 </h1>
+
+
+<h3>Abstract</h3>
+
+<blockquote id="abstract">
+  <%= @paper.abstract.html_safe %>
+</blockquote>
+
 
 <div class="card">
   <div class="card-content row">
     <div class="col s6">
       <strong>Authors</strong>
       <span itemprop="authors">
+
         <% @paper.get_authors.each do |author| %>
         <%= link_to "#{author.full_name}", author %>
         <% end %>
@@ -102,30 +121,13 @@ end %>
   </div>
 </div> <!-- end card -->
 
-<h3>Abstract</h3>
 
-<blockquote id="abstract">
-  <%= @paper.abstract %>
-</blockquote>
-
-<div class="divider"></div>
-
-<% if @paper.status.to_i == 2 %>
+<% if logged_in? && (@paper.is_published? || current_user.is_editor? || current_user.is_reviewer_of?(@paper)) %>
 
   <h3>Content</h3>
 
   <blockquote id="content">
     <p><%= @paper.html_content.html_safe  unless @paper.html_content.blank? %></p>
   </blockquote>
-
-<% elsif @paper.status.to_i == 3 %>
-
-  <p class="notice error">This paper has been refused</p>
-  <p>It is therefore not accessible to the public.
-  You can <%= link_to 'Read the reviews here', reviews_path(@paper.id) %> (TODO anonymise them).</p>
-
-<% else %>
-
-  This paper is currently under review. It will be made available one the peer-review process is finished.
 
 <% end %><!-- end content -->

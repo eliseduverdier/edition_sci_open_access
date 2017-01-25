@@ -25,7 +25,7 @@
   <%=
   unless (params[:debug].nil?)
     debug(params)
-    Rails.application.routes.recognize_path(request.original_url)
+    get_path
   end
   %>
 

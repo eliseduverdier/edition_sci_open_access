@@ -22,10 +22,12 @@ h4 { font-size: 1.5rem; }
 //   @include box_sizing;
 //   background: #ddd;
 // }
-
+.inline {
+  padding: 10px;
+}
 .button-stuff {
   border-radius: 2px;
-  height: 36px;
+  min-height: 36px;
   line-height: 36px;
   text-align: center;
   letter-spacing: .5px;
@@ -37,7 +39,7 @@ h4 { font-size: 1.5rem; }
   @extend .button-stuff;
   margin-top: 10px;
   color: #fff;
-  background-color: #aaa;
+  background-color: lighten(#546e7a, 20%);
   &.error, &.danger { background-color: darken(#f50, 20%); }
   &.warning { background-color: darken(#fc0, 20%); }
   &.success { background-color: darken(#cf0, 20%); }
@@ -48,7 +50,7 @@ h4 { font-size: 1.5rem; }
   @extend .button-stuff;
   margin-top: 10px;
   background-color: #eee;
-  color: #777;
+  color: darken(#546e7a, 20%);
   &.error, &.danger { color: darken(#f50, 20%); }
   &.warning { color: darken(#fc0, 20%); }
   &.success { color: darken(#cf0, 20%); }

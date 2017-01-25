@@ -19,8 +19,12 @@ en:
   people.unauthorized: 'Please log in to access to this page'
 
   # Papers
-  paper.edit.forbidden: 'You don’t have the right to edit '
+  paper.edit.forbidden: 'You don’t have the right to edit this papers.'
+  paper.edit.success: ''
 
+  paper.delete.confirmation: 'Are you sure? Please enter the reason why below. A confirmation to the editor will then be sent.'
+  paper.delete.success: 'The paper has been successfully deleted'
+  paper.delete.forbidden: 'This paper cannot be deleted.'
 
   # Mails
-  user_mailer.account_activation.subject: "Welcome"
+  user_mailer.account_activation.subject: 'Welcome'

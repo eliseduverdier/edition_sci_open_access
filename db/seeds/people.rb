@@ -31,9 +31,8 @@ Person.create([
   }, {
     firstname: 'Paul',
     lastname: 'Erdos', # 'Erdős',
-    bio: 'Paul Erdős was a Hungarian mathematician. He was one of the most prolific mathematicians of the 20th century. He was known both for his social practice of ...',
     status: 'researcher',
-    email: '@test.edu',
+    email: 'erdos@test.edu',
     password: '123456789', password_confirmation: '123456789',
     activated: true, activated_at: Time.zone.now
   },

@@ -1,54 +1,33 @@
-<div class="landing-text">
-
-  <div class="row">
-    <div class="col s8 offset-s2">
-      <h1>open science</h1>
-    </div>
-    <div class="col s8 offset-s2">
-      <h3 class="color1">open access scientific revue</h3>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col s8">
-      <h4 class="text-grey darken-3">free publishing for researchers</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s8 offset-s4">
-      <h4 class="text-grey darken-3">free reading for the public</h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col s8 offset-s2">
-      <h3 class="color2">community based peer review</h3>
-    </div>
-    <%#= image_tag("OpenAccess_black.svg", size: "60x100") %>
-  </div>
-
-</div>
-
-<div class="divider"></div>
+<%
+  provide(:title, "Admin #{@current_user.firstname}")
+%>
 
 <div class="row">
-  <div class="col s4">
-    We allow researcher to publish freely, as we believe good science should be made available without fees.
+  <div class="col m8">
+    <p>TODO: backend for managing</p>
+    <h2>Welcome <%= @current_user.firstname %> (admin)</h2>
+
+    <h3>papers</h3>
+    There is currently <%= Paper.all.count %> articles.
+
+    <h3>reviews</h3>
+
   </div>
-  <div class="col s4">
-    We guarantee a quality of work and conflict-free reviews, by a community based peer reviewed, automation to help the process, while helping respecting the anonymysity but promoting transparence during the process.
+
+  <div class="col m4">
+
+    <div class="input-field">
+      <label for="search">
+        <i class="material-icons prefix">search</i>
+      </label>
+      <input id="search" type="search" placeholder="Search an article, an author, a keyword…">
+    </div>
+
+    <h3>Papers</h3>
+    <p> <%= link_to 'All', papers_all_path, class: 'btn-flat' %> </p>
+    <p> <%= link_to 'Pending', papers_pending_path, class: 'btn-flat' %> </p>
+    <p> <%= link_to 'Refused', papers_refused_path, class: 'btn-flat' %> </p>
+    <p> <%= link_to 'Published', papers_path, class: 'btn-flat' %> </p>
+
   </div>
-  <div class="col s4">
-    The public is allowed to access the works as they are foundation of our society blabla bla.
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<div class="center-align">
-
-  <%= link_to "Log in", login_path, class: 'btn-large color1bg' %>
-  &nbsp; or &nbsp;
-  <%= link_to "Sign up", signup_path, class: 'btn-large color2bg' %>
-
-
 </div>

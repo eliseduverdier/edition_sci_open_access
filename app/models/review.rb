@@ -6,11 +6,11 @@ class Review < ApplicationRecord
 
   # Getters
   def reviewer
-    Person.where(id: reviewer_id)
+    Person.where(id: reviewer_id).take
   end
 
   def editor
-    Person.where(id: editor_id)
+    Person.where(id: editor_id).take
   end
 
 end

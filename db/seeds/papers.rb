@@ -66,7 +66,7 @@ Paper.create([
   	title: 'Topics in the Theory of Generative Grammar',
     status: 2,
   	abstract: '....',
-  	category: Category.where(name: 'linguistic').take
+  	category: Category.where(name: 'grammar').take
   },
   # {
   #   paper_type: '',
