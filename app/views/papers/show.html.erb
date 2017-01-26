@@ -16,17 +16,10 @@
 
 <% if logged_in? %>
 <%#  AUTHOR: EDIT PAPER  %>
-<% if current_user.wrote?(@paper) %>
-  <div class="right-align">
-      <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
-      <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
-          class: "btn-flat waves-effect waves-red" %>
-  </div>
-<% end # if if author %>
 
-<%=
-# EDITOR: ASK REVIEWS
-if current_user.is_editor? && !current_user.wrote?(@paper)
+<div class="center-align">
+
+<%= if current_user.is_editor? # EDITOR: ASK REVIEWS
   if @paper.all_reviews_done?
     render 'reviews/partials/validate'
   elsif @paper.can_be_reviewed?
@@ -34,35 +27,52 @@ if current_user.is_editor? && !current_user.wrote?(@paper)
   elsif @paper.is_pending_opinion?  # EDITOR: IF OPINION, ONLY VALIDATE
     render 'reviews/partials/new_opinion'
   end
-end %>
+end  %>
+
+<% if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
+
+<div class="row">
+  <h3>Your paper has been reviewed.</h3>
+  <div class="col l4 m12 s12">
+    <p> Read the reviews </p>
+    <p><%= link_to 'Read the reviews', reviews_path(@paper.id), class: "btn" %></p>
+  </div>
+  <div class="col l4 m6 s12">
+    <p>Please read the reviews and update your paper consequently.</p>
+    <p><%= link_to 'Update your paper', edit_paper_path(@paper), class: "btn" %></p>
+  </div>
+  <div class="col l4 m6 s12">
+    <p>Once your paper is edited, please ask the editor to review it again</p>
+    <p><%= link_to 'Ask editor ', edit_paper_path(@paper), class: "btn" %></p>
+  </div>
+</div>
 
 <%#  SEE REVIEWS  %>
-<div class="center-align">
-  <%= if current_user.should_review?(@paper)
+  <% elsif current_user.should_review?(@paper) %>
 
-      link_to 'Start reviewing',
+      <%= link_to 'Start reviewing',
         new_review_path(@paper.id),
-        class: "btn red"
+        class: "btn red" %>
 
-    elsif current_user.is_reviewing?(@paper)
+    <% elsif current_user.is_reviewing?(@paper) %>
 
-      link_to 'Continue or edit your review',
+      <%= link_to 'Continue or edit your review',
         edit_review_path(@paper.id, @paper.get_review_by(current_user)),
-        class: "btn color2bg"
+        class: "btn color2bg" %>
 
-    elsif current_user.reviewed?(@paper)
+    <% elsif current_user.reviewed?(@paper) %>
 
-      link_to 'See your review',
+      <%= link_to 'See your review',
         review_path(@paper.id, @paper.get_review_by(current_user)),
-        class: "btn"
+        class: "btn" %>
 
-    elsif current_user.is_editor? || (current_user.wrote?(@paper) && @paper.has_reviews?)
+    <% elsif current_user.is_editor? || (current_user.wrote?(@paper) && @paper.has_reviews?) %>
 
-      link_to 'Read the reviews',
+      <%= link_to 'Read the reviews',
         reviews_path(@paper.id),
-        class: "btn"
+        class: "btn" %>
 
-  end %>
+  <% end  # end reviews %>
   </div>
 <% end # end if logged_in? %>
 
@@ -83,6 +93,13 @@ end %>
   <em><span itemprop="title"><%= @paper.title %></span></em>
 </h1>
 
+<% if logged_in? && current_user.wrote?(@paper) %>
+  <div class="right-align">
+      <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
+      <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
+          class: "btn-flat waves-effect waves-red" %>
+  </div>
+<% end #  if author %>
 
 <h3>Abstract</h3>
 

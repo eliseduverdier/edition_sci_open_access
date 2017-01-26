@@ -1,11 +1,12 @@
 class ReviewsController < ApplicationController
-  before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :set_paper, except: [:index, :mine, :create, :new]
+  before_action :set_review , only: [:show, :edit, :update, :destroy]
+  before_action :is_editor, only: [:validate_opinion]
 
   # GET /papers/:paper_id/reviews
   # GET /papers/:paper_id/reviews.json
   def index
-    @reviews = Review.where(paper_id: params[:paper_id])
-    @paper = Paper.find(params[:paper_id])
+    @reviews = Review.where(paper_id: @paper.id)
   end
 
   # GET /reviews/mine
@@ -22,13 +23,11 @@ class ReviewsController < ApplicationController
   # GET /papers/:paper_id/reviews/new
   # not used: only from paper/:id/show
   def new
-    @paper = Paper.find(params[:paper_id])
     @review = Review.new
   end
 
   # GET /reviews/1/edit
   def edit
-    @paper = Paper.find(params[:paper_id])
   end
 
   ###############################################################
@@ -40,12 +39,14 @@ class ReviewsController < ApplicationController
     if (params[:review][:reviewers])
       params[:review][:reviewers].each do |reviewer_id|
         unless reviewer_id.blank?
-          @review = Review.new(review_params)
-          @review.paper_id    = params[:paper_id]
-          @review.reviewer_id = reviewer_id
-          @review.editor_id   = current_user.id
-          @review.progression = 'pending'
-          @review.save
+          @review = Review.create(
+            status:         params[:status],
+            editor_remarks: params[:editor_remarks],
+            paper_id:       params[:paper_id],
+            reviewer_id:    reviewer_id,
+            editor_id:      current_user.id,
+            progression:    'pending'
+          )
         end
       end # end loop
     end
@@ -91,6 +92,9 @@ class ReviewsController < ApplicationController
   def set_review
     @review = Review.find(params[:id])
   end
+  def set_paper
+    @paper  = Paper.find(params[:paper_id])
+  end
 
   # PARAMS # Never trust parameters from the scary internet, only allow the white list through.
 
@@ -110,19 +114,22 @@ class ReviewsController < ApplicationController
 
   ####################
 
-  # Create a new revieww for an opinion
+  # Create a new review for an opinion
   # +Params+
   # +Status+  2 for accepted, 3 for refused
   def new_opinion(status)
-    review = Review.new(review_opinion_params)
-    review.paper_id    = params[:paper_id]
-    review.reviewer_id = current_user.id
-    review.editor_id   = current_user.id
-    review.progression = 'done'
-    if (status.to_i == 3) # review -> accepted
-      Paper.find(params[:paper_id]).update(status: 2) # published accepted
-    elsif (status.to_i == 0) # review -> refused
-      Paper.find(params[:paper_id]).update(status: 3) # refused
+    review = Review.create(
+      status:         params[:status],
+      editor_remarks: params[:editor_remarks],
+      paper_id:       params[:paper_id],
+      reviewer_id:    current_user.id,
+      editor_id:      current_user.id,
+      progression:    'done'
+    )
+    if (review.is_accepted) # review -> accepted
+      @paper.publish # published accepted
+    elsif (review.is_refused) # review -> refused
+      @paper.refuse # refused
     end
     return review
   end

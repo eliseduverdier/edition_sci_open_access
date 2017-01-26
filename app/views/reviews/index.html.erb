@@ -1,11 +1,15 @@
+<% provide(:title, "Reviews / « #{@paper.title} »") %>
+
+
 <%# See all reviews for paper %>
 <p id="notice"><%= notice %></p>
 
 <h1>Reviews for «<%= @paper.title %> »</h1>
 
-<a href="TODO" class="btn disabled">Compare the changes</a>
+<a title="TODO" class="btn disabled">Compare the changes</a>
 
-<%= render 'reviews/partials/review_list', :reviews => @reviews, :from => 'paper' %>
+
+<%= render 'reviews/partials/review_list_details', :reviews => @reviews %>
 
 
 <%= link_to "Back to paper",

@@ -1,27 +1,7 @@
+<% provide(:title, "My reviews") %>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Reviews you made</h1>
 
-
-<ul class="collection">
-
-  <% @reviews.each do |review| %>
-  <li>
-
-    <%= link_to 'View', review_path(review.paper.id, review.id), class: "btn-flat" %>
-    <%#= link_to 'edit', edit_reviews_path(review.id), class: "btn" %>
-
-    <%= review.paper.title if review.paper %>
-
-    <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
-      <%= review.progression if review.progression %>
-    </span>
-    <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
-      <%= get_review_status(review.status) if review.status %>
-    </span>
-    <%#= review.content %>
-
-  </li>
-  <% end %>
-
-</ul>
+<%= render 'reviews/partials/review_list', :reviews => @reviews, :from => 'mine' %>

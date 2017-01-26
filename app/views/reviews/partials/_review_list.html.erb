@@ -1,22 +1,35 @@
 <ul class="collection">
   <% reviews.each do |review| %>
 
-
   <li>
     <% unless path_is('reviews', 'index') %>
      <p class="title"><%= link_to review.paper.title, review.paper %></p>
+     <% end %>
+
+     <div class="right">
+       <p>
+         <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
+       </p>
+
+       <p>
+         <i class="material-icons <%=review_get_color_progression(review.progression)%>-text">hourglass_full</i>
+         <%= "progression: #{review.progression}" if review.progression %>
+       </p>
+
+       <% unless review.status.blank? %>
+       <p>
+         <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
+         <%= "status: #{get_review_status(review.status)}" %>
+       </p>
+       <% end %>
+
+     </div>
 
     <p> Authors:
       <span itemprop="authors">
         <% review.paper.get_authors.each do |author| %>
         <%= link_to "#{author.full_name}", author %>
         <% end %>
-      </span>
-    <% end %>
-
-
-      <span class="badge" data-badge-caption="">
-        <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
       </span>
 
       <br />
@@ -29,13 +42,6 @@
       <%= link_to review.reviewer.full_name, review.reviewer %> <%= "(you)" if review.reviewer == current_user %>
     <% end %>
     </p>
-
-    <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
-      <%= "progression: #{review.progression}" if review.progression %>
-    </span>
-    <span class="new badge <%= review_get_color_status(review.status) %>" data-badge-caption="">
-      <%= "status: #{get_review_status(review.status)}" if review.status %>
-    </span>
 
     <%= link_to 'Read review',
     review_path(review.paper.id, review.id),

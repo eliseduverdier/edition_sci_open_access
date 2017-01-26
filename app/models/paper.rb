@@ -1,6 +1,9 @@
 class Paper < ApplicationRecord
   belongs_to :category
 
+  # min_reviews = Rails.configuration.options['reviews']['min_reviews']
+  # max_reviews = Rails.configuration.options['reviews']['max_reviews']
+
   # Get all authors of a paper
   def get_authors
     list = []
@@ -51,7 +54,7 @@ class Paper < ApplicationRecord
   def can_be_reviewed?
     paper_type != 'opinion' &&
         is_under_review? &&
-        self.count_reviews < Rails.configuration.options['reviews']['max_reviewers']
+        self.count_reviews < 4
   end
 
 
@@ -74,7 +77,7 @@ class Paper < ApplicationRecord
   def all_reviews_done?
     reviews = Review.where(paper_id: id)
     total = reviews.count
-    total > Rails.configuration.options['reviews']['min_reviewers'] &&
+    total > 2 &&
         reviews.where(progression: 'done').count == total
   end
 
@@ -83,16 +86,21 @@ class Paper < ApplicationRecord
     Review.where(paper_id: id, progression: ['ongoing', 'done']).count > 0
   end
 
-  def publish
-    self.update(status: 2)
-  end
+  def publish; self.update(status: 2); end
 
-  def refuse
-    self.update(status: 3)
-  end
+  def refuse; self.update(status: 3); end
 
   def is_pending_opinion?
     paper_type == 'opinion' && status.to_i < 2
+  end
+
+  # Returns an average (in %) of the reviews
+  # only to indicate the amount of modification that will have to be done
+  def get_reviews_score
+    reviews = Review.where(paper_id: id).all
+    sum = 0.0
+    reviews.each { |review| sum += review.status.to_i }
+    ((sum / (reviews.count * 3) ) * 100).to_i
   end
 
   #####################################

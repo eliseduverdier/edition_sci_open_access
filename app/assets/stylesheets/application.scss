@@ -22,10 +22,17 @@ $secondary-color: #0b8668 !default;
 html {
   font-family: 'Montserrat', Trebuchet, sans-serif;
 }
-h1, h2, h3, h4 {
+h1 {
+//, h2, h3, h4 {
   font-family: 'Montserrat Alternates';
 }
 
+body {
+  background-color: #fefefe;
+}
+strong {
+  font-weight: 800;
+}
 ul.collection li { @extend .collection-item; }
 
 // won't work, need JS

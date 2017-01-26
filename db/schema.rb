@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123165820) do
+ActiveRecord::Schema.define(version: 20170126172025) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20170123165820) do
     t.string   "doi"
     t.string   "keywords"
     t.datetime "accepted_at"
+    t.integer  "reviews_count"
+    t.boolean  "need_review"
     t.index ["category_id"], name: "index_papers_on_category_id"
   end
 
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 20170123165820) do
     t.string   "progression"
     t.text     "editor_remarks"
     t.string   "conflict_of_interest"
+    t.integer  "review_round"
     t.index ["editor_id"], name: "index_reviews_on_editor_id"
     t.index ["paper_id"], name: "index_reviews_on_paper_id"
     t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"

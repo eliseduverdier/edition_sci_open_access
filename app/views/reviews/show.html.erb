@@ -1,3 +1,5 @@
+<% provide(:title, "Review / « #{@paper.title} »") %>
+
 <%
   editor = Person.find(@review.editor_id)
   reviewer = Person.find(@review.reviewer_id)
@@ -26,14 +28,25 @@
 </span>
 </p>
 
+
+<% unless @review.status.blank? %>
 <p>Status:
   <span class="notice-bg inline <%= review_get_color_status(@review.status) %>">
-    <%= get_review_status(@review.status) if @review.status %>
+    <%= get_review_status(@review.status) %>
   </span>
 </p>
+<% end %>
 
+ <% unless @review.conflict_of_interest.blank? %>
+  <p>
+    <i class="material-icons">warning</i> <strong>Conflict of interest </strong>
+    <%= @review.conflict_of_interest %>
+    </p>
+  <% end %>
+
+<% unless @review.content.blank? %>
 <div class="card blue-grey lighten-4">
-  <div class="card-content row">
+  <div class="card-content">
 
     <blockquote>
       <%= @review.content %>
@@ -41,6 +54,8 @@
 
   </div>
 </div> <!-- end card -->
+<% end %>
+
 
 <% if current_user.wrote_review?(@review) && @review.progression != 'done' %>
   <%= link_to "Edit",

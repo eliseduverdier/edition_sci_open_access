@@ -28,14 +28,15 @@ module ColorHelper
   #################################
   # review status
   def review_get_color_status(status)
-    case status.to_i
-    when 3 # accepted
+    if status.blank?
+      'grey'
+    elsif status.to_i == 3 # accepted
       'green'
-    when 2
-      'yellow'
-    when 1
+    elsif status.to_i == 2 # minor
+      'amber'
+    elsif status.to_i == 1 # major
       'orange'
-    when 0
+    elsif status.to_i == 0 # refused
       'red'
     end
   end
@@ -46,7 +47,7 @@ module ColorHelper
     when 'pending'
       'grey'
     when 'ongoing'
-      'yellow darken-2'
+      'darken-2 orange'
     when 'done'
       'green'
     end

@@ -1,0 +1,57 @@
+<% # REVIEW LIST DETAILS: SEEN FROM ARTICLE BY EDITOR AND AUTHOR %>
+
+<ul class="collapsible" data-collapsible="accordion">
+  <% reviews.order(status: :asc).each_with_index do |review, index| %>
+
+  <li>
+    <div class="collapsible-header">
+      <% unless review.conflict_of_interest.blank? %>
+      <i class="material-icons right" title="Conflict of interest">warning</i>
+      <% end %>
+
+      <i class="material-icons <%=review_get_color_progression(review.progression)%>-text">hourglass_full</i>
+      <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
+
+      <% if current_user.is_editor? %>
+        Reviewer:
+        <%= link_to review.reviewer.full_name, review.reviewer %>
+        <%= "(you)" if review.reviewer == current_user %>
+      <% else %>
+        Read review <%= index %>
+      <% end %>
+    </div> <!-- end header -->
+
+    <div class="collapsible-body">
+
+
+       <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
+         <%= "progression: #{review.progression}" if review.progression %>
+       </span>
+       <span class="badge" data-badge-caption="">
+         <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
+       </span>
+
+      <p>
+        Asked by: <%= link_to review.editor.full_name, review.editor %>
+        <%= "(you)" if review.editor == current_user %>
+      </p>
+
+      <% unless review.conflict_of_interest.blank? %>
+      <p>
+        <i class="material-icons">warning</i> <strong>Conflict of interest </strong>
+        <%= review.conflict_of_interest %>
+      </p>
+      <% end %>
+
+      <% unless review.content.blank? %>
+      <p>
+        <strong>Review</strong>
+        <%= review.content %>
+      </p>
+      <% end %>
+
+    </div>
+  </li>
+
+  <% end %>
+</ul>

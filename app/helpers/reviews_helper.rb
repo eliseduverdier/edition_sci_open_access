@@ -2,7 +2,9 @@ module ReviewsHelper
 
     # Get status meaning from number
     def get_review_status(status)
-        if status.to_i == 3
+        if status.blank?
+            '?'
+        elsif status.to_i == 3
             'Accepted'
         elsif status.to_i == 2
             'Need minor modifications'

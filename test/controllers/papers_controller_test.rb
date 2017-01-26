@@ -4,10 +4,6 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
   include SessionsHelper
 
-  # skip_before_filter :logged_in_as_correct_user, only => [:edit, :edit_password, :update, :destroy]
-  # skip_before_filter :is_logged_in, only => [:index]
-  # skip_before_filter :already_logged_in, only => [:new, :create]
-
   setup do
     @paper = papers(:one)
   end
@@ -24,7 +20,7 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
   end
 
 
-
+ # SIMULATE WRITE, EDIT, AND DELETE PAPER
   test "should get new" do
     log_in_as(people(:one))
     get new_paper_url
@@ -50,8 +46,6 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to paper_url(Paper.last)
   end
 
-
-
   test "should get edit" do
     log_in_as(people(:one))
     get edit_paper_url(@paper)
@@ -73,8 +67,7 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to paper_url(@paper)
   end
 
-
-  test "should destroy paper" do
+  test "should delete paper" do
     log_in_as(people(:one))
 
     assert_difference('Paper.count', -1) do
@@ -83,4 +76,26 @@ class PapersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to papers_url
   end
+
+  # EDITOR: SIMULATE ASK FOR REVIEWS
+  test "should send review invitation" do
+    log_in_as(people(:editor))
+    # review#new
+  end
+
+  test "should ask the revision of a paper to its author" do
+    log_in_as(people(:editor))
+    post ask_paper_revision_path(paper(:one))
+  end
+
+  test "should accept a paper" do
+    log_in_as(people(:editor))
+    post accept_paper_path(paper(:one))
+  end
+
+  test "should refuse a paper" do
+    log_in_as(people(:editor))
+    post refuse_paper_path(paper(:one))
+  end
+
 end

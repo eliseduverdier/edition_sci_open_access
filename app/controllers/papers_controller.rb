@@ -4,7 +4,7 @@ class PapersController < ApplicationController
   # permissions to access
   before_action :logged_in_author, only: [:edit, :update, :destroy]
   before_action :is_researcher,    only: [:new, :create]
-  before_action :is_editor,        only: [:index_pending, :index_refused, :index_all]
+  before_action :is_editor,        only: [:index_pending, :index_refused, :index_all, :validate, :refuse]
 
   # GET /papers
   def index
@@ -36,7 +36,6 @@ class PapersController < ApplicationController
 
 ##########################################################
 
-
   # GET /papers/1
   # GET /papers/1.json
   def show
@@ -58,6 +57,7 @@ class PapersController < ApplicationController
   def create
     @paper = Paper.new(paper_params)
     @paper.status = -1 # pending, not reviewed
+    @paper.reviews_count = 0
 
     if @paper.save
       # save author
@@ -79,20 +79,29 @@ class PapersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /papers/1
-  def update
-    if @paper.update(paper_params)
-      redirect_to @paper, notice: 'Paper was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
   # DELETE /papers/1
   def destroy
     @paper.destroy
     redirect_to papers_url, notice: 'Paper was successfully destroyed.'
   end
+
+  ######## end of a review round ##################
+
+  # POST /papers/1/accept
+  def ask_revision
+    @paper.update(need_revision: true)
+  end
+
+  # POST /papers/1/accept
+  def accept
+  end
+
+  # POST /papers/1/refuse
+  def refuse
+  end
+
+
+
 
   ##########################################################
 
