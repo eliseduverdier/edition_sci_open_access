@@ -13,26 +13,27 @@ class Review < ApplicationRecord
     Person.where(id: editor_id).take
   end
 
+  
   ###### CHANGE REVIEWS ATTRIBUTES
 
   # Does the review have accepted the paper ?
   def accepts_the_paper
-    !status.blank? && status.to_i == 3
+    !status.blank? && status == 3
   end
 
   # Does the review asked minor diff to the paper ?
   def ask_minor_diff
-    !status.blank? && status.to_i == 2
+    !status.blank? && status == 2
   end
 
   # Does the review asked major diff to the paper ?
   def ask_major_diff
-    !status.blank? && status.to_i == 1
+    !status.blank? && status == 1
   end
 
   #  Does the review have refused the paper ?
   def refuse_the_paper
-    !status.blank? && status.to_i == 0
+    !status.blank? && status == 0
   end
 
 

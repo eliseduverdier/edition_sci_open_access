@@ -24,6 +24,7 @@ config.eager_load = false
   config.action_mailer.delivery_method = :test
   host = 'localhost:3003'
   config.action_mailer.default_url_options = { host: host, protocol: 'http' }
+  config.action_mailer.asset_host = "http://#{host}"
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

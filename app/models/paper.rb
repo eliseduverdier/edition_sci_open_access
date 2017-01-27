@@ -86,12 +86,9 @@ class Paper < ApplicationRecord
     Review.where(paper_id: id, progression: ['ongoing', 'done']).count > 0
   end
 
-  def publish; self.update(status: 2); end
-
-  def refuse; self.update(status: 3); end
 
   def is_pending_opinion?
-    paper_type == 'opinion' && status.to_i < 2
+    paper_type == 'opinion' && status < 2
   end
 
   # Returns an average (in %) of the reviews
@@ -99,24 +96,64 @@ class Paper < ApplicationRecord
   def get_reviews_score
     reviews = Review.where(paper_id: id).all
     sum = 0.0
-    reviews.each { |review| sum += review.status.to_i }
+    reviews.each { |review| sum += review.status }
     ((sum / (reviews.count * 3) ) * 100).to_i
+  end
+
+  def last_reviews(paper)
+    Review.where(
+      paper_id: id,
+      review_round: reviews_count
+    )
+  end
+
+  def last_done_reviews(paper)
+    Review.where(
+      paper_id: id,
+      review_round: reviews_count,
+      progression: 'done'
+    )
+  end
+
+
+  # CALCULATE A PAPER STATUS ACCORDING TO REVIEWS
+  def current_reviews_round_done
+    Review.where(paper_id: id, review_round: reviews_count)
+
+    if self.all_reviews_done?
+      self.update(status: 1)
+    end
+  end
+
+  def should_be_reviewed?
+    need_review == 1
+  end
+
+  def set_to_review
+    self.update(need_review: 1)
+  end
+
+  def set_review_round_done
+    self.update(need_review: 0)
   end
 
   #####################################
   # STATUS
   #####################################
 
+  def publish; self.update(status: 2); end
+  def refuse; self.update(status: 3); end
+
   def is_published?
-    status.to_i == 2
+    status == 2
   end
 
   def is_under_review?
-    status.to_i < 2
+    status < 2
   end
 
   def is_refused?
-    status.to_i == 3
+    status == 3
   end
 
 end

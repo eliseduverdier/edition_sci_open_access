@@ -10,7 +10,7 @@
   <span class="title"><%= paper.title %></span>
 
   <%# if logged_in? && current_user.is_editor? %>
-  <% if paper.status.to_i != 2 %>
+  <% if paper.status != 2 %>
   <span class="new badge <%= paper_get_color_status(paper.status) %>" data-badge-caption="status">
     <%= get_paper_status(paper.status) if paper.status %>
   </span>

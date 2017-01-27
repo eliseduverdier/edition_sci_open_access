@@ -4,13 +4,13 @@ module ReviewsHelper
     def get_review_status(status)
         if status.blank?
             '?'
-        elsif status.to_i == 3
+        elsif status == 3
             'Accepted'
-        elsif status.to_i == 2
+        elsif status == 2
             'Need minor modifications'
-        elsif status.to_i == 1
+        elsif status == 1
             'Need major modifications'
-        elsif status.to_i == 0
+        elsif status == 0
             'Refused'
         else
             'Unknown'

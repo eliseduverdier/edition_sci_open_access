@@ -105,7 +105,7 @@ class Person < ApplicationRecord
   # Get all the papers written by a person
   def get_papers
     list = Array.new()
-    authors = Author.where(person_id: self[:id])
+    authors = Author.where(person_id: id)
     authors.each do |write|
       list.push(Paper.where(id: write.paper_id).take)
     end
@@ -119,11 +119,12 @@ class Person < ApplicationRecord
     paper.get_authors.include? self
   end
 
+
       ##### REVIEWS #####
 
   # Get all the reviews written by a person
   def get_reviews
-    Review.where(reviewer_id: self[:id])
+    Review.where(reviewer_id: id)
   end
 
   def get_pending_reviews
@@ -136,37 +137,61 @@ class Person < ApplicationRecord
 
 
   # Returns true if the user has to review the paper
+  # progression != done
   def should_review?(paper)
     review = paper.get_review_by(self)
-    !review.nil? && ['pending', '1'].include?(review[:status])
+    !review.nil? && review.progression == 'pending'
   end
 
   # Returns true if the user should review the paper
   def is_reviewing?(paper)
     review = paper.get_review_by(self)
-    !review.nil? && ['ongoing', '2'].include?(review[:status])
+    !review.nil? && review.progression == 'ongoing'
   end
 
   # Returns true if the user reviewed the paper
   def reviewed?(paper)
     review = paper.get_review_by(self)
-    !review.nil? && ['done', '3'].include?(review[:status])
+    !review.nil? && review.progression == 'done'
   end
 
   # Returns true if the user is reviewer of the paper
   def is_reviewer_of?(paper)
-    ! Review.where(paper_id: paper.id, reviewer_id: id).nil?
+    Review.where(paper_id: paper.id, reviewer_id: id)
   end
 
   # Returns true if the user is reviewer of the paper
   def is_editor_of?(paper)
-    ! Review.where(paper_id: paper.id, editor_id: id).nil?
+    Review.where(paper_id: paper.id, editor_id: id)
+  end
+
+
+  # Returns true if the user is reviewer of the paper
+  # FOR THE CURRENT REVIEW-ROUND
+  # maybe reviewer with other researchers
+  def is_current_reviewer_of?(paper)
+    Review.where(
+      paper_id: paper.id,
+      reviewer_id: id,
+      review_round: paper.reviews_count,
+    )
+  end
+
+  # Returns true if the user is reviewer of the paper
+  # FOR THE CURRENT REVIEW-ROUND
+  # maybe editor with other editors
+  def is_current_editor_of?(paper)
+    Review.where(
+      paper_id: paper.id,
+      editor_id: id,
+      review_round: paper.reviews_count,
+    )
   end
 
 
 
 
-    ##### REVIEWS #####
+  ##### REVIEWS #####
 
   # Returns true if the user wrote the review
   def wrote_review?(review)

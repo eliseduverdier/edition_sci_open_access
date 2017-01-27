@@ -148,7 +148,7 @@ Database description, meaning of attributes and possible values for each.
    * only if: author or co-author, paper is unpublished with no peer-reviews, or peer-reviews are started but after notification / need to give reason.
 
 ## Reviews
-**editor**
+* **editor**
   * **paper/:id**
     * if pending, and not enough reviews already: can send reviews to researchers
     * if reviews are done: can accept/refuse the paper, but mostly sends it for modification to the author
@@ -158,10 +158,10 @@ Database description, meaning of attributes and possible values for each.
   * can see when all reviews are done, and asks to author
   * and decide to publish the paper.
 
-**researcher**
+* **researcher**
   on their articles:
   * **paper/:id/reviews**
-    they can see
+    they can see all the finished reviews, for each round
 
 
   on other's article:
@@ -170,7 +170,7 @@ Database description, meaning of attributes and possible values for each.
 
 
 
-**reader**
+* **reader**
   * reviews are private: only editors, author of the article in question, and the reviewer can see them.
 
 ## Persons
