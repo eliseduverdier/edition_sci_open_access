@@ -2,38 +2,13 @@ module ReviewsHelper
 
     # Get status meaning from number
     def get_review_status(status)
-        if status.blank?
-            '?'
-        elsif status == 3
-            'Accepted'
-        elsif status == 2
-            'Need minor modifications'
-        elsif status == 1
-            'Need major modifications'
-        elsif status == 0
-            'Refused'
-        else
-            'Unknown'
+        case status
+        when 3 then 'Accepted'
+        when 2 then 'Need minor modifications'
+        when 1 then 'Need major modifications'
+        when 0 then 'Refused'
+        else '?'
         end
-    end
-
-    # Get status and their meaning
-    def get_review_hash_status
-      {
-        3 => 'Accepted',
-        2 => 'Need minor modifications',
-        1 => 'Need major modifications',
-        0 => 'Refused'
-      }
-    end
-
-    # Get progression and their meaning (not used for now)
-    def get_review_hash_progression
-      {
-        0 => 'pending',
-        1 => 'ongoing',
-        2 => 'done',
-      }
     end
 
 end

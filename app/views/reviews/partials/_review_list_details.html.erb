@@ -1,6 +1,11 @@
-<% # REVIEW LIST DETAILS: SEEN FROM ARTICLE BY EDITOR AND AUTHOR %>
+<%
 
-<ul class="collapsible" data-collapsible="accordion">
+ # REVIEW LIST DETAILS: SEEN FROM ARTICLE BY EDITOR AND AUTHOR
+ # SEPARATE AND ORDER BY ROUND
+
+%>
+
+<ul class="collapsible" data-collapsible="expandable">
   <% reviews.order(status: :asc).each_with_index do |review, index| %>
 
   <li>
@@ -9,8 +14,21 @@
       <i class="material-icons right" title="Conflict of interest">warning</i>
       <% end %>
 
-      <i class="material-icons <%=review_get_color_progression(review.progression)%>-text">hourglass_full</i>
-      <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
+      <span class="review">
+        <a href="<%=review%>">
+        <i
+          title="<%= logged_in? && current_user.is_editor? ? "by #{review.reviewer.full_name}" : ""%>
+          <%=review.progression%> - <%=get_review_status(review.status)%>"
+          class="material-icons <%=review_get_color_status(review.status)%>-text">
+          <%= case review.progression
+            when 'done' then 'done'
+            when 'ongoing' then 'hourglass_full'
+            when 'pending' then 'hourglass_empty'
+            end
+          %>
+          </i>
+        </a>
+      </span>
 
       <% if current_user.is_editor? %>
         Reviewer:
@@ -23,13 +41,15 @@
 
     <div class="collapsible-body">
 
-
-       <span class="new badge <%= review_get_color_progression(review.progression) %>" data-badge-caption="">
+       <p class="right <%= review_get_color_progression(review.progression) %>">
          <%= "progression: #{review.progression}" if review.progression %>
-       </span>
-       <span class="badge" data-badge-caption="">
+       </p>
+       <p class="right <%= review_get_color_status(review.status) %>">
+         <%= "status: #{review.status}" if review.status %>
+       </p>
+       <p class="right">
          <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
-       </span>
+       </p>
 
       <p>
         Asked by: <%= link_to review.editor.full_name, review.editor %>
@@ -43,12 +63,10 @@
       </p>
       <% end %>
 
-      <% unless review.content.blank? %>
       <p>
         <strong>Review</strong>
-        <%= review.content %>
+        <%= review.content unless review.content.blank? %>
       </p>
-      <% end %>
 
     </div>
   </li>

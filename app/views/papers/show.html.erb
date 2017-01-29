@@ -4,22 +4,27 @@
 %>
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong>
 
-  <span class="new badge <%= paper_get_color_status(@paper.status) %>" data-badge-caption="status">
-    <%= get_paper_status(@paper.status) if @paper.status %>
-  </span>
 
+<P class="DEBUG">
+  <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong> /
+  <%= get_paper_status(@paper.status) if @paper.status %> /
   <%= link_to @paper.category.name, @paper.category unless @paper.category.blank? %>
-</p>
+</P>
+
+
+
+<h1>
+  <span itemprop="title"><%= @paper.title %></span>
+</h1>
+
 
 <% if logged_in? %>
-<%#  AUTHOR: EDIT PAPER  %>
 
-<div class="center-align">
+<div class="reviews-stuff">
 
 <%= if current_user.is_editor? # EDITOR: ASK REVIEWS
+
   if @paper.all_reviews_done?
     render 'reviews/partials/validate'
   elsif @paper.can_be_reviewed?
@@ -28,6 +33,10 @@
     render 'reviews/partials/new_opinion'
   end
 end  %>
+
+<%= link_to "Read the reviews",
+  reviews_path(@paper.id),
+  class: "btn-flat" if current_user.is_editor? %>
 
 <% if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
 
@@ -66,85 +75,106 @@ end  %>
         review_path(@paper.id, @paper.get_review_by(current_user)),
         class: "btn" %>
 
-    <% elsif current_user.is_editor? || (current_user.wrote?(@paper) && @paper.has_reviews?) %>
-
-      <%= link_to 'Read the reviews',
-        reviews_path(@paper.id),
-        class: "btn" %>
 
   <% end  # end reviews %>
   </div>
 <% end # end if logged_in? %>
 
+
+
+<%# UNPUBLISHED PAPER: CONTENT IS NOT AVAILABLE %>
 <% if @paper.is_refused? %>
 
-  <p class="notice error">This paper has been refused</p>
-  <p>It is therefore not accessible to the public.
-  You can <%= link_to 'Read the reviews here', reviews_path(@paper.id) %> (TODO anonymise them).</p>
+  <p class="notice error">
+    This paper has been refused. <br />
+    It is therefore not accessible to the public.
+  </p>
 
 <% elsif @paper.is_under_review? %>
+
   <p class="notice">
-    This paper is currently under review.
+    This paper is currently under review. <br />
     It will be made available once the peer-review process is finished.
   </p>
 <% end %>
 
-<h1>
-  <em><span itemprop="title"><%= @paper.title %></span></em>
-</h1>
 
-<% if logged_in? && current_user.wrote?(@paper) %>
-  <div class="right-align">
-      <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
-      <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
-          class: "btn-flat waves-effect waves-red" %>
+
+<div class="row">
+
+  <!-- Metadata -->
+  <div class="col l3 push-l9">
+
+    <% if logged_in? && current_user.wrote?(@paper) %>
+      <div class="right-align">
+          <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
+          <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
+              class: "btn-flat waves-effect waves-red" %>
+      </div>
+    <% end #  if author %>
+
+    <div class="card">
+      <div class="card-content">
+        <p>
+          <span class="small-title">Authors</span>
+          <span itemprop="authors">
+            <% @paper.get_authors.each do |author| %>
+            <%= link_to "#{author.full_name}", author %>
+            <% end %>
+          </span>
+
+          <% unless @paper.publication_date.blank? %>
+          <p itemprop="date-published">
+              <span class="small-title">Published</span>
+              <%= @paper.publication_date.strftime("%d %B %Y") %>
+          </p>
+          <% end %>
+
+          <% unless @paper.keywords.blank? %>
+          <p itemprop="keywords">
+              <span class="small-title">Keywords</span>
+              <% keywords = JSON.parse @paper.keywords %>
+              <%= keywords.each { |keyword| "<div class='chip'>#{keyword}</div>" } %>
+          </p>
+          <% end %>
+
+          <%= link_to raw('↓ PDF'), @paper.pdf_url, class: "btn" unless @paper.pdf_url.blank? %>
+
+        </p>
+      </div>
+    </div> <!-- end card -->
+
   </div>
-<% end #  if author %>
-
-<h3>Abstract</h3>
-
-<blockquote id="abstract">
-  <%= @paper.abstract.html_safe %>
-</blockquote>
 
 
-<div class="card">
-  <div class="card-content row">
-    <div class="col s6">
-      <strong>Authors</strong>
-      <span itemprop="authors">
 
-        <% @paper.get_authors.each do |author| %>
-        <%= link_to "#{author.full_name}", author %>
-        <% end %>
-      </span>
-    </div>
+  <!-- Content -->
+  <div class="col l9 pull-l3">
 
-    <div class="col s6">
-      <strong>Metadata</strong>
-      <% unless @paper.publication_date.blank? %>
-      <p itemprop="date-published" id="published-at">
-          Published on <span><%= @paper.publication_date.strftime("%d %B %Y") %></span>
+      <p id="abstract">
+        <span class="small-title">abstract</span>
+        <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
       </p>
-      <% end %>
-    </div>
 
-    <%= unless @paper.pdf_url.blank?
-         link_to raw('↓ PDF'),
-            @paper.pdf_url,
-            class: "btn"
-    end %>
+      <% if @paper.is_published? ||
+            (logged_in? &&
+               (current_user.wrote?(@paper) ||
+                current_user.is_editor? ||
+                current_user.is_reviewer_of?(@paper))) %>
+      <%# TODO person.can_see_paper?(@paper)  %>
+
+        <h3>Content</h3>
+
+        <blockquote id="content">
+          <p><%= @paper.html_content.html_safe unless @paper.html_content.blank? %></p>
+        </blockquote>
+
+      <% end %><!-- end content -->
 
   </div>
-</div> <!-- end card -->
 
 
-<% if logged_in? && (@paper.is_published? || current_user.is_editor? || current_user.is_reviewer_of?(@paper)) %>
 
-  <h3>Content</h3>
 
-  <blockquote id="content">
-    <p><%= @paper.html_content.html_safe  unless @paper.html_content.blank? %></p>
-  </blockquote>
 
-<% end %><!-- end content -->
+</div>

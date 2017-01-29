@@ -1,37 +1,46 @@
-<ul class="collection">
+<!-- <ul class="collection"> -->
+<div class="row">
 <% papers.each do |paper| %>
-  <li class="collection-item avatar">
+  <!-- <li class="collection-item avatar"> -->
+  <div class="card col m8 offset-m2">
+  <div class="card-content">
 
 
-  <a href="#" id="save_to_reading_list">
-    <i title="Add to your reading list" class="material-icons circle blue-grey lighten-2">bookmark</i>
-  </a>
-
-  <span class="title"><%= paper.title %></span>
-
-  <%# if logged_in? && current_user.is_editor? %>
-  <% if paper.status != 2 %>
-  <span class="new badge <%= paper_get_color_status(paper.status) %>" data-badge-caption="status">
-    <%= get_paper_status(paper.status) if paper.status %>
+  <span class="title">
+    <%= link_to paper.title, paper %>
   </span>
-  <% end %>
 
-  <span class="new badge blue-grey" data-badge-caption=""><%= paper.paper_type %></span>
-  <span class="new badge" data-badge-caption=""><%= paper.category.name unless paper.category.blank? %></span>
+  <div class="right right-align">
+    <p><a href="#" id="save_to_reading_list">
+      <i title="Add to your reading list" class="material-icons blue-grey-text">bookmark_border</i>
+    </a></p>
+    <small>
+      <p><%= paper.category.name if paper.category %></p>
+      <p><%= paper.created_at.strftime("%d %B %Y") %></p>
+    </small>
+  </div>
 
   <p>
     <span itemprop="authors">
       <% paper.get_authors.each do |author| %>
-      <%= link_to "#{author.full_name}", author if author%>
+      <%= author.full_name %>
       <% end %>
     </span>
   </p>
-  <p> <%= paper.created_at.strftime("%d %B %Y") %></strong> </p>
 
-  <%= link_to 'Read', paper_path(paper), class: "btn" %>
+  <%= link_to "Review \##{paper.reviews_count}", reviews_path(paper.id) if paper.reviews_count %>
+  <%= render 'reviews/partials/short_preview', :reviews => paper.get_last_reviews %>
+
+  <%= if paper.all_reviews_done?
+    link_to 'Review the paper', paper
+  end
+   %>
 
   <!-- <a href="#!" title="Add to your reading list" class="secondary-content"><i class="material-icons">book</i></a> -->
-</li>
+</div>
+</div>
+<!-- </li> -->
 
 <% end %>
-</ul>
+</div>
+<!-- </ul> -->

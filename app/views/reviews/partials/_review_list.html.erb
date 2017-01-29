@@ -2,50 +2,51 @@
   <% reviews.each do |review| %>
 
   <li>
-    <% unless path_is('reviews', 'index') %>
-     <p class="title"><%= link_to review.paper.title, review.paper %></p>
-     <% end %>
 
-     <div class="right">
-       <p>
-         <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
-       </p>
+    <p class="right">
+      <i
+        title="<%=review.progression%> - <%=get_review_status(review.status)%>"
+        class="material-icons <%=review_get_color_status(review.status)%>-text">
+        <%= case review.progression
+          when 'done' then 'done'
+          when 'ongoing' then 'hourglass_full'
+          when 'pending' then 'hourglass_empty'
+          end
+        %>
+        </i>
+        <br />
 
-       <p>
-         <i class="material-icons <%=review_get_color_progression(review.progression)%>-text">hourglass_full</i>
-         <%= "progression: #{review.progression}" if review.progression %>
-       </p>
+        Asked <%= distance_of_time_in_words(Time.now, review.created_at) %>
+        <br />
 
-       <% unless review.status.blank? %>
-       <p>
-         <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
-         <%= "status: #{get_review_status(review.status)}" %>
-       </p>
-       <% end %>
-
-     </div>
-
-    <p> Authors:
-      <span itemprop="authors">
-        <% review.paper.get_authors.each do |author| %>
-        <%= link_to "#{author.full_name}", author %>
+        <% if review.editor != current_user %>
+        Asked by <%= link_to review.editor.full_name, review.editor %>
+        <br />
         <% end %>
-      </span>
 
-      <br />
-
-      <%= from == 'home_reviewer' ? 'Asked by' : 'Editor' %>
-      <%= link_to review.editor.full_name, review.editor %> <%= "(you)" if review.editor == current_user %>
-    <br />
-    <% if (current_user.is_editor? || current_user.is_admin?) && from != 'home_reviewer' %>
-      Reviewer:
-      <%= link_to review.reviewer.full_name, review.reviewer %> <%= "(you)" if review.reviewer == current_user %>
-    <% end %>
+        <% if (current_user.is_editor? || current_user.is_admin?) && from != 'home_reviewer' %>
+        Reviewer:
+        <%= link_to review.reviewer.full_name, review.reviewer %> <%= "(you)" if review.reviewer == current_user %>
+      <% end %>
     </p>
 
-    <%= link_to 'Read review',
-    review_path(review.paper.id, review.id),
-    class: "waves-effect waves-light btn-flat"  %>
+    <% unless path_is('reviews', 'index') %>
+    <p class="title">
+      <%= link_to review.paper.title, review.paper %><br />
+        by <%= review.paper.get_authors_as_name_list %>
+        <%# review.paper.get_authors.each do |author| %>
+        <%#= link_to "#{author.full_name}", author %>
+        <%# end %>
+    </p>
+    <% end %>
+
+    <p>
+      <% unless current_user.is_editor? %>
+      <%= link_to review.progression=='pending' ? 'Start to review' : 'Continue your review',
+      review_path(review.paper.id, review.id),
+      class: "waves-effect waves-light btn"  %>
+      <% end %>
+    </p>
 
   </li>
 

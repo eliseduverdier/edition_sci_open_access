@@ -1,21 +1,11 @@
-<%
-reviews = @paper.get_reviews
-%>
-
-<div class="card">
-  <div class="card-content">
-    <p> This paper has been reviewed <%= reviews.count %> times. </p>
-
     <p>
+      This paper has been reviewed
+      —
       Score: <%= @paper.get_reviews_score %> %
-    </p>
-      Results:<p>
-      <% reviews.order(status: :desc).each do |review| %>
-        <i class="material-icons <%=review_get_color_status(review.status)%>-text">brightness_1</i>
-      <% end %>
+      <%= render 'reviews/partials/short_preview', :reviews => @paper.get_last_reviews %>
     </p>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col m12 l4">
         <p>
           If you estimate the paper needs corrections...<br />
@@ -42,7 +32,4 @@ reviews = @paper.get_reviews
           </a>
         </p>
       </div>
-    </div>
-
-  </div>
-</div>
+    </div> -->

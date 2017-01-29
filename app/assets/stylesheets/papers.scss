@@ -2,8 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-blockquote#abstract {
+p#abstract {
   font-size: 18px;
   font-weight: 100;
   line-height: 1.8;
+}
+
+
+span.small-title {
+  font-weight: 700;
+  color: #546e7a;
 }

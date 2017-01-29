@@ -4,6 +4,8 @@ class Paper < ApplicationRecord
   # min_reviews = Rails.configuration.options['reviews']['min_reviews']
   # max_reviews = Rails.configuration.options['reviews']['max_reviews']
 
+  #   AUTHORS
+
   # Get all authors of a paper
   def get_authors
     list = []
@@ -12,27 +14,6 @@ class Paper < ApplicationRecord
     end
     return list
   end
-
-
-  def get_reviewers
-    list = []
-    Review.where(paper_id: id).each {
-      |reviews| list.push(Person.where(id: reviews.reviewer_id).take)
-    }
-    return list
-  end
-
-
-  def get_reviews
-    Review.where(paper_id: id)
-  end
-
-
-  # Get the review for a given paper and person
-  def get_review_by(person)
-    Review.where(paper_id: self[:id], reviewer_id: person.id).take
-  end
-
 
   # Format the list of authors
   # Params:
@@ -46,6 +27,45 @@ class Paper < ApplicationRecord
     people.join(', ')
   end
 
+  #####################################
+  # REVIEWS
+  #####################################
+
+  def get_reviews
+    Review.where(paper_id: id)
+  end
+
+  def get_last_reviews
+    Review.where(
+      paper_id: id,
+      review_round: reviews_count
+    )
+  end
+
+  def last_done_reviews
+    Review.where(
+      paper_id: id,
+      review_round: reviews_count,
+      progression: 'done'
+    )
+  end
+
+  def get_reviewers
+    list = []
+    Review.where(paper_id: id).each {
+      |reviews| list.push(Person.where(id: reviews.reviewer_id).take)
+    }
+    return list
+  end
+
+  # Get the review for a given paper and person
+  def get_review_by(person)
+    Review.where(paper_id: self[:id], reviewer_id: person.id).take
+  end
+
+
+  # REVIEW PROCESS
+  ################
 
   # Returns true if the paper should be reviewed:
   #  * if it is not already accepted
@@ -68,9 +88,6 @@ class Paper < ApplicationRecord
     self.count_reviews > 0
   end
 
-  #####################################
-  # REVIEW PROCESS
-  #####################################
 
   # Checks if a paper has more than <min_reviews> reviews,
   #   and all of them are done
@@ -86,11 +103,6 @@ class Paper < ApplicationRecord
     Review.where(paper_id: id, progression: ['ongoing', 'done']).count > 0
   end
 
-
-  def is_pending_opinion?
-    paper_type == 'opinion' && status < 2
-  end
-
   # Returns an average (in %) of the reviews
   # only to indicate the amount of modification that will have to be done
   def get_reviews_score
@@ -100,21 +112,13 @@ class Paper < ApplicationRecord
     ((sum / (reviews.count * 3) ) * 100).to_i
   end
 
-  def last_reviews(paper)
-    Review.where(
-      paper_id: id,
-      review_round: reviews_count
-    )
-  end
 
-  def last_done_reviews(paper)
-    Review.where(
-      paper_id: id,
-      review_round: reviews_count,
-      progression: 'done'
-    )
-  end
+  # STATUS
+  ################
 
+  def is_pending_opinion?
+    paper_type == 'opinion' && status < 2
+  end
 
   # CALCULATE A PAPER STATUS ACCORDING TO REVIEWS
   def current_reviews_round_done

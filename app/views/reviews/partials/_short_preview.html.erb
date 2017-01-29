@@ -1,0 +1,29 @@
+<% # REVIEW SMALL PREVIEW
+
+if reviews.count > 0
+
+%>
+
+<div class="review-short-previews">
+
+  <% reviews.order(:progression, :status).each do |review| %>
+
+  <span class="review">
+    <a href="<%=review%>">
+    <i
+      title="<%= logged_in? && current_user.is_editor? ? "by #{review.reviewer.full_name}" : ""%>
+      <%=review.progression%> - <%=get_review_status(review.status)%>"
+      class="material-icons <%=review_get_color_status(review.status)%>-text">
+      <%= case review.progression
+        when 'done' then 'done'
+        when 'ongoing' then 'hourglass_full'
+        when 'pending' then 'hourglass_empty'
+        end
+      %>
+      </i>
+    </a>
+  </span>
+  <% end %>
+</div>
+
+<% end %>

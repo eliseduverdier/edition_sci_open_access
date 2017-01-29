@@ -9,7 +9,13 @@
 <a title="TODO" class="btn disabled">Compare the changes</a>
 
 
-<%= render 'reviews/partials/review_list_details', :reviews => @reviews %>
+<%=
+if @reviews.count > 0
+  render 'reviews/partials/review_list_details', :reviews => @reviews
+else
+  "No reviews yet"
+end
+%>
 
 
 <%= link_to "Back to paper",

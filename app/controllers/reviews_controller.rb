@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_paper, except: [:index, :mine, :create, :new]
+  before_action :set_paper, except: [:mine]
   before_action :set_review , only: [:show, :edit, :update, :destroy]
   before_action :is_editor, only: [:validate_opinion]
 

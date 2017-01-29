@@ -20,5 +20,13 @@ Author.create([
   }, {
       person: Person.where(lastname: 'Erdos').take,
       paper: Paper.where(uuid: 'MAT_OP001').take
+  },
+
+  { # sapir whorf paper
+      person: Person.where(lastname: 'Sapir').take,
+      paper: Paper.where(uuid: 'BADLIN001').take
+  }, {
+      person: Person.where(lastname: 'Whorf').take,
+      paper: Paper.where(uuid: 'BADLIN001').take
   }
 ])

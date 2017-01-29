@@ -1,3 +1,12 @@
 // Place all the styles related to the Reviewers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.review-short-previews {
+    display: inline;
+    padding: 10px;
+    border-radius: 2px;
+    min-height: 36px;
+    line-height: 36px;
+    text-align: center;
+  }

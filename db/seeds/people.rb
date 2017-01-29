@@ -35,6 +35,20 @@ Person.create([
     email: 'erdos@test.edu',
     password: '123456789', password_confirmation: '123456789',
     activated: true, activated_at: Time.zone.now
+  }, {
+    firstname: 'Edward',
+    lastname: 'Sapir',
+    status: 'researcher',
+    email: 'sapir@test.edu',
+    password: '123456789', password_confirmation: '123456789',
+    activated: true, activated_at: Time.zone.now
+  }, {
+    firstname: 'Benjamin',
+    lastname: 'Whorf',
+    status: 'researcher',
+    email: 'whorf@test.edu',
+    password: '123456789', password_confirmation: '123456789',
+    activated: true, activated_at: Time.zone.now
   },
 
   # READERS
