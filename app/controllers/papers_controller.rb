@@ -89,15 +89,21 @@ class PapersController < ApplicationController
 
   # POST /papers/1/accept
   def ask_revision
+    @paper.set_review_round_done
+    @paper.add_a_review_round
     @paper.update(need_revision: true)
   end
 
   # POST /papers/1/accept
   def accept
+    @paper.set_review_round_done
+    @paper.update(status: 2)
   end
 
   # POST /papers/1/refuse
   def refuse
+    @paper.set_review_round_done
+    @paper.update(status: 3)
   end
 
 

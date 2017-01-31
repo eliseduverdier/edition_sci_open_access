@@ -33,7 +33,7 @@ $(document).ready(function() {
 
   $('.chips-placeholder').material_chip({
     // placeholder: 'Enter a keyword',
-    secondaryPlaceholder: $(this) ? $(this).getAttribute('data-name') : 'Add',
+    secondaryPlaceholder: $(this).hasAttribute('data-name') ? $(this).getAttribute('data-name') : 'Add',
   });
 
   var chip = {

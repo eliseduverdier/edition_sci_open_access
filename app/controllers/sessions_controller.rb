@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
 
       if user.activated?
         log_in user
-        redirect_back_or user
+        redirect_back_or root_url
       else
         message  = "Your account needs to be activated."
         message += "Please check your email for the activation link."

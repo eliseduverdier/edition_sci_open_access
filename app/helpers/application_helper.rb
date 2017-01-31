@@ -18,7 +18,7 @@ module ApplicationHelper
     Rails.application.routes.recognize_path(request.original_url)[:action] == action
   end
 
-  # compare the current route with the desired one
+  # get current route
   def get_path
     Rails.application.routes.recognize_path(request.original_url)
   end

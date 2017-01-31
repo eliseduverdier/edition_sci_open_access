@@ -32,14 +32,14 @@ class Paper < ApplicationRecord
   #####################################
 
   def get_reviews
-    Review.where(paper_id: id)
+    Review.where(paper_id: id).all
   end
 
   def get_last_reviews
     Review.where(
       paper_id: id,
       review_round: reviews_count
-    )
+    ).all
   end
 
   def last_done_reviews
@@ -47,12 +47,12 @@ class Paper < ApplicationRecord
       paper_id: id,
       review_round: reviews_count,
       progression: 'done'
-    )
+    ).all
   end
 
   def get_reviewers
     list = []
-    Review.where(paper_id: id).each {
+    Review.where(paper_id: id).all.each {
       |reviews| list.push(Person.where(id: reviews.reviewer_id).take)
     }
     return list
@@ -80,7 +80,12 @@ class Paper < ApplicationRecord
 
   # Count the reviews a paper have (all status and progression)
   def count_reviews
-    Review.where(paper_id: id).count
+    self.get_reviews.count
+  end
+
+  # Count the reviews a paper have (all status and progression)
+  def count_last_reviews
+    self.get_last_reviews.count
   end
 
   # Does the paper have any reviews ?
@@ -92,7 +97,7 @@ class Paper < ApplicationRecord
   # Checks if a paper has more than <min_reviews> reviews,
   #   and all of them are done
   def all_reviews_done?
-    reviews = Review.where(paper_id: id)
+    reviews = self.get_reviews
     total = reviews.count
     total > 2 &&
         reviews.where(progression: 'done').count == total
@@ -106,10 +111,14 @@ class Paper < ApplicationRecord
   # Returns an average (in %) of the reviews
   # only to indicate the amount of modification that will have to be done
   def get_reviews_score
-    reviews = Review.where(paper_id: id).all
+    reviews = self.get_reviews
     sum = 0.0
     reviews.each { |review| sum += review.status }
     ((sum / (reviews.count * 3) ) * 100).to_i
+  end
+
+  def signal_edition_finished
+    self.set_to_review
   end
 
 

@@ -1,35 +1,32 @@
-    <p>
-      This paper has been reviewed
-      —
-      Score: <%= @paper.get_reviews_score %> %
-      <%= render 'reviews/partials/short_preview', :reviews => @paper.get_last_reviews %>
-    </p>
+<p>
+  This paper has been reviewed
+  —
+  Score: <%= @paper.get_reviews_score %> %
+  <%= render 'reviews/partials/short_preview', :reviews => @paper.get_last_reviews %>
+</p>
 
-    <!-- <div class="row">
-      <div class="col m12 l4">
-        <p>
-          If you estimate the paper needs corrections...<br />
-          <a href="<%= ask_paper_revision_path(@paper.id) %>" class="btn blue-grey">
-            Ask a revision to the author <i class="material-icons right">send</i>
-          </a>
-        </p>
-      </div>
+<p>
+  If you estimate the paper needs corrections...<br />
+  <a href="<%= ask_paper_revision_path(@paper.id) %>" class="btn blue-grey lighten-2">
+    Ask a revision to the author <i class="material-icons right">send</i>
+  </a>
+</p>
 
-      <div class="col m12 l4">
-        <p>
-          If the article has already been corrected and can be published in this state<br />
-          <a href="<%= accept_paper_path(@paper.id) %>" class="btn blue-grey">
-            Accept the article <i class="material-icons right">done</i>
-          </a>
-        </p>
-      </div>
 
-      <div class="col m12 l4">
-        <p>
-          If the article, despite corrections, does not bear enough quality to be published<br />
-          <a href="<%= refuse_paper_path(@paper.id) %>" class="btn blue-grey">
-            Refuse the article <i class="material-icons right">clear</i>
-          </a>
-        </p>
-      </div>
-    </div> -->
+<div class="row">
+
+  <p class="col m6 s12">
+    If the article has already been corrected and can be published in this state<br />
+    <a href="<%= accept_paper_path(@paper.id) %>" class="btn blue-grey lighten-2">
+      Accept the article <i class="material-icons right">done</i>
+    </a>
+  </p>
+
+  <p class="col m6 s12">
+    If the article, despite corrections, does not bear enough quality to be published<br />
+    <a href="<%= refuse_paper_path(@paper.id) %>" class="btn blue-grey lighten-2">
+      Refuse the article <i class="material-icons right">clear</i>
+    </a>
+  </p>
+
+</div>

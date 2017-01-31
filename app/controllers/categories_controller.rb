@@ -3,16 +3,21 @@ class CategoriesController < ApplicationController
 
   before_action :is_admin, only: [:add, :create, :destroy]
 
+  include CategoriesHelper
+
   # GET /categories
-  # GET /categories.json
   def index
     @categories = Category.all
   end
 
   # GET /categories/1
-  # GET /categories/1.json
   def show
-    @papers = Paper.where(status: 2, category_id: params[:id])
+    parents = get_parents(@category)
+    puts parents
+    @papers = Paper.where(
+        status: 2,
+        category_id: parents
+    )
   end
 
   # GET /categories/new
@@ -25,7 +30,6 @@ class CategoriesController < ApplicationController
   end
 
   # POST /categories
-  # POST /categories.json
   def create
     names = JSON.parse params[:category][:names]
     parent = JSON.parse params[:category][:parent_category]
@@ -38,56 +42,44 @@ class CategoriesController < ApplicationController
         end
       end
     end
-# computational linguistics     quantum mechanics
-    respond_to do |format|
-      # if @category.save
-        format.html { redirect_to categories_url, notice: 'Category was successfully created.' }
-        format.json { render :show, status: :created, location: @category }
-      # else
-      #   format.html { render :new }
-      #   format.json { render json: @category.errors, status: :unprocessable_entity }
-      # end
-    end
+    # if @category.save
+      redirect_to categories_url, notice: 'Category was successfully created.'
+    # else
+    #   render :new, notice: 'Error while creating category, please retry.'
+    # end
   end
 
   # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @category }
-      else
-        format.html { render :edit }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
+    if @category.update(category_params)
+      redirect_to @category, notice: 'Category was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     @category.destroy
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to categories_url, notice: 'Category was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:name, :names, :parent_category)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
 
-    def is_admin
-      unless logged_in? && current_user.status == 'editor'
-        redirect_to root_path, :flash => { :error => "You don’t have access to this page!" }
-      end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_params
+    params.require(:category).permit(:name, :names, :parent_category)
+  end
+
+  def is_admin
+    unless logged_in? && current_user.status == 'editor'
+      redirect_to root_path, :flash => { :error => "You don’t have access to this page!" }
     end
+  end
+
 end

@@ -19,14 +19,14 @@ $link-color: #0b8668 !default;
 
 @import "materialize";
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
 html {
-  font-family: 'Montserrat', Trebuchet, sans-serif;
+  font-family: Ubuntu, sans-serif; //'Montserrat', Trebuchet, sans-serif;
 }
 h1 {
 //, h2, h3, h4 {
-  font-family: 'Montserrat Alternates';
+  font-family: Ubuntu, monospace; //'Montserrat Alternates';
 }
 
 body {

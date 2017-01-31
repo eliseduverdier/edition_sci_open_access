@@ -6,79 +6,18 @@
 
 
 
-<P class="DEBUG">
+<p class="DEBUG">
   <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong> /
   <%= get_paper_status(@paper.status) if @paper.status %> /
   <%= link_to @paper.category.name, @paper.category unless @paper.category.blank? %>
-</P>
+</p>
 
 
 
-<h1>
-  <span itemprop="title"><%= @paper.title %></span>
-</h1>
+<h1 itemprop="title"><%= @paper.title %></h1>
 
 
-<% if logged_in? %>
-
-<div class="reviews-stuff">
-
-<%= if current_user.is_editor? # EDITOR: ASK REVIEWS
-
-  if @paper.all_reviews_done?
-    render 'reviews/partials/validate'
-  elsif @paper.can_be_reviewed?
-    render 'reviews/partials/new'
-  elsif @paper.is_pending_opinion?  # EDITOR: IF OPINION, ONLY VALIDATE
-    render 'reviews/partials/new_opinion'
-  end
-end  %>
-
-<%= link_to "Read the reviews",
-  reviews_path(@paper.id),
-  class: "btn-flat" if current_user.is_editor? %>
-
-<% if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
-
-<div class="row">
-  <h3>Your paper has been reviewed.</h3>
-  <div class="col l4 m12 s12">
-    <p> Read the reviews </p>
-    <p><%= link_to 'Read the reviews', reviews_path(@paper.id), class: "btn" %></p>
-  </div>
-  <div class="col l4 m6 s12">
-    <p>Please read the reviews and update your paper consequently.</p>
-    <p><%= link_to 'Update your paper', edit_paper_path(@paper), class: "btn" %></p>
-  </div>
-  <div class="col l4 m6 s12">
-    <p>Once your paper is edited, please ask the editor to review it again</p>
-    <p><%= link_to 'Ask editor ', edit_paper_path(@paper), class: "btn" %></p>
-  </div>
-</div>
-
-<%#  SEE REVIEWS  %>
-  <% elsif current_user.should_review?(@paper) %>
-
-      <%= link_to 'Start reviewing',
-        new_review_path(@paper.id),
-        class: "btn red" %>
-
-    <% elsif current_user.is_reviewing?(@paper) %>
-
-      <%= link_to 'Continue or edit your review',
-        edit_review_path(@paper.id, @paper.get_review_by(current_user)),
-        class: "btn color2bg" %>
-
-    <% elsif current_user.reviewed?(@paper) %>
-
-      <%= link_to 'See your review',
-        review_path(@paper.id, @paper.get_review_by(current_user)),
-        class: "btn" %>
-
-
-  <% end  # end reviews %>
-  </div>
-<% end # end if logged_in? %>
+<%= render 'papers/partials/show_review_process' if logged_in? %>
 
 
 

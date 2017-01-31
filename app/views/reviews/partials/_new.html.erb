@@ -3,11 +3,31 @@
 
   # current_reviews = @paper.get_reviews
   possible_reviewers = get_possible_reviewers_for(@paper)
+  reviews_count = @paper.count_last_reviews
+
 %>
 
-  <p class="card-title">Ask for reviews</p>
+<% if reviews_count == 0 %>
 
-  The paper has currently <%= @paper.count_reviews %> reviews.
+  The paper is not yet reviewed.
+
+<% elsif reviews_count > 3 %>
+
+  The paper has already <%= reviews_count %> reviews (maximum).
+
+<% else %>
+
+  The paper has currently <%= reviews_count %> reviews.
+
+<% end %>
+
+<% if reviews_count > 0 %>
+
+  <%= link_to "Read the reviews", reviews_path(@paper.id), class: "btn-flat" if current_user.is_editor? %>
+
+<% end %>
+<% if reviews_count < 4 %>
+  <h3>Ask for reviews</h3>
 
   <%= form_for Review.new, :url => reviews_path(@paper.id) do |f| %>
 
@@ -23,6 +43,6 @@
     <button type="submit" class="btn color2bg">
       Ask reviews <i class="material-icons right">send</i>
     </button>
+  <% end # end form %>
 
-
-  <% end %>
+<% end %>
