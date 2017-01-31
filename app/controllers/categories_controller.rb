@@ -12,11 +12,9 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1
   def show
-    parents = get_parents(@category)
-    puts parents
     @papers = Paper.where(
-        status: 2,
-        category_id: parents
+        #status: 2,
+        category_id: get_children(@category)
     )
   end
 

@@ -4,10 +4,11 @@
 <nav>
   <div class="nav-wrapper blue-grey lighten-2">
     <div class="col s12">
-      <% if @category.parent_category %>
-      <a href="#!" class="breadcrumb"><%= @category.parent_category.name %></a>
+
+      <% get_parents(@category, 5).each do |category| %>
+      <a href="<%= category_path(category) %>" class="breadcrumb"><%= category.name %></a>
       <% end %>
-      <a href="#!" class="breadcrumb"><%= @category.name %></a>
+
     </div>
   </div>
 </nav>
