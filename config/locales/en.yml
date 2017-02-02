@@ -2,29 +2,67 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  app_title: 'Open Science'
 
+  home:
+    title_1: 'Open Science'
+    title_2: ''
+    title_3: ''
+    title_4: ''
 
-  ## ACTIONS
+  people:
+    update:
+      success: 'Your profile was successfully updated.'
+      error: 'Error! Your profile was not updated.'
+    update_password:
+      success: 'Your password was successfully updated.'
+      error: 'Error! Your password could not be updated.'
+    delete:
+      success: 'Your profile was successfully deleted.'
+      error: 'Error! Your profile was not deleted.'
+    create:
+      success: 'Welcome!'
+      error: 'Sorry, there was a problem during registration.'
+      need_activation: 'Please check your email to activate your account.' #  #{@person.activation_token} '
+    profile:
+      not_found: 'Sorry, there was an error while retrieving the profile'
+      wrong_password: 'Sorry, it seems you made a mistake in your password'
+    unauthorized: 'Please log in to access to this page'
+    already_logged_in: 'You are already logged in !'
 
-  # People
-  people.update.success: 'Your profile was successfully updated.'
-  people.delete.success: 'Your profile was successfully deleted.'
-  people.update.password.success: 'Your password was successfully updated.'
-  people.create.error: 'Sorry, there was a problem during registration.'
-  people.create.need_activation: 'Please check your email to activate your account.' #  #{@person.activation_token} '
-  people.profile.not_found: 'Sorry, there was an error while retrieving the profile'
+  paper:
+    edit:
+      forbidden: 'You don’t have the right to edit this papers.'
+      success: ''
+    update:
+      success: 'The paper was successfully updated'
+      error: 'Error'
+    delete:
+      confirmation: 'Are you sure? Please enter the reason why below. A confirmation to the editor will then be sent.'
+      success: 'The paper has been successfully deleted'
+      forbidden: 'This paper cannot be deleted.'
+    create:
+      error: 'Sorry, there was an error during the paper submission. The error was logged'
+      success: 'The paper was successfully submitted.'
 
-# before_actions
-  people.unauthorized: 'Please log in to access to this page'
+    ask_revision: 'The revision demand was send to the authors'
+    publish: 'The paper was published'
+    refuse: 'The paper was refused'
 
-  # Papers
-  paper.edit.forbidden: 'You don’t have the right to edit this papers.'
-  paper.edit.success: ''
-
-  paper.delete.confirmation: 'Are you sure? Please enter the reason why below. A confirmation to the editor will then be sent.'
-  paper.delete.success: 'The paper has been successfully deleted'
-  paper.delete.forbidden: 'This paper cannot be deleted.'
+  reviews:
+    create:
+      success: 'Your review was successfully submitted'
+      error: 'Error! This review could not be created'
+    edit:
+      success: ''
+      error:'Error! Your review could not be edited'
+    validate:
+      success:
+      error:
 
   # Mails
-  user_mailer.account_activation.subject: 'Welcome'
+  user_mailer:
+    account_activation:
+      subject: 'Welcome to OpenScience'
+    password_reset:
+      subject: 'Welcome to OpenScience'

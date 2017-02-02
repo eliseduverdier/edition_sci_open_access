@@ -85,8 +85,6 @@
 
   </div>
 
-
-
   <!-- Content -->
   <div class="col l9 pull-l3">
 
@@ -95,12 +93,7 @@
         <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
       </p>
 
-      <% if @paper.is_published? ||
-            (logged_in? &&
-               (current_user.wrote?(@paper) ||
-                current_user.is_editor? ||
-                current_user.is_reviewer_of?(@paper))) %>
-      <%# TODO person.can_see_paper?(@paper)  %>
+      <% if current_user.can_read?(@paper) %>
 
         <h3>Content</h3>
 

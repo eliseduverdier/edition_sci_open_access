@@ -56,15 +56,14 @@ class PapersController < ApplicationController
   # POST /papers
   def create
     @paper = Paper.new(paper_params)
-    @paper.status = -1 # pending, not reviewed
+    @paper.status = -1 # pending & not reviewed
     @paper.reviews_count = 0
 
     if @paper.save
       # save author
-      @author = Author.new(paper_id: @paper.id, person_id: current_user.id)
-      @author.save
+      Author.create(paper_id: @paper.id, person_id: current_user.id, status: 'creator')
 
-      redirect_to @paper, notice: 'Paper was successfully created.'
+      redirect_to @paper, notice: t('paper.creates.success')
     else
       render :new
     end
@@ -73,7 +72,7 @@ class PapersController < ApplicationController
   # PATCH/PUT /papers/1
   def update
     if @paper.update(paper_params)
-      redirect_to @paper, notice: 'Paper was successfully updated.'
+      redirect_to @paper, notice: t('paper.update.success')
     else
       render :edit
     end
@@ -82,7 +81,7 @@ class PapersController < ApplicationController
   # DELETE /papers/1
   def destroy
     @paper.destroy
-    redirect_to papers_url, notice: 'Paper was successfully destroyed.'
+    redirect_to papers_url, notice: t('paper.delete.success')
   end
 
   ######## end of a review round ##################
@@ -92,26 +91,27 @@ class PapersController < ApplicationController
     @paper.set_review_round_done
     @paper.add_a_review_round
     @paper.update(need_revision: true)
+    redirect_to @paper, notice: t('paper.ask_revision')
   end
 
   # POST /papers/1/accept
   def accept
     @paper.set_review_round_done
     @paper.update(status: 2)
+    redirect_to @paper, notice: t('paper.accept')
   end
 
   # POST /papers/1/refuse
   def refuse
     @paper.set_review_round_done
     @paper.update(status: 3)
+    redirect_to @paper, notice: t('paper.refuse')
   end
-
-
-
 
   ##########################################################
 
   private
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_paper
       @paper = Paper.find(params[:id])
@@ -119,7 +119,9 @@ class PapersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
-      params.require(:paper).permit(:paper_type, :title, :abstract, :tex_content, :html_content, :category_id)
+      params.require(:paper).permit(
+      :paper_type, :title, :abstract, :status, :publication_date, :tex_content, :html_content, :pdf_url, :category_id, :uuid, :conflict_of_interest, :licence, :doi, :keywords, :accepted_at, :reviews_count, :need_review
+      )
     end
 
     def author_params

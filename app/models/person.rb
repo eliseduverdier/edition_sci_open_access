@@ -102,17 +102,26 @@ class Person < ApplicationRecord
   # usually applied to current_user
   ##################################################
 
-  # Get all the papers written by a person
-  def get_papers
-    list = Array.new()
-    authors = Author.where(person_id: id)
-    authors.each do |write|
-      list.push(Paper.where(id: write.paper_id).take)
+      ##### READ #####
+    def can_read?(paper)
+      paper.is_published? ||
+         logged_in? &&
+         (self.wrote?(paper) ||
+          self.is_editor? ||
+          self.is_reviewer_of?(paper))
     end
-    return list
-  end
 
       ##### PAPERS #####
+
+    # Get all the papers written by a person
+    def get_papers
+      list = Array.new()
+      authors = Author.where(person_id: id)
+      authors.each do |write|
+        list.push(Paper.where(id: write.paper_id).take)
+      end
+      return list
+    end
 
   # Returns true if the user wrote the paper
   def wrote?(paper)

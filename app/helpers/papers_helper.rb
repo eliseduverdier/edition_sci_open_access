@@ -2,18 +2,20 @@ module PapersHelper
 
   # Get the authors-of-a-paper IDs
   def get_authors_id(paper)
-    list = []
-    authors = paper.get_authors
-    authors.each { |author| list.push(author.id) }
-    return list
+    # list = []
+    # authors = paper.get_authors
+    # authors.each { |author| list.push(author.id) }
+    # return list
+    paper.get_authors.map { |obj| obj.id }
   end
 
   # Get the reviewers-of-a-paper IDs
   def get_reviewers_id(paper)
-    list = []
-    authors = paper.get_reviewers
-    authors.each { |author| list.push(author.id) }
-    return list
+    # list = []
+    # reviewer = paper.get_reviewers
+    # reviewer.each { |author| list.push(reviewer.id) }
+    # return list
+    paper.get_reviewers.map { |obj| obj.id }
   end
 
   # Get the list of possible paper types

@@ -134,11 +134,17 @@ Database description, meaning of attributes and possible values for each.
    * if editor: can see all articles
     `papers/unpublished`
  * show
-   * if article is published:
+   * if article is published: everyone can read the complete article
    * if article is unpublished (undergoing peer review):
-   * if current_user wrote the article:
+     * a notice is displayed (this paper... currently under peer review, etc).
+     * user might ask for a notification concerning its publication
+     * **an editor** can read the whole paper, also sees the peer-review process. They can either ask for reviewer, ask for modification to the authors according to the reviews, and validate/refuse the paper when the process is done.
+     * **a reviewer** can see the whole paper, their own review, and edit it (?)
+     * **an author** they can edit the paper if the review process has not started. After, the corrections should be notified and validated by the editor.
  * new
    * only if researcher (not editor, not admin)
+   * ask principal information about the paper. Asks a latex template, an odt template, or the online editor.
+     * the online editor: based on `firepad` or similar software (see `ot.js`), for real-time collaborative editing, rich-form text, graphics, and tex (necessary, but feasible?) , history of who wrote what, diff between versions, etc.
  * edit
    * (only if current_user wrote the article)
    * can modify the content and abstract only (not the title)

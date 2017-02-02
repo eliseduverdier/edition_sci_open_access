@@ -48,7 +48,10 @@ HelloApp::Application.routes.draw do
   #####################
 
   resources :reading_lists
-  resources :reading_list_folders
+  # resources :reading_list_saves
+  get 'reading_list_saves/:paper_id', to: 'reading_list_saves#create'
+  get 'reading_list_saves/:paper_id/:reading_list_id', to: 'reading_list_saves#create'
+  delete 'reading_list_saves/:paper_id/:reading_list_id', to: 'reading_list_saves#delete'
 
 
 

@@ -75,21 +75,22 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.index ["email"], name: "index_people_on_email", unique: true
   end
 
-  create_table "reading_list_folders", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "reading_list_saves", force: :cascade do |t|
+    t.integer  "paper_id"
+    t.integer  "reading_list_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["paper_id"],           name: "index_reading_lists_on_paper_id"
+    t.index ["reading_list_id"], name: "index_reading_lists_on_reading_list_folder_id"
   end
 
   create_table "reading_lists", force: :cascade do |t|
     t.integer  "person_id"
-    t.integer  "paper_id"
-    t.integer  "reading_list_folder_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["paper_id"], name: "index_reading_lists_on_paper_id"
-    t.index ["person_id"], name: "index_reading_lists_on_person_id"
-    t.index ["reading_list_folder_id"], name: "index_reading_lists_on_reading_list_folder_id"
+    t.integer  "name"
+    t.integer  "visibility",        :default => 0    # 0: private / 1: public
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["person_id"],          name: "index_reading_lists_on_person_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -102,11 +103,11 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.text     "editor_remarks"
     t.string   "conflict_of_interest"
     t.integer  "review_round"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.index ["editor_id"],  name: "index_reviews_on_editor_id"
     t.index ["paper_id"],   name: "index_reviews_on_paper_id"
     t.index ["reviewer_id"],  name: "index_reviews_on_reviewer_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
   end
 
 end

@@ -8,11 +8,14 @@ class Paper < ApplicationRecord
 
   # Get all authors of a paper
   def get_authors
-    list = []
-    Author.where(paper_id: id).each do |author|
-      list.push(Person.where(id: author.person_id).take)
-    end
-    return list
+    # list = []
+    # Author.where(paper_id: id).each do |author|
+    #   list.push(Person.where(id: author.person_id).take)
+    # end
+    # return list
+    Author.where(paper_id: id).map { |author|
+      Person.where(id: author.person_id).take
+    }
   end
 
   # Format the list of authors

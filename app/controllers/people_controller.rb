@@ -19,15 +19,13 @@ class PeopleController < ApplicationController
     end
   end
 
-# GET /people/:id/papers
+  # GET /people/:id/papers
   def papers
     person = Person.find(params[:id])
     @papers = person.get_papers
     @title = "Papers from #{person.full_name}"
     render :template => 'papers/index'
   end
-
-
 
   # GET /people/1
   def show
@@ -64,6 +62,10 @@ class PeopleController < ApplicationController
       @person.send_activation_email
       flash[:info] = t('people.create.need_activation')
       # flash[:info] += "Activation token: /#{@person.activation_token}/#{CGI.@person.email}"
+
+      # creates a default reading list for the user
+      ReadingList.creates(person_id: @person.id, name: 'Your reading List')
+
       redirect_to root_url # TODO thanks for joining page
 
       # log_in @person
@@ -110,7 +112,7 @@ class PeopleController < ApplicationController
       redirect_to people_path, notice: t('people.profile.not_found')
     else
       @person.activate
-        redirect_to @person, notice: t('people.update.success')
+      redirect_to @person, notice: t('people.update.success')
     end
   end
 

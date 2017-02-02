@@ -1,15 +1,22 @@
 class ReadingListsController < ApplicationController
+
   before_action :set_reading_list, only: [:show, :edit, :update, :destroy]
+  before_action :is_logged_in, except: [:show]
+  before_action :is_public, only: [:show]
 
   # GET /reading_lists
-  # GET /reading_lists.json
   def index
-    @reading_lists = ReadingList.all
+    @reading_lists = ReadingList.where(person_id: current_user.id)
+  end
+
+  # GET /reading_lists/public
+  def index
+    @reading_lists = ReadingList.where(visibility: 1)
   end
 
   # GET /reading_lists/1
-  # GET /reading_lists/1.json
   def show
+    @papers = ReadingListSaves.where(reading_list_id: @reading_list.id)
   end
 
   # GET /reading_lists/new
@@ -22,46 +29,34 @@ class ReadingListsController < ApplicationController
   end
 
   # POST /reading_lists
-  # POST /reading_lists.json
   def create
     @reading_list = ReadingList.new(reading_list_params)
+    @reading_list.person_id = current_user.id
 
-    respond_to do |format|
-      if @reading_list.save
-        format.html { redirect_to @reading_list, notice: 'Reading list was successfully created.' }
-        format.json { render :show, status: :created, location: @reading_list }
-      else
-        format.html { render :new }
-        format.json { render json: @reading_list.errors, status: :unprocessable_entity }
-      end
+    if @reading_list.save
+      redirect_to @reading_list, notice: t('reading_list.create.success')
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /reading_lists/1
-  # PATCH/PUT /reading_lists/1.json
   def update
-    respond_to do |format|
-      if @reading_list.update(reading_list_params)
-        format.html { redirect_to @reading_list, notice: 'Reading list was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reading_list }
-      else
-        format.html { render :edit }
-        format.json { render json: @reading_list.errors, status: :unprocessable_entity }
-      end
+    if @reading_list.update(reading_list_params)
+      redirect_to @reading_list, notice: t('reading_list.update.success')
+    else
+      render :edit
     end
   end
 
   # DELETE /reading_lists/1
-  # DELETE /reading_lists/1.json
   def destroy
     @reading_list.destroy
-    respond_to do |format|
-      format.html { redirect_to reading_lists_url, notice: 'Reading list was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+   redirect_to reading_lists_url, notice: t('reading_list.destroy.success')
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_reading_list
       @reading_list = ReadingList.find(params[:id])
@@ -69,6 +64,11 @@ class ReadingListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def reading_list_params
-      params.require(:reading_list).permit(:person_id, :paper_id, :reading_list_folder_id)
+      params.require(:reading_list).permit(:name, :visibility)
     end
+
+    def is_public
+      redirect_to reading_lists_path unless reading_list.is_public? || reading_list.person_id == current_user.id
+    end
+    
 end

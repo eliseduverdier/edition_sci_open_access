@@ -1,19 +1,14 @@
+<% provide(:title, "#{@reading_list.name} | Reading list") %>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Person:</strong>
-  <%= @reading_list.person %>
-</p>
+
+<%= render 'papers/partials/paper_list', :papers => @papers %>
+
+
 
 <p>
-  <strong>Paper:</strong>
-  <%= @reading_list.paper %>
+  <%= link_to 'rename / change status', edit_reading_list_path(@reading_list) %>
 </p>
-
 <p>
-  <strong>Reading list folder:</strong>
-  <%= @reading_list.reading_list_folder %>
 </p>
-
-<%= link_to 'Edit', edit_reading_list_path(@reading_list) %> |
-<%= link_to 'Back', reading_lists_path %>

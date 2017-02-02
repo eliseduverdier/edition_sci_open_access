@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
-  before_action :is_admin, only: [:add, :create, :destroy]
+  before_action :is_admin, only: [:new, :create, :edit, :update, :destroy]
 
   include CategoriesHelper
 

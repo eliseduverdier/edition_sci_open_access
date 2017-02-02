@@ -11,7 +11,7 @@
   </span>
 
   <div class="right right-align">
-    <p><a href="#" id="save_to_reading_list">
+    <p><a href="<%= reading_list_save(paper.id) %>" id="save_to_reading_list">
       <i title="Add to your reading list" class="material-icons blue-grey-text">bookmark_border</i>
     </a></p>
     <small>
@@ -28,13 +28,10 @@
     </span>
   </p>
 
-  <%= link_to "Review \##{paper.reviews_count}", reviews_path(paper.id) if paper.reviews_count %>
+  <%= link_to "Review n. #{paper.reviews_count}", reviews_path(paper.id) if paper.reviews_count %>
   <%= render 'reviews/partials/short_preview', :reviews => paper.get_last_reviews %>
 
-  <%= if paper.all_reviews_done?
-    link_to 'Review the paper', paper
-  end
-   %>
+  <%= link_to 'Review the paper', paper if paper.all_reviews_done? %>
 
   <!-- <a href="#!" title="Add to your reading list" class="secondary-content"><i class="material-icons">book</i></a> -->
 </div>
