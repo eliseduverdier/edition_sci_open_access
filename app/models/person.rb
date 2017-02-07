@@ -99,37 +99,42 @@ class Person < ApplicationRecord
 
   ##################################################
   #    RELATIONS TO PAPERS
-  # usually applied to current_user
   ##################################################
 
-      ##### READ #####
-    def can_read?(paper)
-      paper.is_published? ||
-         logged_in? &&
-         (self.wrote?(paper) ||
-          self.is_editor? ||
-          self.is_reviewer_of?(paper))
-    end
+  # for current_user
 
-      ##### PAPERS #####
-
-    # Get all the papers written by a person
-    def get_papers
-      list = Array.new()
-      authors = Author.where(person_id: id)
-      authors.each do |write|
-        list.push(Paper.where(id: write.paper_id).take)
-      end
-      return list
-    end
+  ##############
+  ### ACCESS ###
+  ##############
+  def can_read?(paper)
+    paper.is_published? ||
+       logged_in? &&
+       (self.wrote?(paper) ||
+        self.is_editor? ||
+        self.is_reviewer_of?(paper))
+  end
 
   # Returns true if the user wrote the paper
   def wrote?(paper)
+    Author.where(person_id: id).nil?
     paper.get_authors.include? self
   end
 
+  ##############
+  ### PAPERS ###
+  ##############
 
-      ##### REVIEWS #####
+  # Get all the papers written by a person
+  def get_papers
+    Author.where(person_id: id).map { |write|
+      Paper.where(id: write.paper_id).take
+    }
+  end
+
+
+  ###############
+  ### REVIEWS ###
+  ###############
 
   # Get all the reviews written by a person
   def get_reviews
@@ -198,10 +203,6 @@ class Person < ApplicationRecord
   end
 
 
-
-
-  ##### REVIEWS #####
-
   # Returns true if the user wrote the review
   def wrote_review?(review)
     review.reviewer_id = id
@@ -212,6 +213,15 @@ class Person < ApplicationRecord
     review.reviewer_id = id
   end
 
+
+  ####################
+  ### READING LIST ###
+  ####################
+
+  def has_saved?(paper)
+    list_ids = ReadingList.where(person_id: id).pluck(:id)
+    ReadingListSaves.where(reading_list_id: list_ids).nil?
+  end
 
 
   private

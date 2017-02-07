@@ -8,11 +8,6 @@ class Paper < ApplicationRecord
 
   # Get all authors of a paper
   def get_authors
-    # list = []
-    # Author.where(paper_id: id).each do |author|
-    #   list.push(Person.where(id: author.person_id).take)
-    # end
-    # return list
     Author.where(paper_id: id).map { |author|
       Person.where(id: author.person_id).take
     }
@@ -22,12 +17,10 @@ class Paper < ApplicationRecord
   # Params:
   # +initials+::  +bool+  true: get only the initial of the firstname
   def get_authors_as_name_list(initials: false)
-    list = self.get_authors
-    people = []
-    list.each do |person|
-      people.push( person.full_name(initials))
-    end
-    people.join(', ')
+    list = self.get_authors.map { |author|
+      author.full_name(initials)
+    }
+    list.join(', ')
   end
 
   #####################################
@@ -54,11 +47,9 @@ class Paper < ApplicationRecord
   end
 
   def get_reviewers
-    list = []
-    Review.where(paper_id: id).all.each {
-      |reviews| list.push(Person.where(id: reviews.reviewer_id).take)
+    Review.where(paper_id: id).map { |reviews|
+      Person.where(id: reviews.reviewer_id).take
     }
-    return list
   end
 
   # Get the review for a given paper and person

@@ -8,5 +8,8 @@ Category.create([
   { name: 'semantics', parent_category: Category.where(name: 'linguistics').take},
   { name: 'grammar', parent_category: Category.where(name: 'linguistics').take},
   { name: 'algebra', parent_category: Category.where(name: 'maths').take},
+])
+Category.create([
   { name: 'groups', parent_category: Category.where(name: 'algebra').take},
+  { name: 'lexicography', parent_category: Category.where(name: 'semantics').take},
 ])

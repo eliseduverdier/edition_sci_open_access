@@ -11,7 +11,7 @@
   </span>
 
   <div class="right right-align">
-    <p><a href="<%= reading_list_save(paper.id) %>" id="save_to_reading_list">
+    <p><a href="<%= reading_list_default_save_path(paper.id) %>" id="save_to_reading_list">
       <i title="Add to your reading list" class="material-icons blue-grey-text">bookmark_border</i>
     </a></p>
     <small>
@@ -34,7 +34,7 @@
   <%= link_to 'Review the paper', paper if paper.all_reviews_done? %>
 
   <!-- <a href="#!" title="Add to your reading list" class="secondary-content"><i class="material-icons">book</i></a> -->
-</div>
+  </div>
 </div>
 <!-- </li> -->
 

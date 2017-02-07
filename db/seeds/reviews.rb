@@ -7,7 +7,6 @@ Review.create([
       status: 3, # accepted
       content: 'Nice paper',
       review_round: 0
-
   },
 
   {# Damien has to review Chomsky's paper (says Zed)
@@ -17,7 +16,6 @@ Review.create([
       progression: 'pending',
       content: 'Nice paper, haven’t decided yet / will set a status later.',
       review_round: 0
-
   },
 
   { # Einstein reviewed Chomsky's paper (says Zed)
@@ -40,7 +38,6 @@ Review.create([
       content: 'Quite interesting',
       review_round: 0,
       conflict_of_interest: ''
-
   },
 
   { # Chomsky has to review Damien's paper (says Ed)

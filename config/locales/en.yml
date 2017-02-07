@@ -55,10 +55,10 @@ en:
       error: 'Error! This review could not be created'
     edit:
       success: ''
-      error:'Error! Your review could not be edited'
-    validate:
-      success:
-      error:
+      error: 'Error! Your review could not be edited'
+    validate: ''
+      success: ''
+      error: ''
 
   # Mails
   user_mailer:

@@ -6,7 +6,7 @@ class ReadingList < ApplicationRecord
   end
 
   def get_papers
-    saved_papers_ids = ReadingListSaves.where(id_list: id).all.map { |obj| obj.id }
+    saved_papers_ids = ReadingListSaves.where(id_list: id).pluck(:id)
     Papers.where(id: saved_papers_ids)
   end
 

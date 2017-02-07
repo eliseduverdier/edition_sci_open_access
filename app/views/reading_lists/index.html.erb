@@ -3,15 +3,15 @@
 <h1>Reading Lists</h1>
 
 
-<% if @reading_lists.count == 0 %>
-
-  No reading list yet ! Create one ?
-
-<% elsif @reading_lists.count == 1 %>
-
-<%= render 'papers/partials/paper_list', :papers => @reading_lists.get_papers %>
-
-<% end %>
+<%=
+  if @reading_lists.count == 0
+    "No reading list yet ! Create one ?"
+  elsif @reading_lists.count == 1
+    render 'papers/partials/paper_list', :papers => @reading_lists.get_papers
+  else # many reading list
+    @reading_lists.each { |list| link_to list.name, list, class: 'btn' }
+  end
+%>
 
 <br>
 
