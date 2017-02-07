@@ -108,7 +108,7 @@ class Person < ApplicationRecord
   ##############
   def can_read?(paper)
     paper.is_published? ||
-       logged_in? &&
+       #logged_in? &&
        (self.wrote?(paper) ||
         self.is_editor? ||
         self.is_reviewer_of?(paper))

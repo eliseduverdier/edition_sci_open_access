@@ -44,19 +44,18 @@ en:
     create:
       error: 'Sorry, there was an error during the paper submission. The error was logged'
       success: 'The paper was successfully submitted.'
-
     ask_revision: 'The revision demand was send to the authors'
     publish: 'The paper was published'
     refuse: 'The paper was refused'
 
-  reviews:
+  review:
     create:
       success: 'Your review was successfully submitted'
       error: 'Error! This review could not be created'
     edit:
       success: ''
       error: 'Error! Your review could not be edited'
-    validate: ''
+    validate:
       success: ''
       error: ''
 
