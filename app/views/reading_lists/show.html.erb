@@ -2,10 +2,22 @@
 
 <p id="notice"><%= notice %></p>
 
-<%= render 'papers/partials/paper_list', :papers => @papers %>
+<h1><%= @reading_list.name %></h1>
+
+<%
+  papers_ids = ReadingListSave.where(reading_list: @reading_list).pluck(:paper_id)
+  papers = Paper.where(id: papers_ids)
+%>
+
+<%= if papers.count == 0
+    t('reading_list.show.empty')
+  else
+    render 'papers/partials/paper_list', :papers => papers
+end %>
+
 
 <p>
-  <%= link_to 'rename / change status', edit_reading_list_path(@reading_list) %>
+  <%= link_to 'rename / change status', edit_reading_list_path(@reading_list), class: 'btn' %>
 </p>
 
 <p>

@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20170126172025) do
 
   create_table "reading_lists", force: :cascade do |t|
     t.integer  "person_id"
-    t.integer  "name"
+    t.string   "name"
     t.integer  "visibility",        :default => 0    # 0: private / 1: public
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false

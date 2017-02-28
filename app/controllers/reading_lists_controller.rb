@@ -6,17 +6,17 @@ class ReadingListsController < ApplicationController
 
   # GET /reading_lists
   def index
-    @reading_lists = ReadingList.where(person_id: current_user.id)
+    @reading_lists = ReadingList.where(person: current_user)
   end
 
   # GET /reading_lists/public
-  def index
+  def index_public
     @reading_lists = ReadingList.where(visibility: 1)
   end
 
   # GET /reading_lists/1
   def show
-    @papers = ReadingListSaves.where(reading_list_id: @reading_list.id)
+    @papers = ReadingListSave.where(reading_list_id: @reading_list.id)
   end
 
   # GET /reading_lists/new
@@ -68,7 +68,7 @@ class ReadingListsController < ApplicationController
     end
 
     def is_public
-      redirect_to reading_lists_path unless reading_list.is_public? || reading_list.person_id == current_user.id
+      redirect_to reading_lists_path unless @reading_list.is_public? || @reading_list.person_id == current_user.id
     end
-    
+
 end

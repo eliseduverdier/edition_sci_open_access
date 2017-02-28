@@ -1,4 +1,4 @@
-class ReadingListsController < ApplicationController
+class ReadingListSavesController < ApplicationController
 
   before_action :get_params
 

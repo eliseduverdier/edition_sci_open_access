@@ -19,13 +19,15 @@
   <div class="switch">
     <label>
       Visibility: Private
-      <input name="reading_list[visibility]" type="checkbox" value="1">
+      <input name="reading_list[visibility]" type="checkbox" value="1" <%='checked' if reading_list.visibility == 1%>>
       <span class="lever"></span>
       Public
     </label>
   </div>
 
+  <br/>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Save', :class => "btn"  %>
   </div>
 <% end %>

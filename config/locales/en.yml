@@ -59,6 +59,11 @@ en:
       success: ''
       error: ''
 
+  reading_list:
+    show:
+      nolist: 'No reading list yet! Create one?'
+      empty: 'No papers yet!'
+
   # Mails
   user_mailer:
     account_activation:

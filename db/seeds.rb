@@ -9,7 +9,10 @@ files = [
   "people",
 
   "authors",
-  "reviews"
+  "reviews",
+
+  "reading_lists",
+  "reading_list_saves",
 ]
 $LOAD_PATH << File.join('db', 'seeds')
 

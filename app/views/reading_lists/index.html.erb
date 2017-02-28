@@ -1,18 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Reading Lists</h1>
+<h1>Your reading lists</h1>
+
+<div class="right">
+  <%= link_to 'New reading list', new_reading_list_path, class: 'btn' %>
+</div>
 
 
-<%=
-  if @reading_lists.count == 0
-    "No reading list yet ! Create one ?"
-  elsif @reading_lists.count == 1
-    render 'papers/partials/paper_list', :papers => @reading_lists.get_papers
-  else # many reading list
-    @reading_lists.each { |list| link_to list.name, list, class: 'btn' }
-  end
-%>
+<% if @reading_lists.count == 0 %>
+  No reading list yet ! Create one ?
+<%#  elsif @reading_lists.count == 1 %>
+  <%#=  render 'papers/partials/paper_list', :papers => @reading_lists %>
+<% else # many reading list %>
+  <%= render 'reading_lists/partials/reading_lists', :reading_lists => @reading_lists %>
+<% end %>
 
 <br>
-
-<%= link_to 'New reading list', new_reading_list_folder_path %>

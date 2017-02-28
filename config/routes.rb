@@ -48,6 +48,7 @@ HelloApp::Application.routes.draw do
   #####################
 
   resources :reading_lists
+  
   # resources :reading_list_saves
   get 'reading_list_saves/:paper_id',
     to:   'reading_list_saves#create',
