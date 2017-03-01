@@ -3,13 +3,10 @@
 if reviews.count > 0
 
 %>
-
 <div class="review-short-previews">
-
   <% reviews.order(:progression, :status).each do |review| %>
-
   <span class="review">
-    <a href="<%=review%>">
+    <a href="<%= review_path(review.paper.id, review.id) %>">
     <i
       title="<%= logged_in? && current_user.is_editor? ? "by #{review.reviewer.full_name}" : ""%>
       <%=review.progression%> - <%=get_review_status(review.status)%>"
@@ -25,5 +22,4 @@ if reviews.count > 0
   </span>
   <% end %>
 </div>
-
 <% end %>

@@ -63,10 +63,23 @@ en:
     show:
       nolist: 'No reading list yet! Create one?'
       empty: 'No papers yet!'
+    create:
+      success: 'The list has been created!'
+    delete:
+      confirmation: 'Are your sure you want to delete this reading list?'
+    destroy:
+      success: 'The reading list has been deleted'
+
+  reading_list_save:
+    add:
+      title: 'Add to your reading list'
+    remove:
+      title: 'Saved in %{lists} list'
+      success: 'The paper was removed from the list'
 
   # Mails
   user_mailer:
     account_activation:
       subject: 'Welcome to OpenScience'
     password_reset:
-      subject: 'Welcome to OpenScience'
+      subject: 'OpenScience — Password reset'

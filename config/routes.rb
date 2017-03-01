@@ -47,18 +47,19 @@ HelloApp::Application.routes.draw do
 
   #####################
 
+  get 'reading_lists/public', to: 'reading_lists#index_public'
   resources :reading_lists
-  
+
   # resources :reading_list_saves
   get 'reading_list_saves/:paper_id',
-    to:   'reading_list_saves#create',
-    :as => :reading_list_default_save
-  get 'reading_list_saves/:paper_id/:reading_list_id',
-    to:   'reading_list_saves#create',
+    to:   'reading_list_saves#save_default',
+    :as => :reading_list_save_default
+  get 'reading_list_saves/:reading_list_id/:paper_id',
+    to:   'reading_list_saves#save',
     :as => :reading_list_save
-  delete 'reading_list_saves/:paper_id/:reading_list_id',
-    to:   'reading_list_saves#delete',
-    :as => :reading_list_delete
+  get 'reading_list_remove/:reading_list_id/:paper_id',
+    to:   'reading_list_saves#remove',
+    :as => :reading_list_remove
 
 
 

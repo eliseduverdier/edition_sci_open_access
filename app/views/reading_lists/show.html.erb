@@ -4,6 +4,12 @@
 
 <h1><%= @reading_list.name %></h1>
 
+<% if logged_in? && current_user.is_list_owner?(@reading_list) %>
+<p class="right">
+  <%= link_to 'edit', edit_reading_list_path(@reading_list), class: 'btn' %>
+</p>
+<% end %>
+
 <%
   papers_ids = ReadingListSave.where(reading_list: @reading_list).pluck(:paper_id)
   papers = Paper.where(id: papers_ids)
@@ -14,11 +20,3 @@
   else
     render 'papers/partials/paper_list', :papers => papers
 end %>
-
-
-<p>
-  <%= link_to 'rename / change status', edit_reading_list_path(@reading_list), class: 'btn' %>
-</p>
-
-<p>
-</p>

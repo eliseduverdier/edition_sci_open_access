@@ -1,7 +1,7 @@
 class ReadingListsController < ApplicationController
 
   before_action :set_reading_list, only: [:show, :edit, :update, :destroy]
-  before_action :is_logged_in, except: [:show]
+  before_action :is_logged_in, except: [:show, :index_public]
   before_action :is_public, only: [:show]
 
   # GET /reading_lists
@@ -12,6 +12,7 @@ class ReadingListsController < ApplicationController
   # GET /reading_lists/public
   def index_public
     @reading_lists = ReadingList.where(visibility: 1)
+    render :index_public
   end
 
   # GET /reading_lists/1

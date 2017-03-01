@@ -6,8 +6,12 @@ class ReadingList < ApplicationRecord
   end
 
   def get_papers
-    saved_papers_ids = ReadingListSaves.where(id_list: id).pluck(:id)
+    saved_papers_ids = ReadingListSave.where(reading_list_id: id).pluck(:id)
     Papers.where(id: saved_papers_ids)
+  end
+
+  def include_paper(paper)
+    ReadingListSave.where(reading_list_id: id, paper_id: paper.id).count > 0
   end
 
 end

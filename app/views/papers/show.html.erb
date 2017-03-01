@@ -93,7 +93,7 @@
         <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
       </p>
 
-      <% if current_user.can_read?(@paper) %>
+      <% if (logged_in? && current_user.can_read?(@paper)) || @paper.is_published? %>
 
         <h3>Content</h3>
 

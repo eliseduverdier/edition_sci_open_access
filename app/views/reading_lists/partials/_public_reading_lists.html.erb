@@ -1,12 +1,12 @@
 <%
-  # TODO javascript tabs
+  # TODO allow filtering, sorting
 %>
 
 <% reading_lists.each do |list| %>
 
   <h3>
     <%= link_to list.name, list %>
-    <%= '[Public]' if list.visibility == 1 %>
+    By <%= link_to list.person.full_name, list.person %>
   </h3>
 
   <%

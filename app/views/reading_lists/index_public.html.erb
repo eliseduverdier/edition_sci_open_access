@@ -1,20 +1,15 @@
-<% provide(:title, "Your reading lists") %>
+<% provide(:title, "Public reading lists") %>
 
 <p id="notice"><%= notice %></p>
 
-<h1>Your reading lists</h1>
-
-<div class="right">
-  <%= link_to 'New reading list', new_reading_list_path, class: 'btn' %>
-</div>
-
+<h1>Public reading lists</h1>
 
 <% if @reading_lists.count == 0 %>
   No reading list yet ! Create one ?
 <%#  elsif @reading_lists.count == 1 %>
   <%#=  render 'papers/partials/paper_list', :papers => @reading_lists %>
 <% else # many reading list %>
-  <%= render 'reading_lists/partials/reading_lists', :reading_lists => @reading_lists %>
+  <%= render 'reading_lists/partials/public_reading_lists', :reading_lists => @reading_lists %>
 <% end %>
 
 <br>

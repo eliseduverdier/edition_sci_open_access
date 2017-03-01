@@ -205,12 +205,12 @@ class Person < ApplicationRecord
 
   # Returns true if the user wrote the review
   def wrote_review?(review)
-    review.reviewer_id = id
+    review.reviewer_id == id
   end
 
   # Returns true if the user asked the review
   def asked_review?(review)
-    review.reviewer_id = id
+    review.editor_id == id
   end
 
 
@@ -219,8 +219,26 @@ class Person < ApplicationRecord
   ####################
 
   def has_saved?(paper)
+    has_saved_in(paper).count > 0
+  end
+
+  def has_saved_in(paper)
     list_ids = ReadingList.where(person_id: id).pluck(:id)
-    ReadingListSaves.where(reading_list_id: list_ids).nil?
+    ReadingListSave.where(reading_list_id: list_ids, paper_id: paper.id)
+  end
+
+  def reading_lists
+    ReadingList.where(person_id: id).all
+  end
+
+  # take the first private reading_list (might be the default one)
+  def default_reading_list
+    ReadingList.where(person_id: id, visibility: 0).take
+  end
+
+  def is_list_owner?(reading_list)
+    list = ReadingList.where(id: reading_list.id).take
+    list.person_id == id
   end
 
 

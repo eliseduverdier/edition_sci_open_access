@@ -1,3 +1,13 @@
+<% provide(:title, "Editing «#{@reading_list.name}» | Reading list") %>
+
 <h1>Editing Reading List</h1>
 
 <%= render 'form', reading_list: @reading_list %>
+
+<p>
+  <%= link_to 'delete this list',
+          @reading_list,
+          method: :delete,
+          data: { confirm: t('reading_list.delete.confirmation') },
+          class: "btn-flat red waves-effect" %>
+</p>

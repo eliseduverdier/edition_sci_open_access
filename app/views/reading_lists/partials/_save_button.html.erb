@@ -1,0 +1,29 @@
+<%
+user_lists = current_user.reading_lists
+is_in_lists = current_user.has_saved_in(paper)
+%>
+<p>
+  <a href="#" data-activates="list-readinglists_<%=paper.id%>" class="dropdown-button">
+    <i title="<%=t('reading_list_save.remove.title', lists: is_in_lists.count)%>" class="material-icons orange-text">
+      <% if current_user.has_saved?(paper) %>
+      bookmark
+      <% else %>
+      bookmark_border
+      <% end %>
+    </i>
+  </a>
+  <ul id="list-readinglists_<%=paper.id%>" class="dropdown-content">
+    <% user_lists.each do |list| %>
+    <li>
+      <% if list.include_paper(paper)%>
+        <a href="<%= reading_list_remove_path(list.id, paper.id) %>">
+          <i class="material-icons blue-grey-text">done</i><%= list.name %>
+        </a>
+      <% else %>
+        <%= link_to list.name, reading_list_save_path(list.id, paper.id) %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+
+</p>

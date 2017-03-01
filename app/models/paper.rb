@@ -72,12 +72,12 @@ class Paper < ApplicationRecord
   end
 
 
-  # Count the reviews a paper have (all status and progression)
+  # Count all the reviews a paper have (all status and progression)
   def count_reviews
     self.get_reviews.count
   end
 
-  # Count the reviews a paper have (all status and progression)
+  # Count the "current" reviews a paper have
   def count_last_reviews
     self.get_last_reviews.count
   end
@@ -148,8 +148,13 @@ class Paper < ApplicationRecord
   # STATUS
   #####################################
 
-  def publish; self.update(status: 2); end
-  def refuse; self.update(status: 3); end
+  def publish
+    self.update(status: 2)
+  end
+
+  def refuse
+    self.update(status: 3)
+  end
 
   def is_published?
     status == 2
@@ -161,6 +166,18 @@ class Paper < ApplicationRecord
 
   def is_refused?
     status == 3
+  end
+
+  def is_pending_waiting?
+    status == -1
+  end
+
+  def is_pending?
+    status == 0
+  end
+
+  def is_pending_done?
+    status == 1
   end
 
 end
