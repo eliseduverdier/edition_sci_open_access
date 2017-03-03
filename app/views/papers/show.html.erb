@@ -4,22 +4,15 @@
 %>
 <p id="notice"><%= notice %></p>
 
-
-
 <p class="DEBUG">
   <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong> /
   <%= get_paper_status(@paper.status) if @paper.status %> /
   <%= link_to @paper.category.name, @paper.category unless @paper.category.blank? %>
 </p>
 
-
-
 <h1 itemprop="title"><%= @paper.title %></h1>
 
-
 <%= render 'papers/partials/show_review_process' if logged_in? %>
-
-
 
 <%# UNPUBLISHED PAPER: CONTENT IS NOT AVAILABLE %>
 <% if @paper.is_refused? %>
@@ -36,8 +29,6 @@
     It will be made available once the peer-review process is finished.
   </p>
 <% end %>
-
-
 
 <div class="row">
 
@@ -93,7 +84,8 @@
         <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
       </p>
 
-      <% if (logged_in? && current_user.can_read?(@paper)) || @paper.is_published? %>
+      <% if @paper.is_published? ||
+            (logged_in? && current_user.can_read?(@paper)) %>
 
         <h3>Content</h3>
 
@@ -102,11 +94,5 @@
         </blockquote>
 
       <% end %><!-- end content -->
-
   </div>
-
-
-
-
-
 </div>
