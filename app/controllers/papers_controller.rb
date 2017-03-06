@@ -86,7 +86,12 @@ class PapersController < ApplicationController
 
   ######## end of a review round ##################
 
-  # POST /papers/1/accept
+  # GET /papers/1/ask_revision
+  def ask_revision_notif
+    render :ask_revision
+  end
+
+  # POST /papers/1/ask_revision
   def ask_revision
     @paper.set_review_round_done
     @paper.add_a_review_round
@@ -101,6 +106,11 @@ class PapersController < ApplicationController
     redirect_to @paper, notice: t('paper.accept')
   end
 
+  # GET /papers/1/refuse
+  def refuse_notif
+    render :refusal_notif
+  end
+
   # POST /papers/1/refuse
   def refuse
     @paper.set_review_round_done
@@ -111,7 +121,7 @@ class PapersController < ApplicationController
   ##########################################################
 
   private
-  
+
     # Use callbacks to share common setup or constraints between actions.
     def set_paper
       @paper = Paper.find(params[:id])

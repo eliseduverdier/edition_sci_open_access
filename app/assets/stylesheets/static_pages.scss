@@ -44,3 +44,43 @@ div.landing-title {
   }
 
 }
+
+// ETC
+div.divider {
+  margin: 10px 0;
+}
+// MAIN
+main.container {
+  margin-top: 10px;
+}
+
+// FOOTER
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  &.page-footer {
+    padding-top: 0;
+  }
+  .row {
+    margin-bottom: 0;
+  }
+  a {
+    font-weight: 100;
+    padding-right: 5px;
+    &:after {
+      margin-left: 10px;
+      content: '/';
+    }
+    &:last-child:after {
+      content : ''
+    }
+  }
+}

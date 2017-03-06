@@ -8,19 +8,26 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
  */
 
-@import "materialize/components/color";
-$primary-color  : color("blue-grey", "darken-1") !default;
-$secondary-color: #0b8668 !default;
-$link-color: #0b8668 !default;
+@import "variables";
+@import "_common";
+@import "_header";
+@import "authors";
+@import "categories";
+@import "papers";
+@import "people";
+@import "reading_lists";
+@import "reviews";
+@import "static_pages";
 
+
+@import "materialize/components/color";
 @import "materialize";
 
-// @import url('https://fonts.googleapis.com/css?family=Montserrat');
-// @import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates');
+
 html {
   font-family: 'Montserrat', Trebuchet, sans-serif;
 }
@@ -30,7 +37,7 @@ h1 {
 }
 
 body {
-  background-color: #fefefe;
+  background-color: $background-color;
 }
 strong {
   font-weight: 800;
@@ -46,51 +53,11 @@ ul.collection li { @extend .collection-item; }
 
 
 // COLORS
-.color1bg { background-color: #0b8668; }
-.color1 { color: #0b8668; }
-.color2bg { background-color: #c68d00; }
-.color2 { color: #c68d00; }
-.color3bg { background-color: #546e7a; }
-.color3 { color: #546e7a; }
+.color1bg { background-color: $secondary-color; }
+.color1 { color: $secondary-color; }
+.color2bg { background-color: $ternary-color; }
+.color2 { color: $ternary-color; }
+.color3bg { background-color: $primary-color; }
+.color3 { color: $primary-color; }
 
 .btn-flat.visible { background-color: #eee; }
-
-// ETC
-div.divider {
-  margin: 10px 0;
-}
-// MAIN
-main.container {
-  margin-top: 10px;
-}
-
-// FOOTER
-body {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-main {
-  flex: 1 0 auto;
-}
-
-footer {
-  &.page-footer {
-    padding-top: 0;
-  }
-  .row {
-    margin-bottom: 0;
-  }
-  a {
-    font-weight: 100;
-    padding-right: 5px;
-    &:after {
-      margin-left: 10px;
-      content: '/';
-    }
-    &:last-child:after {
-      content : ''
-    }
-  }
-}

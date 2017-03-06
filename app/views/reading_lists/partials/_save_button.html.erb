@@ -3,6 +3,7 @@ user_lists = current_user.reading_lists
 is_in_lists = current_user.has_saved_in(paper)
 %>
 <p>
+  <!-- :remote => true -->
   <a href="#" data-activates="list-readinglists_<%=paper.id%>" class="dropdown-button">
     <i title="<%=t('reading_list_save.remove.title', lists: is_in_lists.count)%>" class="material-icons orange-text">
       <% if current_user.has_saved?(paper) %>

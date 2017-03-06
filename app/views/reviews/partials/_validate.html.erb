@@ -1,31 +1,34 @@
-<p>
-  This paper has been reviewed
-  —
-  Score: <%= @paper.get_reviews_score %> %
+<div class="center">
+  <p> This paper has been reviewed <% @paper.count_last_reviews %> times. </p>
   <%= render 'reviews/partials/short_preview', :reviews => @paper.get_last_reviews %>
-</p>
-
-<p>
-  If you estimate the paper needs corrections...<br />
-  <a href="<%= ask_paper_revision_path(@paper.id) %>" class="btn blue-grey lighten-2">
-    Ask a revision to the author <i class="material-icons right">send</i>
-  </a>
-</p>
+  <br />
+   <%= link_to "Read the reviews", reviews_path(@paper.id), class: "btn" if current_user.is_editor? %>
+  <br />
+  <!--Score: <%= @paper.get_reviews_score %> % -->
+  <button class="btn-flat"> Ask another reviewer </button>
+</div>
 
 
-<div class="row">
+<div class="row center">
 
-  <p class="col m6 s12">
-    If the article has already been corrected and can be published in this state<br />
-    <a href="<%= accept_paper_path(@paper.id) %>" class="btn blue-grey lighten-2">
-      Accept the article <i class="material-icons right">done</i>
+  <p class="col m4 s12">
+    <a href="<%= ask_paper_revision_notif_path(@paper.id) %>" class="btn-flat btn-waves"
+      title="If you estimate the paper needs corrections...">
+      Ask a revision <i class="material-icons right color1">send</i>
     </a>
   </p>
 
-  <p class="col m6 s12">
-    If the article, despite corrections, does not bear enough quality to be published<br />
-    <a href="<%= refuse_paper_path(@paper.id) %>" class="btn blue-grey lighten-2">
-      Refuse the article <i class="material-icons right">clear</i>
+  <p class="col m4 s12">
+    <a href="<%= accept_paper_path(@paper.id) %>" class="btn-flat btn-waves"
+      title="If the article has already been corrected and can be published in this state">
+      Accept the article <i class="material-icons right green-text">done</i>
+    </a>
+  </p>
+
+  <p class="col m4 s12">
+    <a href="<%= refuse_paper_notif_path(@paper.id) %>" class="btn-flat btn-waves"
+      title="If the article, despite corrections, does not bear enough quality to be published">
+      Refuse the article <i class="material-icons right red-text">clear</i>
     </a>
   </p>
 

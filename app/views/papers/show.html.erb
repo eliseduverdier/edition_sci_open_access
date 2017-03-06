@@ -79,10 +79,10 @@
   <!-- Content -->
   <div class="col l9 pull-l3">
 
-      <p id="abstract">
-        <span class="small-title">abstract</span>
+      <div id="abstract">
+        <!-- <span class="small-title">abstract</span> -->
         <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
-      </p>
+      </div>
 
       <% if @paper.is_published? ||
             (logged_in? && current_user.can_read?(@paper)) %>

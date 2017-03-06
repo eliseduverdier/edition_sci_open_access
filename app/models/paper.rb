@@ -93,7 +93,7 @@ class Paper < ApplicationRecord
   def all_reviews_done?
     reviews = self.get_reviews
     total = reviews.count
-    total > 2 &&
+    total >= 2 &&
         reviews.where(progression: 'done').count == total
   end
 

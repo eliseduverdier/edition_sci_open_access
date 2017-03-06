@@ -1,71 +1,63 @@
 <ul class="collection">
 
 <%
-  # TODO:
-  #  papers_concerned = Review.where(editor_id: 11).pluck(:paper_id).uniq
-  #  papers_concerned.each
-  #    get reviews: show status
-  #  if paper has all_reviews_done: show "feedbask to editor" / "publish" / "refuse"
+  Review.where(editor_id: 11).pluck(:paper_id).uniq.each do |papers_concerned_id|
+  paper = Paper.find(papers_concerned_id)
 %>
 
-<% reviews.each do |review| %>
-
   <li>
+    <p class="title">
+      <strong>
+        <%= link_to paper.title, paper %>
+        by <%= paper.get_authors_as_name_list %>
+      </strong>
+    </p>
 
-    <div class="row">
-    <div class="col m8">
-
-      <% unless path_is('reviews', 'index') %>
-      <p class="title">
-        <%= link_to review.paper.title, review.paper %><br />
-          by <%= review.paper.get_authors_as_name_list %>
-          <%# review.paper.get_authors.each do |author| %>
-          <%#= link_to "#{author.full_name}", author %>
-          <%# end %>
-      </p>
-      <% end %>
+    <ul class="collection">
+    <%
+    Review.where(editor_id: 11, paper_id: papers_concerned_id).each do |review|
+    %>
+    <li>
 
       <p>
         <% unless current_user.is_editor? %>
         <%= link_to review.progression=='pending' ? 'Start to review' : 'Continue your review',
-        review_path(review.paper.id, review.id),
+        review_path(paper.id, review.id),
         class: "waves-effect waves-light btn"  %>
         <% end %>
       </p>
 
-      </div>
-      <p class="col m4">
-        <i
-          title="<%=review.progression%> - <%=get_review_status(review.status)%>"
-          class="material-icons <%=review_get_color_status(review.status)%>-text">
-          <%= case review.progression
-            when 'done' then 'done'
-            when 'ongoing' then 'hourglass_full'
-            when 'pending' then 'hourglass_empty'
-            end
-          %>
-          </i>
-          <br />
+      <i
+        title="<%=review.progression%> - <%=get_review_status(review.status)%>"
+        class="material-icons <%=review_get_color_status(review.status)%>-text">
+        <%= case review.progression
+          when 'done' then 'done'
+          when 'ongoing' then 'hourglass_full'
+          when 'pending' then 'hourglass_empty'
+          end
+        %>
+        </i>
 
-          Asked <%= distance_of_time_in_words(Time.now, review.created_at) %> ago.
-          <br />
+        Asked <%= distance_of_time_in_words(Time.now, review.created_at) %> ago.
+        <br />
 
-          <% if review.editor != current_user %>
-          Asked by <%= link_to review.editor.full_name, review.editor %>
-          <br />
-          <% end %>
+        <% if review.editor != current_user %>
+          Asked by <%= link_to review.editor.full_name, review.editor %> <br />
+        <% end %>
 
-          <% if (current_user.is_editor? || current_user.is_admin?) && from != 'home_reviewer' %>
+        <% if current_user.is_editor? || current_user.is_admin? %>
           Reviewer:
           <%= link_to review.reviewer.full_name, review.reviewer %> <%= "(you)" if review.reviewer == current_user %>
         <% end %>
-      </p>
 
+      </li>
+      <% end # each review %>
+    </ul>
+    <% if (paper.all_reviews_done?) %>
+      <p>Reviews finished: read reviews / send feedback / publish / refuse</p>
+    <% end %>
 
-    </div>
+   </li>
+   <% end # each paper %>
 
-
-  </li>
-
-<% end %>
 </ul>
