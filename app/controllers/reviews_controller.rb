@@ -85,6 +85,55 @@ class ReviewsController < ApplicationController
     redirect_to reviews_url, notice: 'The review was successfully deleted.'
   end
 
+  ######## end of a review round ##################
+
+  # GET /papers/1/ask_revision
+  def ask_revision_notif
+    render :ask_revision
+  end
+
+  # POST /papers/1/ask_revision
+  def ask_revision
+    @review = Review.create(review_of_review_params)
+    @review.review_round = @paper.review_count
+    @review.editor_id = current_user.id
+    @review.reviewer_id = current_user.id
+    @review.progression = 'done'
+    # @review.editor_remarks = @review.content
+
+    @paper.set_review_round_done
+    @paper.add_a_review_round
+    @paper.update(need_review: true)
+    redirect_to @paper, notice: t('paper.ask_revision')
+  end
+
+  # POST /papers/1/accept
+  def accept
+    @paper.set_review_round_done
+    @paper.update(status: 2)
+    redirect_to @paper, notice: t('paper.publish')
+  end
+
+  # GET /papers/1/refuse
+  def refuse_notif
+    render :refusal_notif
+  end
+
+  # POST /papers/1/refuse
+  def refuse
+    #editor_remarks
+    @review = Review.create(review_of_review_params)
+    @review.review_round = @paper.review_count
+    @review.editor_id = current_user.id
+    @review.reviewer_id = current_user.id
+    @review.progression = 'done'
+    # @review.editor_remarks = @review.content
+
+    @paper.set_review_round_done
+    @paper.update(status: 3)
+    redirect_to @paper, notice: t('paper.refuse')
+  end
+
   ####################################################
   private
 
@@ -98,18 +147,24 @@ class ReviewsController < ApplicationController
 
   # PARAMS # Never trust parameters from the scary internet, only allow the white list through.
 
-  # For creation
+  # For (batch) creation, by editor
   def review_params
     params.require(:review).permit(:reviewers, :status, :editor_remarks)
   end
 
-  # For edition
+  # For edition, by reviewer
   def review_edit_params
     params.require(:review).permit(:reviewer, :status, :content, :progression)
   end
 
+  # for opinion papers, by editor
   def review_opinion_params
     params.require(:review).permit(:status, :editor_remarks)
+  end
+
+  # editor feedback on opinion papers
+  def review_of_review_params
+    params.require(:review).permit(:content)
   end
 
   ####################

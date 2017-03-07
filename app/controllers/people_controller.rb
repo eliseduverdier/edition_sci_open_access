@@ -6,6 +6,7 @@ class PeopleController < ApplicationController
   before_action :logged_in_as_correct_user, only: [:edit, :edit_password, :update, :destroy]
   before_action :is_logged_in, only: [:index]
   before_action :already_logged_in, only: [:new, :create]
+  before_action :is_admin, only: [:activate]
 
 
   # GET /people

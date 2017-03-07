@@ -13,7 +13,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   def show
     @papers = Paper.where(
-        #status: 2,
+        status: 2,
         category_id: get_children(@category)
     )
   end

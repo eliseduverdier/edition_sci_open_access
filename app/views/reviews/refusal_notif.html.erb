@@ -1,0 +1,33 @@
+<h1>
+  refuse the article
+</h1>
+
+<div class="row">
+
+  <div class="col s12 m6">
+
+    <%= form_for Review.new, :url => refuse_paper_path  do |f| %>
+     
+      <div class="field">
+        <%= f.label 'please explain to the author(s) why their paper cannot be published' %>
+        <textarea id="content" name="review[content]" class="materialize-textarea"></textarea>
+      </div>
+
+      <div class="actions">
+        <%= f.submit 'Refuse <i class="material-icons">send</i>'.html_safe, :class => "btn" %>
+      </div>
+    <% end # form %>
+
+  </div>
+
+  <div class="col s12 m6">
+    <p>please try to summarize the reviews below</p>
+    <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_last_reviews%>
+
+    <%=
+      render 'reviews/partials/review_list_details', :reviews => @paper.get_reviews
+      if @paper.reviews_count > 0
+    %>
+  </div>
+
+</div>

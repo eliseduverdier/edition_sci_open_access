@@ -89,7 +89,7 @@ Database description, meaning of attributes and possible values for each.
  * reviewer_id [people.id]
  * editor_id   [people.id]
  * paper_id    [paper.id]
- * status     
+ * status
      * 0: refused
      * 1: major modif
      * 2: minor modif
@@ -98,8 +98,9 @@ Database description, meaning of attributes and possible values for each.
      * 0: pending
      * 1: ongoing
      * 2: done
- * content     content (general points to the paper)
- * notes       notes on document
+ * content          reviewer feedback
+ * editor_remarks   
+ * review_round
 
 
 ## reading_list_folders
@@ -173,11 +174,16 @@ Database description, meaning of attributes and possible values for each.
   on other's article:
   * can edit a copy of the base article: their modification will be highligthed.
 
-
-
-
 * **reader**
   * reviews are private: only editors, author of the article in question, and the reviewer can see them.
+
+- When 2 (minimum) reviews for a paper are done, the reviewer can either publish/refuse the manuscript, or more frequently ask a correction to the authors, based on the reviews.
+- The editor then creates a review (where editor.id=reviewer.id, and which set the 'need_review' to 0).
+- The authors are notified, have access to the editor's review + the simple reviews.
+- They can edit their paper (TODO work on a diff), and validate the changes (which set the 'need_review' to 1)
+- Everythings continues until an editor publishes or refuses the paper.
+
+- If the paper is refused, idem for the review above: new review created with editor remarks, except the review round does not increment, the paper's status is 'refused', and the paper does not need review.
 
 ## Persons
  * (admin) see a list of all persons

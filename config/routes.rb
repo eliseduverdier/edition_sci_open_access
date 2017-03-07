@@ -12,11 +12,11 @@ HelloApp::Application.routes.draw do
   get    '/reviews/mine' => 'reviews#mine', :as => :user_reviews
   post   'papers/:paper_id/review_opinion' => 'reviews#validate_opinion', :as => :review_opinion
 
-  get   'papers/:paper_id/accept' => 'paper#accept', :as => :accept_paper
-  get   'papers/:paper_id/refuse' => 'papers#refuse_notif', :as => :refuse_paper_notif
-  post   'papers/:paper_id/refuse' => 'papers#refuse', :as => :refuse_paper
-  get   'papers/:paper_id/ask_revision' => 'papers#ask_revision_notif', :as => :ask_paper_revision_notif
-  post   'papers/:paper_id/ask_revision' => 'papers#ask_revision', :as => :ask_paper_revision
+  get   'papers/:paper_id/accept' => 'reviews#accept', :as => :accept_paper
+  get   'papers/:paper_id/refuse' => 'reviews#refuse_notif', :as => :refuse_paper_notif
+  post   'papers/:paper_id/refuse' => 'reviews#refuse', :as => :refuse_paper
+  get   'papers/:paper_id/ask_revision' => 'reviews#ask_revision_notif', :as => :ask_paper_revision_notif
+  post   'papers/:paper_id/ask_revision' => 'reviews#ask_revision', :as => :ask_paper_revision
 
 
   #####################

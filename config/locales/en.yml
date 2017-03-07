@@ -36,7 +36,7 @@ en:
       success: ''
     update:
       success: 'The paper was successfully updated'
-      error: 'Error'
+      error: 'Sorry, there was an error updating the paper'
     delete:
       confirmation: 'Are you sure? Please enter the reason why below. A confirmation to the editor will then be sent.'
       success: 'The paper has been successfully deleted'

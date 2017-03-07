@@ -84,41 +84,7 @@ class PapersController < ApplicationController
     redirect_to papers_url, notice: t('paper.delete.success')
   end
 
-  ######## end of a review round ##################
-
-  # GET /papers/1/ask_revision
-  def ask_revision_notif
-    render :ask_revision
-  end
-
-  # POST /papers/1/ask_revision
-  def ask_revision
-    @paper.set_review_round_done
-    @paper.add_a_review_round
-    @paper.update(need_revision: true)
-    redirect_to @paper, notice: t('paper.ask_revision')
-  end
-
-  # POST /papers/1/accept
-  def accept
-    @paper.set_review_round_done
-    @paper.update(status: 2)
-    redirect_to @paper, notice: t('paper.accept')
-  end
-
-  # GET /papers/1/refuse
-  def refuse_notif
-    render :refusal_notif
-  end
-
-  # POST /papers/1/refuse
-  def refuse
-    @paper.set_review_round_done
-    @paper.update(status: 3)
-    redirect_to @paper, notice: t('paper.refuse')
-  end
-
-  ##########################################################
+  ###################################################
 
   private
 
@@ -130,7 +96,7 @@ class PapersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
       params.require(:paper).permit(
-      :paper_type, :title, :abstract, :status, :publication_date, :tex_content, :html_content, :pdf_url, :category_id, :uuid, :conflict_of_interest, :licence, :doi, :keywords, :accepted_at, :reviews_count, :need_review
+      :paper_type, :title, :abstract, :status, :publication_date, :tex_content, :html_content, :pdf_url, :category_id, :uuid, :conflict_of_interest, :licence, :doi, :keywords, :accepted_at, :reviews_count, :need_review,
       )
     end
 

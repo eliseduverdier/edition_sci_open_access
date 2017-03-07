@@ -1,7 +1,8 @@
 <div class="center">
-  <p> This paper has been reviewed <% @paper.count_last_reviews %> times. </p>
+  <p> This paper has been reviewed <% @paper.count_last_reviews %> times</p>
   <%= render 'reviews/partials/short_preview', :reviews => @paper.get_last_reviews %>
-  <br />
+  <p> It is its <strong><%= (@paper.reviews_count+1).ordinalize %></strong> round. </p>
+
    <%= link_to "Read the reviews", reviews_path(@paper.id), class: "btn" if current_user.is_editor? %>
   <br />
   <!--Score: <%= @paper.get_reviews_score %> % -->
@@ -12,21 +13,21 @@
 <div class="row center">
 
   <p class="col m4 s12">
-    <a href="<%= ask_paper_revision_notif_path(@paper.id) %>" class="btn-flat btn-waves"
+    <a href="<%= ask_paper_revision_notif_path(@paper.id) %>" class="btn-flat"
       title="If you estimate the paper needs corrections...">
       Ask a revision <i class="material-icons right color1">send</i>
     </a>
   </p>
 
   <p class="col m4 s12">
-    <a href="<%= accept_paper_path(@paper.id) %>" class="btn-flat btn-waves"
+    <a href="<%= accept_paper_path(@paper.id) %>" class="btn-flat waves-effect waves-green"
       title="If the article has already been corrected and can be published in this state">
       Accept the article <i class="material-icons right green-text">done</i>
     </a>
   </p>
 
   <p class="col m4 s12">
-    <a href="<%= refuse_paper_notif_path(@paper.id) %>" class="btn-flat btn-waves"
+    <a href="<%= refuse_paper_notif_path(@paper.id) %>" class="btn-flat waves-effect waves-red"
       title="If the article, despite corrections, does not bear enough quality to be published">
       Refuse the article <i class="material-icons right red-text">clear</i>
     </a>

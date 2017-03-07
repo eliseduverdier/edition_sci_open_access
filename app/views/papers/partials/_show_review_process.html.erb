@@ -20,6 +20,14 @@ end  %>
 <% # AUTHOR
 if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
 
+
+<%=
+if @paper.need_revision
+  'Paper needs revision !'
+else
+  'Paper does not need revision (yet)'
+%>
+
 <div class="row">
   <h3>Your paper has been reviewed.</h3>
   <div class="col l3 m12 s12">

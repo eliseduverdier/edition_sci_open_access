@@ -21,23 +21,23 @@
 
 
 <div class="row">
-  <div class="field col l3 m6 s12">
+  <div class="field col m6 s12">
     <%= f.label :licence %>
     <%= select("paper", "licence", licence_choice.collect {|licence| licence}, {prompt: 'Select a licence'}) %>
   </div>
 
-  <div class="field col l3 m6 s12">
+  <div class="field col m6 s12">
     <%= f.label :category %>
     <%= select("paper", "category", Category.all.collect {|cat| [cat.name, cat.id]}, {prompt: 'Select a category'}) %>
   </div>
 
-  <div class="field col l3 m6 s12">
+  <div class="field col m6 s12">
     <%= f.label :conflict_of_interest %>
     <%= f.text_field :conflict_of_interest %>
   </div>
 
 
-  <div class="field col l3 m6 s12">
+  <div class="field col m6 s12">
     <%= f.label :paper_type %>
     <%= select("paper", "paper_type", get_paper_types.collect {|type| type }, {prompt: 'Select a paper type'}) %>
 </div>

@@ -2,7 +2,7 @@
     authors = @paper.get_authors_as_name_list(initials: true)
     provide(:title, "« #{@paper.title} » by #{authors}" )
 %>
-<p id="notice"><%= notice %></p>
+
 
 <p class="DEBUG">
   <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong> /

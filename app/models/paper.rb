@@ -116,7 +116,7 @@ class Paper < ApplicationRecord
   end
 
 
-  # STATUS
+  # review STATUS
   ################
 
   def is_pending_opinion?
@@ -132,6 +132,10 @@ class Paper < ApplicationRecord
     end
   end
 
+  def add_a_review_round
+    self.update(reviews_count: reviews_count+1)
+  end
+
   def should_be_reviewed?
     need_review == 1
   end
@@ -144,8 +148,16 @@ class Paper < ApplicationRecord
     self.update(need_review: 0)
   end
 
+  def need_revision
+    !should_be_reviewed && status < 2
+  end
+
+  def have_problem_in_review
+    (status == 2 || status == 3) && reviews_count < 1
+  end
+
   #####################################
-  # STATUS
+  # state STATUS
   #####################################
 
   def publish
