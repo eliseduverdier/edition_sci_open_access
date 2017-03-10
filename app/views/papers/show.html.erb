@@ -60,13 +60,9 @@
           </p>
           <% end %>
 
-          <% unless @paper.keywords.blank? %>
           <p itemprop="keywords">
               <span class="small-title">Keywords</span>
-              <% keywords = JSON.parse @paper.keywords %>
-              <%= keywords.each { |keyword| "<div class='chip'>#{keyword}</div>" } %>
           </p>
-          <% end %>
 
           <%= link_to raw('↓ PDF'), @paper.pdf_url, class: "btn" unless @paper.pdf_url.blank? %>
 

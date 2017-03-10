@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :set_paper, except: [:mine]
   before_action :set_review , only: [:show, :edit, :update, :destroy]
+  
   before_action :is_editor, only: [:validate_opinion]
 
   # GET /papers/:paper_id/reviews
@@ -181,12 +182,13 @@ class ReviewsController < ApplicationController
       editor_id:      current_user.id,
       progression:    'done'
     )
+    @paper.set_review_round_done
     if (review.is_accepted) # review -> accepted
       @paper.publish # published accepted
     elsif (review.is_refused) # review -> refused
       @paper.refuse # refused
     end
-    return review
+    review
   end
 
 

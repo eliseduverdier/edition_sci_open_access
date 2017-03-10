@@ -1,7 +1,6 @@
 class PeopleController < ApplicationController
   before_action :set_person, only: [:show, :edit, :update, :destroy]
 
-
   # permissions to access
   before_action :logged_in_as_correct_user, only: [:edit, :edit_password, :update, :destroy]
   before_action :is_logged_in, only: [:index]

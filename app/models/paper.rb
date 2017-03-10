@@ -136,6 +136,7 @@ class Paper < ApplicationRecord
     self.update(reviews_count: reviews_count+1)
   end
 
+  # Are all the reviews finished ?
   def should_be_reviewed?
     need_review == 1
   end
@@ -148,12 +149,14 @@ class Paper < ApplicationRecord
     self.update(need_review: 0)
   end
 
-  def need_revision
-    !should_be_reviewed && status < 2
+  # if the paper is not yet published nor refused, all reviews are done, and the editor says
+  def need_revision?
+    self.status < 2 && ! should_be_reviewed?
   end
 
+  # if the paper is published, and does not have any reviews, or still needs review
   def have_problem_in_review
-    (status == 2 || status == 3) && reviews_count < 1
+    (status == 2 || status == 3) && (reviews_count < 1 || need_review == true)
   end
 
   #####################################

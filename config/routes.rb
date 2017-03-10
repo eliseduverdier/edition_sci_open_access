@@ -18,6 +18,7 @@ HelloApp::Application.routes.draw do
   get   'papers/:paper_id/ask_revision' => 'reviews#ask_revision_notif', :as => :ask_paper_revision_notif
   post   'papers/:paper_id/ask_revision' => 'reviews#ask_revision', :as => :ask_paper_revision
 
+  get  'papers/:paper_id/finished' => 'papers#signal_edition_finished', :as => :signal_edition_finished
 
   #####################
 

@@ -24,4 +24,23 @@ module ApplicationHelper
   end
 
 
+  # Icons
+
+  def icon_read
+    '<i class="material-icons right blue-grey">read</i>'
+  end
+
+  def icon_feedback
+    '<i class="material-icons right color1">send</i>'
+  end
+
+  def icon_publish
+    '<i class="material-icons right green-text">done</i>'
+  end
+
+  def icon_refuse
+    '<i class="material-icons right red-text">clear</i>'
+  end
+
+
 end

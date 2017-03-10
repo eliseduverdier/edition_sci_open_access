@@ -39,7 +39,7 @@
 
   <div class="field col m6 s12">
     <%= f.label :paper_type %>
-    <%= select("paper", "paper_type", get_paper_types.collect {|type| type }, {prompt: 'Select a paper type'}) %>
+    <%= select("paper", "paper_type", get_paper_types.collect {|type| type}, {prompt: 'Select a paper type'}) %>
 </div>
 
 <div class="row">
@@ -51,7 +51,7 @@
     </div>
 
     <div class="field">
-      <%= f.label 'Content (TODO LATEX EDITOR)' %>
+      <%= f.label 'Content (TODO COLLABORATIVE TEXT/CODE EDITOR)' %>
       <%= f.text_area :html_content, class: "materialize-textarea" %>
     </div>
   </div>
@@ -82,9 +82,23 @@
 </div>
 
 <div class="row">
+  <% if paper.persisted?  %>
+    <% if paper.need_revision? %>
+      <div class="switch col s12">
+         <label>
+           Your paper has been reviewed, and modification where asked.
+           <br />
+           Please check the input when you consider the necessary changes have been done.
+           <input name="paper[need_review]" type="checkbox" value="0">
+           <span class="lever"></span>
+           <!-- (If selected, you will not be able to modify your paper after saving) -->
+         </label>
+      </div>
+    <% end %>
+  <% end %>
   <div class="field col s12">
     <div class="actions">
-    <%= f.submit 'Save', :class => "btn"  %>
+      <%= f.submit 'Save', :class => "btn" %>
     </div>
   </div>
 </div>

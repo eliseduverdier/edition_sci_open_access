@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.string   "conflict_of_interest"
     t.string   "licence"
     t.string   "doi"
-    t.string   "keywords"
     t.datetime "accepted_at"
     t.integer  "reviews_count"
     t.boolean  "need_review"
@@ -108,6 +107,14 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.index ["editor_id"],  name: "index_reviews_on_editor_id"
     t.index ["paper_id"],   name: "index_reviews_on_paper_id"
     t.index ["reviewer_id"],  name: "index_reviews_on_reviewer_id"
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.string   "keyword"
+    t.integer  "paper_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["paper_id"],   name: "index_keywords_on_paper_id"
   end
 
 end

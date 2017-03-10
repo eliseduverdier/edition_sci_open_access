@@ -1,11 +1,11 @@
-<ul class="collection">
-
 <%
   Review.where(editor_id: 11).pluck(:paper_id).uniq.each do |papers_concerned_id|
   paper = Paper.find(papers_concerned_id)
 %>
 
-  <li>
+<div class="card">
+  <div class="card-content">
+
     <p class="title">
       <strong>
         <%= link_to paper.title, paper %>
@@ -14,9 +14,7 @@
     </p>
 
     <ul class="collection">
-    <%
-    Review.where(editor_id: 11, paper_id: papers_concerned_id).each do |review|
-    %>
+    <% Review.where(editor_id: 11, paper_id: papers_concerned_id).each do |review| %>
     <li>
 
       <p>
@@ -53,11 +51,17 @@
       </li>
       <% end # each review %>
     </ul>
+    
     <% if (paper.all_reviews_done?) %>
-      <p>Reviews finished: read reviews / send feedback / publish / refuse</p>
+      <p>
+        <%= link_to "read reviews", reviews_path(paper.id), class: 'btn-flat' %>
+        <%= link_to "send feedback #{icon_feedback}".html_safe, ask_paper_revision_notif_path(paper.id), class: 'btn-flat' %>
+        <%= link_to "publish #{icon_publish}".html_safe, accept_paper_path(paper.id), class: 'btn-flat' %>
+        <%= link_to "refuse #{icon_refuse}".html_safe, refuse_paper_notif_path(paper.id), class: 'btn-flat' %>
+      </p>
     <% end %>
 
-   </li>
-   <% end # each paper %>
+  </div>
+</div>
 
-</ul>
+<% end # each paper %>

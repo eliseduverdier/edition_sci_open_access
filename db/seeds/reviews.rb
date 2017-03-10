@@ -32,7 +32,7 @@ Review.create([
   { # Einstein is reviewing Damien's paper (says Ed)
       paper: Paper.where(uuid: 'PHY002').take,
       reviewer_id: (Person.where(lastname: 'Einstein').take).id,
-      editor_id: (Person.where(firstname: 'Ed').take).id,
+      editor_id: (Person.where(firstname: 'Zed').take).id,
       progression: 'done',
       status: 3,
       content: 'Quite interesting',
@@ -43,7 +43,7 @@ Review.create([
   { # Chomsky has to review Damien's paper (says Ed)
       paper: Paper.where(uuid: 'PHY002').take,
       reviewer_id: (Person.where(lastname: 'Chomsky').take).id,
-      editor_id: (Person.where(firstname: 'Ed').take).id,
+      editor_id: (Person.where(firstname: 'Zed').take).id,
       progression: 'done',
       status: 2,
       review_round: 0
@@ -53,7 +53,7 @@ Review.create([
   {
       paper: Paper.where(uuid: 'BADLIN001').take,
       reviewer_id: (Person.where(lastname: 'Chomsky').take).id,
-      editor_id: (Person.where(firstname: 'Ed').take).id,
+      editor_id: (Person.where(firstname: 'Zed').take).id,
       progression: 'done',
       status: 0,
       review_round: 0
@@ -69,7 +69,7 @@ Review.create([
   {
       paper: Paper.where(uuid: 'BADLIN001').take,
       reviewer_id: (Person.where(lastname: 'Chomsky').take).id,
-      editor_id: (Person.where(firstname: 'Ed').take).id,
+      editor_id: (Person.where(firstname: 'Zed').take).id,
       progression: 'done',
       status: 3,
       review_round: 1
@@ -77,7 +77,7 @@ Review.create([
   {
       paper: Paper.where(uuid: 'BADLIN001').take,
       reviewer_id: (Person.where(lastname: 'Minenna').take).id,
-      editor_id: (Person.where(firstname: 'Ed').take).id,
+      editor_id: (Person.where(firstname: 'Zed').take).id,
       progression: 'done',
       status: 0,
       review_round: 1
