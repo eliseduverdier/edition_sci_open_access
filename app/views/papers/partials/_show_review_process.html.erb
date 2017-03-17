@@ -15,14 +15,6 @@ if current_user.is_editor?
 
 end  %>
 
-<%=
-  if @paper.need_revision?
-    'Paper needs revision !'
-  else
-    'Paper does not need revision (yet)'
-  end
-%>
-
 <% # AUTHOR
 if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
 
@@ -41,7 +33,7 @@ if current_user.wrote?(@paper) && @paper.all_reviews_done? %>
     <p><%= link_to 'Signal correction finished ', signal_edition_finished_path(@paper), class: "btn" %></p>
   </div>
   <div class="col l3 m6 s12">
-    <p>You can ask the editor questions if you have any</p>
+    <p>You can ask the editor questions if you have any questions</p>
     <p><a href="#" class="btn">Ask</a><%#= link_to 'Ask', ask_editor_about(@paper), class: "btn" %></p>
   </div>
 </div>

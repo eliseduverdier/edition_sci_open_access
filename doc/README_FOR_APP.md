@@ -39,7 +39,6 @@ Database description, meaning of attributes and possible values for each.
  * title
  * doi               (digital object identifier)
  * abstract
- * keywords          (list encoded in json)
  * status
     * -1: pending, not reviewed
     * 0: pending, reviewed
@@ -57,6 +56,9 @@ Database description, meaning of attributes and possible values for each.
  * conflict_interests
  * licence ( everything is open but licence can vary. Default: CC BY SA)
 
+##keywords
+ * keyword
+ * paper_id
 
 ## people
  * id

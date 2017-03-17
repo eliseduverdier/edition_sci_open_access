@@ -62,9 +62,10 @@
 
           <p itemprop="keywords">
               <span class="small-title">Keywords</span>
+              <%# @paper.get_keywords.each { |k| link_to k.keyword, k, class: 'keyword' } %>
           </p>
 
-          <%= link_to raw('↓ PDF'), @paper.pdf_url, class: "btn" unless @paper.pdf_url.blank? %>
+          <%= link_to "PDF #{icon_download('white-text')}".html_safe, @paper.pdf_url, class: "btn" unless @paper.pdf_url.blank? %>
 
         </p>
       </div>
@@ -73,11 +74,11 @@
   </div>
 
   <!-- Content -->
-  <div class="col l9 pull-l3">
+  <div class="col s12 m9 pull-m3">
 
       <div id="abstract">
         <!-- <span class="small-title">abstract</span> -->
-        <%= @paper.abstract.html_safe unless @paper.abstract.blank? %>
+        <%= @paper.abstract unless @paper.abstract.blank? %>
       </div>
 
       <% if @paper.is_published? ||
@@ -86,7 +87,7 @@
         <h3>Content</h3>
 
         <blockquote id="content">
-          <p><%= @paper.html_content.html_safe unless @paper.html_content.blank? %></p>
+          <p><%= @paper.html_content unless @paper.html_content.blank? %></p>
         </blockquote>
 
       <% end %><!-- end content -->

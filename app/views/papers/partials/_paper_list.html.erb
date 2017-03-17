@@ -6,13 +6,8 @@
   <div class="card-content">
 
   <span class="title">
-    <%=
-      if paper.need_revision?
-        '(REVISION)'
-      else
-        '(WAIT)'
-      end
-    %>
+    <%= "#{icon_warning}".html_safe if paper.need_revision? %>
+    
     <% if paper.is_refused? %>
     <span class="red-text"><strong>[Refused]</strong></span>
     <% elsif paper.is_pending_waiting? %>

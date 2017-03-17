@@ -61,7 +61,13 @@ class PapersController < ApplicationController
 
     if @paper.save
       # save author
-      Author.create(paper_id: @paper.id, person_id: current_user.id, status: 'creator')
+      Author.create(paper_id: @paper.id, person_id: current_user.id, status: 'author ')
+
+      # save keywords
+      # keywords
+      JSON.parse params[:keywords].each { |kw|
+        Keyword.create(name: kw, paper_id: @paper.id)
+      }
 
       redirect_to @paper, notice: t('paper.creates.success')
     else

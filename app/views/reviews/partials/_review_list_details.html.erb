@@ -41,15 +41,15 @@
 
     <div class="collapsible-body">
 
-       <p class="right <%= review_get_color_progression(review.progression) %>">
+       <span class="badge right <%= review_get_color_progression(review.progression) %>">
          <%= "progression: #{review.progression}" if review.progression %>
-       </p>
-       <p class="right <%= review_get_color_status(review.status) %>">
+       </span>
+       <span class="badge right <%= review_get_color_status(review.status) %>">
          <%= "status: #{review.status}" if review.status %>
-       </p>
-       <p class="right">
+       </span>
+       <span class="badge right">
          <%= 'Asked on: '+ review.created_at.strftime("%d %B %Y") %>
-       </p>
+       </span>
 
       <p>
         Asked by: <%= link_to review.editor.full_name, review.editor %>
@@ -57,7 +57,7 @@
       </p>
 
       <% unless review.conflict_of_interest.blank? %>
-      <p>
+      <p class="right">
         <i class="material-icons">warning</i> <strong>Conflict of interest </strong>
         <%= review.conflict_of_interest %>
       </p>

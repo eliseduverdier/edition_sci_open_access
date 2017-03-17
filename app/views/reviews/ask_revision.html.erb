@@ -1,31 +1,30 @@
 <h1>
-  ask a revision to the author
+  ask a revision
 </h1>
 
-<div class="row">
+<p>
+  Your are asking a revision on the paper <%= link_to @paper.title, @paper %> by <%= @paper.get_authors_as_name_list %>
+</p>
 
-  <div class="col s12 m6">
+<p>Please try to summarize the reviews below</p>
 
-    <%= form_for Review.new, :url => ask_paper_revision_path() do |f| %>
+<% if @paper.reviews_count > 0 %>
+  <h2>All reviews</h2>
+  <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_reviews %>
+<% else %>
+  <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_last_reviews%>
+<% end %>
 
-      <div class="field">
-        <%= f.label 'please note principal points to review' %>
-        <textarea id="content" name="review[content]" class="materialize-textarea"></textarea>
-      </div>
+<div class="divider"></div>
 
-      <div class="actions">
-        <%= f.submit 'Send <i class="material-icons">send</i>'.html_safe, :class => "btn" %>
-      </div>
-    <% end # form %>
+<%= form_for Review.new, :url => ask_paper_revision_path() do |f| %>
+
+  <div class="field">
+    <%= f.label 'please note principal points to review' %>
+    <%= f.text_area :content, class: "materialize-textarea" %>
   </div>
 
-  <div class="col s12 m6">
-    <p>please try to summarize the reviews below</p>
-    <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_last_reviews%>
-
-    <%= if @paper.reviews_count > 0
-      render 'reviews/partials/review_list_details', :reviews => @paper.get_reviews
-    end %>
+  <div class="actions">
+    <%= f.submit "Send", :class => "btn" %>
   </div>
-
-</div>
+<% end # form %>

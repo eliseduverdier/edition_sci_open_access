@@ -7,14 +7,14 @@
   <div class="col s12 m6">
 
     <%= form_for Review.new, :url => refuse_paper_path  do |f| %>
-     
+
       <div class="field">
         <%= f.label 'please explain to the author(s) why their paper cannot be published' %>
         <textarea id="content" name="review[content]" class="materialize-textarea"></textarea>
       </div>
 
       <div class="actions">
-        <%= f.submit 'Refuse <i class="material-icons">send</i>'.html_safe, :class => "btn" %>
+        <%= f.submit "Refuse #{icon_feedback}".html_safe, :class => "btn" %>
       </div>
     <% end # form %>
 
