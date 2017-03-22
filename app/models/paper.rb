@@ -25,7 +25,7 @@ class Paper < ApplicationRecord
 
   # Key keywords for a paper
   def get_keywords
-    Keyword.where(paper: @paper).all
+    Keyword.where(paper_id: id).all
   end
 
   #####################################

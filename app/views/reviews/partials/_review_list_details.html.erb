@@ -17,7 +17,7 @@
       <span class="review">
         <a href="<%=review%>">
         <i
-          title="<%= logged_in? && current_user.is_editor? ? "by #{review.reviewer.full_name}" : ""%>
+          title="<%= "by #{review.reviewer.full_name}" if logged_in? && current_user.is_editor? %>
           <%=review.progression%> - <%=get_review_status(review.status)%>"
           class="material-icons <%=review_get_color_status(review.status)%>-text">
           <%= case review.progression

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126172025) do
+ActiveRecord::Schema.define(version: 20170322163135) do
 
   create_table "authors", force: :cascade do |t|
     t.integer  "person_id"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["parent_category_id"], name: "index_categories_on_parent_category"
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.integer  "paper_id"
+    t.string   "keyword"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paper_id"], name: "index_keywords_on_paper_id"
   end
 
   create_table "papers", force: :cascade do |t|
@@ -56,7 +64,7 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.string   "email"
     t.string   "firstname"
     t.string   "lastname"
-    t.string  "status"
+    t.string   "status"
     t.text     "bio"
     t.text     "level"
     t.string   "country"
@@ -77,19 +85,19 @@ ActiveRecord::Schema.define(version: 20170126172025) do
   create_table "reading_list_saves", force: :cascade do |t|
     t.integer  "paper_id"
     t.integer  "reading_list_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["paper_id"],           name: "index_reading_lists_on_paper_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["paper_id"], name: "index_reading_lists_on_paper_id"
     t.index ["reading_list_id"], name: "index_reading_lists_on_reading_list_folder_id"
   end
 
   create_table "reading_lists", force: :cascade do |t|
     t.integer  "person_id"
     t.string   "name"
-    t.integer  "visibility",        :default => 0    # 0: private / 1: public
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["person_id"],          name: "index_reading_lists_on_person_id"
+    t.integer  "visibility", default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["person_id"], name: "index_reading_lists_on_person_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -102,19 +110,11 @@ ActiveRecord::Schema.define(version: 20170126172025) do
     t.text     "editor_remarks"
     t.string   "conflict_of_interest"
     t.integer  "review_round"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["editor_id"],  name: "index_reviews_on_editor_id"
-    t.index ["paper_id"],   name: "index_reviews_on_paper_id"
-    t.index ["reviewer_id"],  name: "index_reviews_on_reviewer_id"
-  end
-
-  create_table "keywords", force: :cascade do |t|
-    t.string   "keyword"
-    t.integer  "paper_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["paper_id"],   name: "index_keywords_on_paper_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["editor_id"], name: "index_reviews_on_editor_id"
+    t.index ["paper_id"], name: "index_reviews_on_paper_id"
+    t.index ["reviewer_id"], name: "index_reviews_on_reviewer_id"
   end
 
 end

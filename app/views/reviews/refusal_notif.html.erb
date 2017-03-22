@@ -6,7 +6,7 @@
 
   <div class="col s12 m6">
 
-    <%= form_for Review.new, :url => refuse_paper_path  do |f| %>
+    <%= form_for Review.new, :url => refuse_paper_path do |f| %>
 
       <div class="field">
         <%= f.label 'please explain to the author(s) why their paper cannot be published' %>
@@ -22,7 +22,7 @@
 
   <div class="col s12 m6">
     <p>please try to summarize the reviews below</p>
-    <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_last_reviews%>
+    <%= render 'reviews/partials/review_list_details', :reviews => @paper.get_last_reviews %>
 
     <%=
       render 'reviews/partials/review_list_details', :reviews => @paper.get_reviews

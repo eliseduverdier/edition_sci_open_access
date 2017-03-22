@@ -13,6 +13,8 @@ files = [
 
   "reading_lists",
   "reading_list_saves",
+
+  "keywords",
 ]
 $LOAD_PATH << File.join('db', 'seeds')
 

@@ -3,7 +3,6 @@
     provide(:title, "« #{@paper.title} » by #{authors}" )
 %>
 
-
 <p class="DEBUG">
   <strong> (<%= @paper.paper_type unless @paper.category.blank? %>) </strong> /
   <%= get_paper_status(@paper.status) if @paper.status %> /
@@ -33,13 +32,13 @@
 <div class="row">
 
   <!-- Metadata -->
-  <div class="col l3 push-l9">
+  <div class="col m3 push-m9">
 
     <% if logged_in? && current_user.wrote?(@paper) %>
       <div class="right-align">
-          <%= link_to 'Edit', edit_paper_path(@paper), class: "btn-flat" %>
+          <%= link_to 'Edit', edit_paper_path(@paper), class: 'btn-flat' %>
           <%= link_to 'Delete', @paper, method: :delete, data: { confirm: t('paper.delete.confirmation') },
-              class: "btn-flat waves-effect waves-red" %>
+              class: 'btn-flat waves-effect waves-red' %>
       </div>
     <% end #  if author %>
 
@@ -62,7 +61,7 @@
 
           <p itemprop="keywords">
               <span class="small-title">Keywords</span>
-              <%# @paper.get_keywords.each { |k| link_to k.keyword, k, class: 'keyword' } %>
+              <% @paper.get_keywords.each { |k| link_to k.keyword, k, class: 'keyword' } %>
           </p>
 
           <%= link_to "PDF #{icon_download('white-text')}".html_safe, @paper.pdf_url, class: "btn" unless @paper.pdf_url.blank? %>
@@ -74,22 +73,31 @@
   </div>
 
   <!-- Content -->
-  <div class="col s12 m9 pull-m3">
-
+  <div class="col s12 m9">
       <div id="abstract">
-        <!-- <span class="small-title">abstract</span> -->
         <%= @paper.abstract unless @paper.abstract.blank? %>
       </div>
-
-      <% if @paper.is_published? ||
-            (logged_in? && current_user.can_read?(@paper)) %>
-
-        <h3>Content</h3>
-
-        <blockquote id="content">
-          <p><%= @paper.html_content unless @paper.html_content.blank? %></p>
-        </blockquote>
-
-      <% end %><!-- end content -->
   </div>
+
+</div>
+
+
+<div class="row">
+
+  <div class="col s12 m8 pull-m2">
+    <% if @paper.is_published? ||
+          (logged_in? && current_user.can_read?(@paper)) %>
+      <blockquote id="content">
+        <p><%= @paper.html_content unless @paper.html_content.blank? %></p>
+      </blockquote>
+    <% end %><!-- end content -->
+
+    <div class="col s12 m2">
+      <div class="footnote">
+        A footnote
+      </div>
+    </div>
+
+  </div>
+
 </div>

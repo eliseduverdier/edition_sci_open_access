@@ -1,5 +1,6 @@
 HelloApp::Application.routes.draw do
 
+  resources :keywords
   root 'static_pages#home'
   get '/home',  to: 'static_pages#home'
   get '/about', to: 'static_pages#about'

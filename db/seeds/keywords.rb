@@ -1,8 +1,8 @@
 Keyword.create([
-  { paper: Paper.where(uuid: 'LIN001').take, keyword: 'linguitics' },
-  { paper: Paper.where(uuid: 'LIN001').take, keyword: 'universal grammar' },
-  { paper: Paper.where(uuid: 'LIN001').take, keyword: 'syntax' },
+  { paper_id: (Paper.where(uuid: 'LIN001').take).id, keyword: 'linguitics' },
+  { paper_id: (Paper.where(uuid: 'LIN001').take).id, keyword: 'universal grammar' },
+  { paper_id: (Paper.where(uuid: 'LIN001').take).id, keyword: 'syntax' },
 
-  { paper: Paper.where(uuid: 'LIN002').take, keyword: 'syxtax' },
-  { paper: Paper.where(uuid: 'LIN002').take, keyword: 'sanskrit' },
+  { paper_id: (Paper.where(uuid: 'LIN002').take).id, keyword: 'syxtax' },
+  { paper_id: (Paper.where(uuid: 'LIN002').take).id, keyword: 'sanskrit' },
 ])

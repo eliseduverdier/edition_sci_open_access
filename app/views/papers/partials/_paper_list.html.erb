@@ -7,11 +7,11 @@
 
   <span class="title">
     <%= "#{icon_warning}".html_safe if paper.need_revision? %>
-    
+
     <% if paper.is_refused? %>
     <span class="red-text"><strong>[Refused]</strong></span>
     <% elsif paper.is_pending_waiting? %>
-    <span class="red-pending"><strong>[Pending]</strong></span>
+    <span class="grey-text"><strong>[Pending]</strong></span>
     <% end %>
     <%= link_to paper.title, paper %>
   </span>

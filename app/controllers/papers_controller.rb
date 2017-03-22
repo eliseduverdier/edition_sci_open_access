@@ -60,8 +60,12 @@ class PapersController < ApplicationController
     @paper.reviews_count = 0
 
     if @paper.save
-      # save author
-      Author.create(paper_id: @paper.id, person_id: current_user.id, status: 'author ')
+      # save current_user as author
+      Author.create(paper_id: @paper.id, person_id: current_user.id, status: 'author')
+      # save other co-authors
+      params[:authors].each { |coauth|
+        Author.create(paper_id: @paper.id, person_id: coauth, status: 'co-author')
+      }
 
       # save keywords
       # keywords
@@ -102,7 +106,7 @@ class PapersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def paper_params
       params.require(:paper).permit(
-      :paper_type, :title, :abstract, :status, :publication_date, :tex_content, :html_content, :pdf_url, :category_id, :uuid, :conflict_of_interest, :licence, :doi, :keywords, :accepted_at, :reviews_count, :need_review,
+      :paper_type, :title, :abstract, :status, :publication_date, :tex_content, :html_content, :pdf_url, :category_id, :uuid, :conflict_of_interest, :licence, :doi, :keywords, :accepted_at, :reviews_count, :need_review
       )
     end
 
